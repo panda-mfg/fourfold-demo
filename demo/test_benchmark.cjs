@@ -1,6 +1,6 @@
 'use strict';
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const source=fs.readFileSync(__dirname+'/benchmark-engine.js','utf8');
+const source=fs.readFileSync(__dirname+'/reference/benchmark-engine.js','utf8');
 const env={performance,self:{postMessage(){}}};vm.createContext(env);vm.runInContext(source,env);
 function valid(graph,result){
   assert.equal(result.status,'complete',result.message);assert.equal(result.colors.length,graph.adj.length);

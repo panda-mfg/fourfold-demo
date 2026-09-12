@@ -1,0 +1,2200 @@
+<!doctype html>
+<html lang="en" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Fourfold — Explore the Four Color Theorem</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Fourfold — Explore the Four Color Theorem" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot; data-visualize-standalone&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Fourfold — Explore the Four Color Theorem&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --icon-size: 16px;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --corner-shape: round;
+  --radius: var(--border-radius-lg, 10px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: var(--visualize-paint-gutter, 0px);
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: var(--corner-shape);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 6px;
+  border: 0;
+  background: var(--border);
+}
+
+.nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress {
+  display: flex;
+  height: 8px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar:only-child {
+  border-radius: var(--radius-full);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.nav-link,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn,
+.nav-link {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover,
+.nav-link:not(:disabled):not([aria-disabled=&quot;true&quot;]):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.nav-pills .nav-link {
+  min-width: 0;
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.nav-justified .nav-link {
+  flex: 1 1 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.nav-pills .nav-link.active {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+.btn:disabled,
+.nav-link:disabled,
+.nav-link[aria-disabled=&quot;true&quot;] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: var(--corner-shape);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@media (pointer: coarse) {
+  .btn,
+  .nav-link,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keep small-screen WebKit from zooming when a text field receives focus. */
+  .form-control,
+  .form-select {
+    font-size: max(16px, var(--font-size-normal));
+  }
+
+  .form-control[type=&quot;file&quot;]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type=&quot;color&quot;] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type=&quot;date&quot;],
+    [type=&quot;datetime-local&quot;],
+    [type=&quot;month&quot;],
+    [type=&quot;time&quot;],
+    [type=&quot;week&quot;]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: &quot;&quot;;
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    height: 44px;
+  }
+
+  .form-range::-moz-range-track {
+    height: 44px;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    margin-top: 12px;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;fourfold-exhibit&quot; data-mode=&quot;compare&quot; aria-label=&quot;Fourfold map coloring exhibit&quot;&gt;
+  &lt;style&gt;
+    #fourfold-exhibit {
+      color-scheme: light dark;
+      --ff-paper: light-dark(#fffdf8,#202622);
+      --ff-ink: light-dark(#253a32,#f1f3e9);
+      --ff-muted: light-dark(#657369,#b0bdb2);
+      --ff-line: light-dark(#e0e5d9,#414c42);
+      --ff-sea: light-dark(#eaf1e7,#2a382f);
+      --ff-empty: light-dark(#f7f8f0,#65736b);
+      --ff-border: light-dark(#fffdf8,#202622);
+      --ff-chip: light-dark(#f2f3e9,#354037);
+      --ff-dark: light-dark(#263f34,#daedc8);
+      --ff-on-dark: light-dark(#fffdf8,#253a32);
+      --ff-red: light-dark(#b73d35,#ff9c94);
+      --ff-green: light-dark(#377658,#abd19b);
+      --ff-c1:light-dark(#f18d78,#eb9987);
+      --ff-c2:light-dark(#f4cb65,#e9c875);
+      --ff-c3:light-dark(#83bbd1,#8bbacf);
+      --ff-c4:light-dark(#b4a0d4,#b8a7d3);
+      --ff-map-ink:#273a36;
+      font-family: &#x27;Avenir Next&#x27;, &#x27;Segoe UI&#x27;, sans-serif;
+      color:var(--ff-ink); background:var(--ff-paper); overflow:hidden; border-radius:24px;
+    }
+    #fourfold-exhibit * { box-sizing:border-box; }
+    #fourfold-exhibit button, #fourfold-exhibit select { font:inherit; cursor:pointer; }
+    #fourfold-exhibit button:disabled { cursor:default; opacity:.5; }
+    #fourfold-exhibit button { -webkit-tap-highlight-color:transparent; }
+    #fourfold-exhibit .ff-nav { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px 32px; border-bottom:1px solid var(--ff-line); }
+    #fourfold-exhibit .ff-brand { display:flex; align-items:center; gap:10px; font-family:Georgia,serif; font-size:25px; letter-spacing:-1px; }
+    #fourfold-exhibit .ff-mark { width:29px; height:29px; display:grid; grid-template-columns:1fr 1fr; gap:3px; transform:rotate(-7deg); }
+    #fourfold-exhibit .ff-mark span { border-radius:5px 5px 2px 5px; }
+    #fourfold-exhibit .ff-nav-actions { display:flex; align-items:center; gap:18px; }
+    #fourfold-exhibit .ff-nav-note { color:var(--ff-muted); font-size:10px; letter-spacing:1.7px; }
+    #fourfold-exhibit .ff-text-button { border:0; background:transparent; color:var(--ff-ink); padding:8px 0; font-size:13px; text-decoration:underline; text-underline-offset:4px; }
+    #fourfold-exhibit .ff-main { display:grid; grid-template-columns:minmax(250px,.8fr) minmax(0,1.3fr); gap:24px; padding:38px 32px 24px; }
+    #fourfold-exhibit .ff-intro { align-self:center; padding:4px 0 22px; }
+    #fourfold-exhibit .ff-eyebrow { font-size:10px; font-weight:500; letter-spacing:1.8px; color:var(--ff-muted); display:flex; align-items:center; gap:8px; }
+    #fourfold-exhibit .ff-little-dot { width:7px; height:7px; border-radius:50%; background:var(--ff-c1); display:inline-block; }
+    #fourfold-exhibit h1 { color:var(--ff-ink); font-family:Georgia,&#x27;Times New Roman&#x27;,serif; font-weight:400; font-size:clamp(37px,4.9vw,54px); line-height:1.03; letter-spacing:-2.1px; margin:19px 0 17px; }
+    #fourfold-exhibit h1 em { font-weight:400; color:var(--ff-green); }
+    #fourfold-exhibit .ff-lede { font-size:14px; line-height:1.65; color:var(--ff-muted); max-width:295px; margin:0 0 25px; }
+    #fourfold-exhibit .ff-palette-label { font-size:12px; margin-bottom:11px; display:flex; justify-content:space-between; gap:8px; max-width:278px; }
+    #fourfold-exhibit .ff-palette-label span { color:var(--ff-muted); }
+    #fourfold-exhibit .ff-palette { display:flex; gap:10px; margin-bottom:12px; }
+    #fourfold-exhibit .ff-paint { width:53px; height:55px; border:2px solid transparent; border-radius:16px; background:var(--paint); color:var(--ff-map-ink); position:relative; transition:transform .15s; font-size:17px; font-weight:500; box-shadow:inset 0 -3px 0 color-mix(in srgb,var(--ff-map-ink) 8%,transparent); }
+    #fourfold-exhibit .ff-paint:hover { transform:translateY(-3px); }
+    #fourfold-exhibit .ff-paint[aria-pressed=true] { outline:2px solid var(--ff-ink); outline-offset:3px; transform:translateY(-3px); }
+    #fourfold-exhibit .ff-instruction { font-size:12px; line-height:1.5; color:var(--ff-muted); margin:0 0 25px; }
+    #fourfold-exhibit .ff-actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    #fourfold-exhibit .ff-primary { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 17px; border:0; border-radius:12px; background:var(--ff-dark); color:var(--ff-on-dark); font-size:13px; font-weight:500; min-height:44px; }
+    #fourfold-exhibit .ff-secondary { display:inline-flex; align-items:center; justify-content:center; padding:12px 14px; border:1px solid var(--ff-line); border-radius:12px; background:transparent; color:var(--ff-ink); font-size:13px; min-height:44px; }
+    #fourfold-exhibit .ff-why { display:inline-flex; align-items:center; gap:8px; margin-top:23px; padding:0; border:0; background:transparent; color:var(--ff-muted); font-size:12px; text-decoration:underline; text-underline-offset:4px; }
+    #fourfold-exhibit .ff-lesson { font-size:13px; line-height:1.6; color:var(--ff-green); max-width:290px; margin:16px 0 0; }
+    #fourfold-exhibit .ff-world { min-width:0; }
+    #fourfold-exhibit .ff-map-toolbar { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:12px; }
+    #fourfold-exhibit .ff-map-choice { display:flex; gap:7px; align-items:center; color:var(--ff-muted); font-size:12px; min-width:0; }
+    #fourfold-exhibit .ff-map-choice select { border:0; background:var(--ff-paper); color:var(--ff-ink); padding:7px 20px 7px 6px; max-width:220px; font-size:12px; border-radius:6px; }
+    #fourfold-exhibit .ff-new-map { display:flex; align-items:center; gap:5px; color:var(--ff-muted); border:0; padding:8px 0 8px 8px; background:transparent; white-space:nowrap; font-size:12px; }
+    #fourfold-exhibit .ff-map-stage { width:100%; position:relative; background:var(--ff-sea); border-radius:27px; overflow:hidden; }
+    #fourfold-exhibit .ff-map-art { display:block; width:100%; }
+    #fourfold-exhibit .ff-map-art .ff-region { stroke:var(--ff-border); stroke-width:2.5; stroke-linejoin:round; transition:fill .28s; }
+    #fourfold-exhibit .ff-map-art .ff-region.ff-uncolored { stroke:light-dark(#bac8b4,#a9baac); stroke-width:1.4; stroke-dasharray:3 3; }
+    #fourfold-exhibit .ff-map-art .ff-region.ff-hovered { stroke:var(--ff-ink); stroke-width:3; }
+    #fourfold-exhibit .ff-map-art .ff-number { font:500 12px &#x27;Avenir Next&#x27;,&#x27;Segoe UI&#x27;,sans-serif; fill:var(--ff-map-ink); text-anchor:middle; dominant-baseline:central; pointer-events:none; opacity:.85; }
+    #fourfold-exhibit .ff-map-art .ff-empty-number { fill:var(--ff-muted); opacity:.7; }
+    #fourfold-exhibit .ff-map-art .ff-clash { stroke:var(--ff-red); stroke-width:5; stroke-linecap:round; pointer-events:none; }
+    #fourfold-exhibit .ff-map-art .ff-connection { stroke:var(--ff-ink); stroke-width:1.8; opacity:.72; pointer-events:none; }
+    #fourfold-exhibit .ff-map-art .ff-dot { stroke:var(--ff-ink); stroke-width:1.5; pointer-events:none; }
+    #fourfold-exhibit .ff-map-stage[data-connections=true] .ff-region { opacity:.38; }
+    #fourfold-exhibit .ff-hit-layer { position:absolute; inset:0; }
+    #fourfold-exhibit .ff-region-hit { position:absolute; padding:0; border:0; background:transparent; }
+    #fourfold-exhibit .ff-map-stamp { position:absolute; left:18px; bottom:13px; display:flex; align-items:center; gap:7px; pointer-events:none; color:var(--ff-muted); font-size:10px; letter-spacing:1.2px; }
+    #fourfold-exhibit .ff-map-stamp span:first-child { width:5px; height:5px; display:inline-block; border-radius:50%; background:currentColor; }
+    #fourfold-exhibit .ff-progress-line { display:flex; justify-content:space-between; align-items:center; gap:10px; margin:16px 0 9px; font-size:12px; font-variant-numeric:tabular-nums; }
+    #fourfold-exhibit .ff-progress-line strong { font-weight:500; }
+    #fourfold-exhibit .ff-progress-line .ff-clashes { display:inline-flex; gap:6px; align-items:center; color:var(--ff-green); }
+    #fourfold-exhibit .ff-progress-line .ff-clashes[data-invalid=true] { color:var(--ff-red); }
+    #fourfold-exhibit .ff-progress-track { height:5px; background:var(--ff-chip); overflow:hidden; border-radius:5px; }
+    #fourfold-exhibit .ff-progress-fill { height:100%; background:var(--ff-green); transition:width .25s; }
+    #fourfold-exhibit .ff-result { min-height:34px; padding-top:10px; font-size:12px; line-height:1.55; color:var(--ff-muted); }
+    #fourfold-exhibit .ff-bottom { padding:19px 32px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; border-top:1px solid var(--ff-line); font-size:12px; color:var(--ff-muted); }
+    #fourfold-exhibit .ff-rule { display:flex; gap:8px; align-items:center; }
+    #fourfold-exhibit .ff-connections-toggle { display:flex; align-items:center; gap:7px; cursor:pointer; }
+    #fourfold-exhibit .ff-connections-toggle input { accent-color:var(--ff-green); width:15px; height:15px; margin:0; }
+    #fourfold-exhibit .ff-about { margin:0; padding:24px 32px; border-top:1px solid var(--ff-line); background:var(--ff-chip); }
+    #fourfold-exhibit .ff-about h2 { color:var(--ff-ink); font:400 26px Georgia,serif; margin:0 0 10px; letter-spacing:-.5px; }
+    #fourfold-exhibit .ff-about p { max-width:760px; color:var(--ff-muted); font-size:13px; line-height:1.65; margin:8px 0; }
+    #fourfold-exhibit .ff-about details { margin-top:13px; font-size:12px; color:var(--ff-ink); }
+    #fourfold-exhibit .ff-about summary { cursor:pointer; }
+    #fourfold-exhibit .ff-confetti { pointer-events:none; position:absolute; inset:0; overflow:hidden; }
+    #fourfold-exhibit .ff-confetti span { position:absolute; width:7px; height:11px; top:-14px; border-radius:2px; animation:ff-fall 1.7s ease-out both; }
+    @keyframes ff-fall { from { transform:translateY(-12px) rotate(0deg);opacity:1; } to { transform:translateY(430px) rotate(270deg);opacity:0; } }
+    @media (prefers-reduced-motion:reduce) {
+      #fourfold-exhibit .ff-map-art .ff-region, #fourfold-exhibit .ff-progress-fill, #fourfold-exhibit .ff-paint { transition:none; }
+      #fourfold-exhibit .ff-confetti { display:none; }
+    }
+    @media (max-width:760px) {
+      #fourfold-exhibit .ff-main { grid-template-columns:minmax(210px,.8fr) minmax(0,1.1fr); gap:20px; padding:28px 24px 22px; }
+      #fourfold-exhibit h1 { font-size:40px; }
+      #fourfold-exhibit .ff-paint { width:46px; height:49px; border-radius:13px; }
+      #fourfold-exhibit .ff-palette { gap:9px; }
+      #fourfold-exhibit .ff-nav-note { display:none; }
+      #fourfold-exhibit .ff-map-choice&gt;span { display:none; }
+      #fourfold-exhibit .ff-map-choice select { max-width:170px; }
+    }
+    @media (max-width:600px) {
+      #fourfold-exhibit { border-radius:18px; }
+      #fourfold-exhibit .ff-nav { padding:17px 20px; }
+      #fourfold-exhibit .ff-main { display:flex; flex-direction:column; padding:26px 20px 18px; gap:21px; }
+      #fourfold-exhibit .ff-intro { align-self:stretch; padding:0; }
+      #fourfold-exhibit h1 { font-size:43px; margin:14px 0 12px; }
+      #fourfold-exhibit h1 br { display:none; }
+      #fourfold-exhibit .ff-lede { max-width:none; margin-bottom:19px; font-size:13px; }
+      #fourfold-exhibit .ff-palette-label { max-width:none; }
+      #fourfold-exhibit .ff-paint { width:52px; height:48px; }
+      #fourfold-exhibit .ff-palette { gap:12px; margin-bottom:11px; }
+      #fourfold-exhibit .ff-instruction { margin-bottom:17px; }
+      #fourfold-exhibit .ff-why { margin-top:17px; }
+      #fourfold-exhibit .ff-bottom { padding:17px 20px; gap:16px; font-size:11px; }
+      #fourfold-exhibit .ff-about { padding:22px 20px; }
+      #fourfold-exhibit .ff-map-choice select { max-width:205px; font-size:13px; }
+    }
+    @media (pointer:coarse) {
+      #fourfold-exhibit .ff-new-map, #fourfold-exhibit .ff-why, #fourfold-exhibit .ff-text-button, #fourfold-exhibit .ff-connections-toggle { min-height:44px; }
+      #fourfold-exhibit .ff-map-choice select { font-size:16px; max-width:200px; }
+    }
+  &lt;/style&gt;
+  &lt;style&gt;
+    #fourfold-exhibit .fb-mode { display:flex; gap:4px; background:var(--ff-chip); border-radius:10px; padding:3px; }
+    #fourfold-exhibit .fb-mode button { border:0; border-radius:7px; background:transparent; color:var(--ff-muted); padding:8px 12px; font-size:12px; }
+    #fourfold-exhibit .fb-mode button[aria-pressed=true] { background:var(--ff-paper); color:var(--ff-ink); }
+    #fourfold-exhibit [hidden] { display:none !important; }
+    #fourfold-exhibit .fb-main { padding:30px 32px; }
+    #fourfold-exhibit .fb-top { display:flex; align-items:start; justify-content:space-between; gap:20px; }
+    #fourfold-exhibit .fb-top h1 { font-size:39px; margin:10px 0 12px; letter-spacing:-1.2px; }
+    #fourfold-exhibit .fb-sub { margin:0; color:var(--ff-muted); font-size:13px; line-height:1.6; }
+    #fourfold-exhibit .fb-theory { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:22px; }
+    #fourfold-exhibit .fb-era { padding:17px 19px; border:1px solid var(--ff-line); border-radius:15px; min-width:0; }
+    #fourfold-exhibit .fb-era-label { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--ff-muted); }
+    #fourfold-exhibit .fb-era h2 { color:var(--ff-ink); font:400 22px Georgia,serif; margin:8px 0 12px; }
+    #fourfold-exhibit .fb-era h2 small { font:400 11px &#x27;Segoe UI&#x27;,sans-serif; color:var(--ff-muted); }
+    #fourfold-exhibit .fb-bound { display:flex; justify-content:space-between; gap:14px; align-items:baseline; flex-wrap:wrap; }
+    #fourfold-exhibit .fb-bound strong { font:400 26px Georgia,serif; }
+    #fourfold-exhibit .fb-growth { font-size:13px; font-variant-numeric:tabular-nums; }
+    #fourfold-exhibit .fb-era p { color:var(--ff-muted); font-size:11px; line-height:1.6; margin:10px 0 0; }
+    #fourfold-exhibit .fb-era a, #fourfold-exhibit .fb-methods a { color:inherit; text-underline-offset:3px; }
+    #fourfold-exhibit .fb-note { font-size:11px; color:var(--ff-muted); line-height:1.65; margin:12px 0 23px; }
+    #fourfold-exhibit .fb-controls { display:flex; flex-wrap:wrap; align-items:end; gap:12px; padding:20px 0; border-top:1px solid var(--ff-line); border-bottom:1px solid var(--ff-line); }
+    #fourfold-exhibit .fb-control { display:flex; flex-direction:column; gap:6px; font-size:11px; color:var(--ff-muted); }
+    #fourfold-exhibit .fb-control select, #fourfold-exhibit .fb-control input { border:1px solid var(--ff-line); border-radius:9px; padding:10px; background:var(--ff-paper); color:var(--ff-ink); font:400 13px &#x27;Segoe UI&#x27;,sans-serif; min-height:40px; }
+    #fourfold-exhibit .fb-control input { width:88px; }
+    #fourfold-exhibit .fb-control select { max-width:180px; }
+    #fourfold-exhibit .fb-controls .ff-primary, #fourfold-exhibit .fb-controls .ff-secondary { min-height:40px; padding:11px 14px; }
+    #fourfold-exhibit .fb-lab-heading { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin:23px 0 8px; }
+    #fourfold-exhibit .fb-lab-heading h2 { color:var(--ff-ink); margin:0; font:400 25px Georgia,serif; }
+    #fourfold-exhibit .fb-map-info { font-size:11px; color:var(--ff-muted); font-variant-numeric:tabular-nums; }
+    #fourfold-exhibit .fb-scope { font-size:12px; line-height:1.6; color:var(--ff-muted); margin:0 0 17px; }
+    #fourfold-exhibit .fb-racers { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+    #fourfold-exhibit .fb-racer { min-width:0; }
+    #fourfold-exhibit .fb-racer-head { display:flex; justify-content:space-between; gap:10px; align-items:start; margin-bottom:8px; }
+    #fourfold-exhibit .fb-racer h3 { margin:0; color:var(--ff-ink); font-size:14px; font-weight:500; }
+    #fourfold-exhibit .fb-method-tag { margin-top:5px; font-size:11px; color:var(--ff-muted); }
+    #fourfold-exhibit .fb-status { font-size:10px; color:var(--ff-muted); text-transform:uppercase; letter-spacing:.9px; padding-top:2px; }
+    #fourfold-exhibit .fb-time-row { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:12px 0; }
+    #fourfold-exhibit .fb-time { font:400 35px Georgia,serif; font-variant-numeric:tabular-nums; letter-spacing:-1px; color:var(--ff-ink); }
+    #fourfold-exhibit .fb-time-note { font-size:11px; color:var(--ff-muted); }
+    #fourfold-exhibit .fb-map { width:100%; display:block; background:var(--ff-sea); border-radius:16px; }
+    #fourfold-exhibit .fb-validation { min-height:28px; padding-top:10px; color:var(--ff-green); font-size:11px; }
+    #fourfold-exhibit .fb-validation[data-failed=true] { color:var(--ff-red); }
+    #fourfold-exhibit .fb-stats { display:flex; gap:12px; justify-content:space-between; flex-wrap:wrap; border-top:1px solid var(--ff-line); padding-top:10px; color:var(--ff-muted); font-size:11px; line-height:1.6; }
+    #fourfold-exhibit .fb-stats strong { color:var(--ff-ink); font-weight:500; font-variant-numeric:tabular-nums; }
+    #fourfold-exhibit .fb-message { font-size:13px; line-height:1.6; min-height:44px; color:var(--ff-ink); padding:19px 0 8px; }
+    #fourfold-exhibit .fb-history { border-top:1px solid var(--ff-line); margin-top:10px; padding-top:15px; }
+    #fourfold-exhibit .fb-history-head { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    #fourfold-exhibit .fb-history h3 { margin:0; font-size:13px; font-weight:500; color:var(--ff-ink); }
+    #fourfold-exhibit .fb-table { width:100%; border-collapse:collapse; margin-top:9px; font-size:12px; font-variant-numeric:tabular-nums; }
+    #fourfold-exhibit .fb-table th { font-weight:400; color:var(--ff-muted); text-align:right; padding:10px 5px; border-bottom:1px solid var(--ff-line); }
+    #fourfold-exhibit .fb-table td { color:var(--ff-ink); padding:11px 5px; text-align:right; border-bottom:1px solid var(--ff-line); }
+    #fourfold-exhibit .fb-table th:first-child, #fourfold-exhibit .fb-table td:first-child { text-align:left; }
+    #fourfold-exhibit .fb-methods { color:var(--ff-muted); font-size:12px; line-height:1.65; margin-top:19px; }
+    #fourfold-exhibit .fb-methods summary { cursor:pointer; color:var(--ff-ink); }
+    #fourfold-exhibit .fb-methods ul { padding-left:20px; }
+    #fourfold-exhibit .fb-methods li { margin:6px 0; }
+    #fourfold-exhibit .fb-json { width:100%; margin-top:12px; padding:12px; border:1px solid var(--ff-line); border-radius:9px; background:var(--ff-paper); color:var(--ff-ink); font:12px ui-monospace,monospace; }
+    #fourfold-exhibit .fb-key { display:flex; flex-wrap:wrap; align-items:center; gap:9px; margin:14px 0 0; color:var(--ff-muted); font-size:11px; }
+    #fourfold-exhibit .fb-key i { display:inline-block; width:10px; height:10px; border-radius:3px; }
+    @media(max-width:760px) { #fourfold-exhibit .fb-main{padding:25px 24px;} #fourfold-exhibit .fb-racers{gap:18px;} #fourfold-exhibit .fb-theory{gap:18px;} #fourfold-exhibit .fb-time{font-size:30px;} }
+    @media(max-width:600px) { #fourfold-exhibit .fb-main{padding:23px 20px;} #fourfold-exhibit .fb-top h1{font-size:33px;} #fourfold-exhibit .fb-theory,#fourfold-exhibit .fb-racers{grid-template-columns:1fr;} #fourfold-exhibit .fb-theory{gap:12px;} #fourfold-exhibit .fb-racers{gap:28px;} #fourfold-exhibit .fb-controls{gap:10px;} #fourfold-exhibit .fb-control select{max-width:150px;} #fourfold-exhibit .fb-controls button{flex-grow:1;} #fourfold-exhibit .ff-nav-actions{gap:10px;} #fourfold-exhibit .ff-nav{padding:17px 16px;} #fourfold-exhibit .ff-brand{font-size:22px;} #fourfold-exhibit .ff-mark{width:23px;height:23px;} #fourfold-exhibit .fb-mode button{padding:8px;} #fourfold-exhibit .fb-table{font-size:11px;} }
+  &lt;/style&gt;
+  &lt;header class=&quot;ff-nav&quot;&gt;
+    &lt;div class=&quot;ff-brand&quot;&gt;&lt;span class=&quot;ff-mark&quot; aria-hidden=&quot;true&quot;&gt;&lt;span style=&quot;background:var(--ff-c1)&quot;&gt;&lt;/span&gt;&lt;span style=&quot;background:var(--ff-c2)&quot;&gt;&lt;/span&gt;&lt;span style=&quot;background:var(--ff-c3)&quot;&gt;&lt;/span&gt;&lt;span style=&quot;background:var(--ff-c4)&quot;&gt;&lt;/span&gt;&lt;/span&gt;fourfold&lt;/div&gt;
+    &lt;div class=&quot;ff-nav-actions&quot;&gt;&lt;div class=&quot;fb-mode&quot; role=&quot;group&quot; aria-label=&quot;Demo mode&quot;&gt;&lt;button type=&quot;button&quot; data-b-mode=&quot;play&quot; aria-pressed=&quot;false&quot;&gt;Paint&lt;/button&gt;&lt;button type=&quot;button&quot; data-b-mode=&quot;compare&quot; aria-pressed=&quot;true&quot;&gt;Compare&lt;/button&gt;&lt;/div&gt;&lt;button type=&quot;button&quot; class=&quot;ff-text-button&quot; data-about-toggle aria-expanded=&quot;false&quot; aria-controls=&quot;ff-about-panel&quot;&gt;The idea&lt;/button&gt;&lt;/div&gt;
+  &lt;/header&gt;
+  &lt;div data-b-play-view hidden&gt;
+  &lt;main class=&quot;ff-main&quot;&gt;
+    &lt;section class=&quot;ff-intro&quot; aria-label=&quot;Paint controls&quot;&gt;
+      &lt;div class=&quot;ff-eyebrow&quot;&gt;&lt;span class=&quot;ff-little-dot&quot;&gt;&lt;/span&gt;THE FOUR COLOR CHALLENGE&lt;/div&gt;
+      &lt;h1&gt;A whole world.&lt;br&gt; &lt;em&gt;Just four colors.&lt;/em&gt;&lt;/h1&gt;
+      &lt;p class=&quot;ff-lede&quot;&gt;Give neighboring regions different colors. That&#x27;s the whole game. Four colors are always enough.&lt;/p&gt;
+      &lt;div class=&quot;ff-palette-label&quot;&gt;Your paintbox &lt;span data-paint-name&gt;Coral selected&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;ff-palette&quot; role=&quot;group&quot; aria-label=&quot;Choose a paint color&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;ff-paint&quot; data-paint=&quot;0&quot; style=&quot;--paint:var(--ff-c1)&quot; aria-pressed=&quot;true&quot; aria-label=&quot;Color 1, Coral&quot;&gt;1&lt;/button&gt;
+        &lt;button type=&quot;button&quot; class=&quot;ff-paint&quot; data-paint=&quot;1&quot; style=&quot;--paint:var(--ff-c2)&quot; aria-pressed=&quot;false&quot; aria-label=&quot;Color 2, Sunshine&quot;&gt;2&lt;/button&gt;
+        &lt;button type=&quot;button&quot; class=&quot;ff-paint&quot; data-paint=&quot;2&quot; style=&quot;--paint:var(--ff-c3)&quot; aria-pressed=&quot;false&quot; aria-label=&quot;Color 3, Sky&quot;&gt;3&lt;/button&gt;
+        &lt;button type=&quot;button&quot; class=&quot;ff-paint&quot; data-paint=&quot;3&quot; style=&quot;--paint:var(--ff-c4)&quot; aria-pressed=&quot;false&quot; aria-label=&quot;Color 4, Lilac&quot;&gt;4&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;p class=&quot;ff-instruction&quot;&gt;Pick a color. Tap a region. Make it yours.&lt;/p&gt;
+      &lt;div class=&quot;ff-actions&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;ff-primary&quot; data-solve&gt;&lt;i data-lucide=&quot;play&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span data-solve-label&gt;Watch it color&lt;/span&gt;&lt;/button&gt;
+        &lt;button type=&quot;button&quot; class=&quot;ff-secondary&quot; data-clear&gt;Try from blank&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;button type=&quot;button&quot; class=&quot;ff-why&quot; data-why&gt;Could we get away with three? &lt;i data-lucide=&quot;arrow-up-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+      &lt;p class=&quot;ff-lesson&quot; data-lesson hidden&gt;Every region here touches the other three. This little map really does need a fourth color.&lt;/p&gt;
+    &lt;/section&gt;
+    &lt;section class=&quot;ff-world&quot; aria-label=&quot;Interactive coloring map&quot;&gt;
+      &lt;div class=&quot;ff-map-toolbar&quot;&gt;
+        &lt;label class=&quot;ff-map-choice&quot;&gt;&lt;span&gt;Explore&lt;/span&gt;&lt;select data-size aria-label=&quot;Choose a map&quot;&gt;&lt;option value=&quot;12&quot;&gt;Little adventure · 12&lt;/option&gt;&lt;option value=&quot;28&quot; selected&gt;Color country · 28&lt;/option&gt;&lt;option value=&quot;44&quot;&gt;The big picture · 44&lt;/option&gt;&lt;option value=&quot;4&quot;&gt;Why four? · 4&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+        &lt;button type=&quot;button&quot; class=&quot;ff-new-map&quot; data-new&gt;&lt;i data-lucide=&quot;shuffle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;New map&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;ff-map-stage&quot; data-connections=&quot;false&quot;&gt;
+        &lt;svg class=&quot;ff-map-art&quot; role=&quot;img&quot; aria-labelledby=&quot;ff-map-title ff-map-desc&quot;&gt;&lt;title id=&quot;ff-map-title&quot;&gt;A colorful fictional map&lt;/title&gt;&lt;desc id=&quot;ff-map-desc&quot;&gt;Paint each region using one of four colors. Regions sharing a border must have different colors. The keyboard-accessible region buttons follow this picture.&lt;/desc&gt;&lt;g data-regions&gt;&lt;/g&gt;&lt;g data-clashes&gt;&lt;/g&gt;&lt;g data-dual&gt;&lt;/g&gt;&lt;g data-numbers&gt;&lt;/g&gt;&lt;/svg&gt;
+        &lt;div class=&quot;ff-hit-layer&quot; data-hit-layer role=&quot;group&quot; aria-label=&quot;Paint a region&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;ff-map-stamp&quot; aria-hidden=&quot;true&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;AN IMAGINARY LITTLE WORLD&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;ff-confetti&quot; data-confetti aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;ff-progress-line&quot;&gt;&lt;span&gt;&lt;strong data-colored&gt;0&lt;/strong&gt; of &lt;span data-total&gt;28&lt;/span&gt; regions colored&lt;/span&gt;&lt;span class=&quot;ff-clashes&quot; data-clash-status data-invalid=&quot;false&quot;&gt;&lt;span data-valid-icon&gt;&lt;i data-lucide=&quot;check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span data-invalid-icon hidden&gt;&lt;i data-lucide=&quot;circle-alert&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span data-clash-count&gt;No clashes&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;ff-progress-track&quot; role=&quot;progressbar&quot; aria-label=&quot;Regions colored&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;28&quot; aria-valuenow=&quot;0&quot;&gt;&lt;div class=&quot;ff-progress-fill&quot; data-progress style=&quot;width:0%&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;ff-result&quot; data-message role=&quot;status&quot; aria-live=&quot;polite&quot;&gt;Your map is ready.&lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+  &lt;footer class=&quot;ff-bottom&quot;&gt;&lt;span class=&quot;ff-rule&quot;&gt;&lt;i data-lucide=&quot;lightbulb&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;Corners can share a color. Borders can’t.&lt;/span&gt;&lt;label class=&quot;ff-connections-toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; data-connections&gt;&lt;span&gt;Peek at the connections&lt;/span&gt;&lt;/label&gt;&lt;/footer&gt;
+  &lt;/div&gt;
+  &lt;section class=&quot;fb-main&quot; data-b-compare-view aria-label=&quot;Algorithm comparison&quot;&gt;
+    &lt;div class=&quot;fb-top&quot;&gt;&lt;div&gt;&lt;div class=&quot;ff-eyebrow&quot;&gt;&lt;span class=&quot;ff-little-dot&quot;&gt;&lt;/span&gt;FROM THE FIRST PROOF TO A NEW PROPOSAL&lt;/div&gt;&lt;h1&gt;More regions. &lt;br&gt;&lt;em&gt;How much more work?&lt;/em&gt;&lt;/h1&gt;&lt;p class=&quot;fb-sub&quot;&gt;Explore Appel–Haken and the 2026 paper, then time the code that runs in this demo.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class=&quot;fb-theory&quot;&gt;
+      &lt;article class=&quot;fb-era&quot;&gt;&lt;div class=&quot;fb-era-label&quot;&gt;ORIGINAL · 1976 / 1977&lt;/div&gt;&lt;h2&gt;Appel–Haken&lt;/h2&gt;&lt;div class=&quot;fb-bound&quot;&gt;&lt;strong&gt;O(n⁴)&lt;/strong&gt;&lt;span class=&quot;fb-growth&quot; data-b-old-growth&gt;—&lt;/span&gt;&lt;/div&gt;&lt;p&gt;Associated constructive coloring bound. &lt;a href=&quot;https://www.ams.org/notices/199807/thomas.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Historical source&lt;/a&gt;&lt;br&gt;Full implementation: not available in this demo.&lt;/p&gt;&lt;/article&gt;
+      &lt;article class=&quot;fb-era&quot;&gt;&lt;div class=&quot;fb-era-label&quot;&gt;NEW PROPOSAL · 2026&lt;/div&gt;&lt;h2&gt;Inoue et al.&lt;/h2&gt;&lt;div class=&quot;fb-bound&quot;&gt;&lt;strong&gt;O(n log n)&lt;/strong&gt;&lt;span class=&quot;fb-growth&quot; data-b-new-growth&gt;—&lt;/span&gt;&lt;/div&gt;&lt;p&gt;Claimed bound in the supplied paper. &lt;a href=&quot;https://arxiv.org/abs/2603.24880v2&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Paper, version 2&lt;/a&gt;&lt;br&gt;Full implementation: not available in this demo.&lt;/p&gt;&lt;/article&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;fb-note&quot;&gt;&lt;strong&gt;Growth models, not measured times.&lt;/strong&gt; Both formulas are normalized to 1 at 64 regions; constants are unknown. The original proof-checking computer program is a different task from coloring one map. The intervening 1996/97 RSST method has a quadratic bound.&lt;/p&gt;
+    &lt;div class=&quot;fb-controls&quot;&gt;
+      &lt;label class=&quot;fb-control&quot;&gt;Regions&lt;select data-b-size&gt;&lt;option value=&quot;8&quot;&gt;64 regions&lt;/option&gt;&lt;option value=&quot;16&quot;&gt;256 regions&lt;/option&gt;&lt;option value=&quot;32&quot; selected&gt;1,024 regions&lt;/option&gt;&lt;option value=&quot;64x32&quot;&gt;2,048 regions&lt;/option&gt;&lt;option value=&quot;64&quot;&gt;4,096 regions&lt;/option&gt;&lt;option value=&quot;128&quot;&gt;16,384 regions&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+      &lt;label class=&quot;fb-control&quot;&gt;Map seed&lt;input data-b-seed type=&quot;number&quot; min=&quot;0&quot; max=&quot;999999&quot; value=&quot;817&quot; step=&quot;1&quot;&gt;&lt;/label&gt;
+      &lt;label class=&quot;fb-control&quot;&gt;Timed runs&lt;select data-b-repeats&gt;&lt;option value=&quot;1&quot;&gt;1 run&lt;/option&gt;&lt;option value=&quot;3&quot; selected&gt;3 runs · median&lt;/option&gt;&lt;option value=&quot;5&quot;&gt;5 runs · median&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+      &lt;button type=&quot;button&quot; class=&quot;ff-primary&quot; data-b-run&gt;Run demo benchmark&lt;/button&gt;
+      &lt;button type=&quot;button&quot; class=&quot;ff-secondary&quot; data-b-sweep&gt;Test all sizes&lt;/button&gt;
+      &lt;button type=&quot;button&quot; class=&quot;ff-secondary&quot; data-b-stop disabled&gt;Stop&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;fb-lab-heading&quot;&gt;&lt;h2&gt;Real runtime laboratory&lt;/h2&gt;&lt;span class=&quot;fb-map-info&quot; data-b-map-info&gt;Preparing your map…&lt;/span&gt;&lt;/div&gt;
+    &lt;p class=&quot;fb-scope&quot;&gt;&lt;strong&gt;These are demo implementations, not the complete historical algorithms above.&lt;/strong&gt; The comparison below is DSATUR search versus a limited reduction prototype. Measured solver time excludes map construction and drawing.&lt;/p&gt;
+    &lt;div class=&quot;fb-racers&quot;&gt;
+      &lt;article class=&quot;fb-racer&quot; data-b-method=&quot;dsatur&quot;&gt;&lt;div class=&quot;fb-racer-head&quot;&gt;&lt;div&gt;&lt;h3&gt;Demo DSATUR&lt;/h3&gt;&lt;div class=&quot;fb-method-tag&quot;&gt;Search directly on the whole graph&lt;/div&gt;&lt;/div&gt;&lt;span class=&quot;fb-status&quot; data-b-status&gt;Ready&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;fb-time-row&quot;&gt;&lt;strong class=&quot;fb-time&quot; data-b-time&gt;—&lt;/strong&gt;&lt;span class=&quot;fb-time-note&quot; data-b-time-note&gt;Solver time&lt;/span&gt;&lt;/div&gt;&lt;canvas class=&quot;fb-map&quot; data-b-canvas aria-label=&quot;Map colored by the demo DSATUR solver&quot;&gt;&lt;/canvas&gt;&lt;div class=&quot;fb-validation&quot; data-b-validation&gt;Awaiting a checked coloring&lt;/div&gt;&lt;div class=&quot;fb-stats&quot;&gt;&lt;span&gt;Search choices &lt;strong data-b-stat-a&gt;—&lt;/strong&gt;&lt;/span&gt;&lt;span&gt;Backtracks &lt;strong data-b-stat-b&gt;—&lt;/strong&gt;&lt;/span&gt;&lt;/div&gt;&lt;/article&gt;
+      &lt;article class=&quot;fb-racer&quot; data-b-method=&quot;reduction&quot;&gt;&lt;div class=&quot;fb-racer-head&quot;&gt;&lt;div&gt;&lt;h3&gt;Local reduction prototype&lt;/h3&gt;&lt;div class=&quot;fb-method-tag&quot;&gt;Reduce, color the core, restore&lt;/div&gt;&lt;/div&gt;&lt;span class=&quot;fb-status&quot; data-b-status&gt;Ready&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;fb-time-row&quot;&gt;&lt;strong class=&quot;fb-time&quot; data-b-time&gt;—&lt;/strong&gt;&lt;span class=&quot;fb-time-note&quot; data-b-time-note&gt;Solver time&lt;/span&gt;&lt;/div&gt;&lt;canvas class=&quot;fb-map&quot; data-b-canvas aria-label=&quot;Map colored by the local reduction prototype&quot;&gt;&lt;/canvas&gt;&lt;div class=&quot;fb-validation&quot; data-b-validation&gt;Awaiting a checked coloring&lt;/div&gt;&lt;div class=&quot;fb-stats&quot;&gt;&lt;span&gt;Removed &lt;strong data-b-stat-a&gt;—&lt;/strong&gt;&lt;/span&gt;&lt;span&gt;Search core &lt;strong data-b-stat-b&gt;—&lt;/strong&gt;&lt;/span&gt;&lt;span&gt;Kempe swaps &lt;strong data-b-stat-c&gt;—&lt;/strong&gt;&lt;/span&gt;&lt;/div&gt;&lt;/article&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;fb-key&quot;&gt;&lt;span&gt;Same four colors&lt;/span&gt;&lt;i style=&quot;background:var(--ff-c1)&quot;&gt;&lt;/i&gt;1&lt;i style=&quot;background:var(--ff-c2)&quot;&gt;&lt;/i&gt;2&lt;i style=&quot;background:var(--ff-c3)&quot;&gt;&lt;/i&gt;3&lt;i style=&quot;background:var(--ff-c4)&quot;&gt;&lt;/i&gt;4&lt;span&gt;· Live maps refresh every 5 seconds. Blank tiles are uncolored; search may undo colors.&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;fb-message&quot; data-b-message role=&quot;status&quot; aria-live=&quot;polite&quot;&gt;Choose a size and run the demo benchmark.&lt;/div&gt;
+    &lt;div class=&quot;fb-history&quot;&gt;&lt;div class=&quot;fb-history-head&quot;&gt;&lt;h3&gt;Measured demo timings&lt;/h3&gt;&lt;button type=&quot;button&quot; class=&quot;ff-text-button&quot; data-b-export disabled&gt;Results JSON&lt;/button&gt;&lt;/div&gt;&lt;table class=&quot;fb-table&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Regions · seed&lt;/th&gt;&lt;th&gt;DSATUR&lt;/th&gt;&lt;th&gt;Reduction&lt;br&gt;prototype&lt;/th&gt;&lt;th&gt;Runs&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody data-b-history&gt;&lt;tr&gt;&lt;td colspan=&quot;4&quot;&gt;No measurements yet.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;textarea class=&quot;fb-json&quot; data-b-json readonly rows=&quot;8&quot; aria-label=&quot;Benchmark results JSON, select and copy to save&quot; hidden&gt;&lt;/textarea&gt;&lt;/div&gt;
+    &lt;details class=&quot;fb-methods&quot;&gt;&lt;summary&gt;What is being timed?&lt;/summary&gt;&lt;ul&gt;
+      &lt;li&gt;Both demo methods receive identical region adjacencies, with a deterministic seed and map fingerprint. Maps are jittered square-grid Voronoi examples, not a representative collection of all planar graphs.&lt;/li&gt;
+      &lt;li&gt;Two small warm-up runs per method precede measurement. Timed runs execute sequentially in a worker and alternate order. The display reports the median and range of completed trials. A 100-second solver limit ends a trial; timeouts are not successful colorings or zero times.&lt;/li&gt;
+      &lt;li&gt;Solver time includes its state allocation, all reduction, search, and restoration work, and the small cost of copying and sending progress every 5 seconds. Map generation, warm-up, final data transfer, independent edge checking, and drawing are excluded.&lt;/li&gt;
+      &lt;li&gt;Live maps show partial search states. Colored counts can decrease during backtracking and do not estimate time remaining. A completed coloring is marked Checked only after every shared border passes validation.&lt;/li&gt;
+      &lt;li&gt;DSATUR uses iterative exact backtracking with saturation ordering. The prototype removes independent batches of vertices with at most four remaining neighbors, runs DSATUR on any leftover core, and restores using complete Kempe-component swaps.&lt;/li&gt;
+      &lt;li&gt;The prototype does not implement the full catalogue, discharging, separator recursion, or certified rank scheduler of the 2026 paper. It has no near-linear runtime guarantee. Neither demo method is an implementation of Appel–Haken.&lt;/li&gt;
+      &lt;li&gt;For a measured Appel–Haken versus 2026 comparison, both faithful implementations must first be built and audited. Published asymptotic bounds alone cannot determine milliseconds or real-world speedups.&lt;/li&gt;
+    &lt;/ul&gt;&lt;/details&gt;
+  &lt;/section&gt;
+  &lt;section class=&quot;ff-about&quot; id=&quot;ff-about-panel&quot; hidden&gt;
+    &lt;h2&gt;A surprisingly simple rule.&lt;/h2&gt;
+    &lt;p&gt;The four color theorem says that any flat map of connected regions can be colored with at most four colors, so regions sharing a border have different colors. A corner touching another corner doesn’t count as a shared border.&lt;/p&gt;
+    &lt;p&gt;“Peek at the connections” turns regions into dots and shared borders into lines. Coloring the map and coloring those dots are the same puzzle. A successful example is a demonstration, not a proof for every map.&lt;/p&gt;
+    &lt;details&gt;&lt;summary&gt;About the paper and this exhibit&lt;/summary&gt;&lt;p&gt;The reviewed paper proposes removing suitable regions, coloring a smaller graph, and restoring the removed regions with coordinated recoloring. This public exhibit uses a small search solver to demonstrate map coloring. The complete paper algorithm and its remaining formal verification are separate work.&lt;/p&gt;&lt;/details&gt;
+  &lt;/section&gt;
+  &lt;script&gt;
+    (() =&gt; {
+      const root=document.getElementById(&#x27;fourfold-exhibit&#x27;);
+      const $=selector=&gt;root.querySelector(selector);
+      const NS=&#x27;http://www.w3.org/2000/svg&#x27;;
+      const palettes={
+        Sorbet:{names:[&#x27;Coral&#x27;,&#x27;Sunshine&#x27;,&#x27;Sky&#x27;,&#x27;Lilac&#x27;],light:[&#x27;#f18d78&#x27;,&#x27;#f4cb65&#x27;,&#x27;#83bbd1&#x27;,&#x27;#b4a0d4&#x27;],dark:[&#x27;#eb9987&#x27;,&#x27;#e9c875&#x27;,&#x27;#8bbacf&#x27;,&#x27;#b8a7d3&#x27;]},
+        Garden:{names:[&#x27;Rose&#x27;,&#x27;Buttercup&#x27;,&#x27;Mint&#x27;,&#x27;Periwinkle&#x27;],light:[&#x27;#ea9aa9&#x27;,&#x27;#e2cd76&#x27;,&#x27;#8dc1a3&#x27;,&#x27;#98abdd&#x27;],dark:[&#x27;#df9eaa&#x27;,&#x27;#d5c482&#x27;,&#x27;#94bda2&#x27;,&#x27;#9eaed6&#x27;]},
+        Vivid:{names:[&#x27;Tangerine&#x27;,&#x27;Lemon&#x27;,&#x27;Aqua&#x27;,&#x27;Iris&#x27;],light:[&#x27;#f6a171&#x27;,&#x27;#ead763&#x27;,&#x27;#79c6b4&#x27;,&#x27;#aca3e7&#x27;],dark:[&#x27;#eaaa88&#x27;,&#x27;#dacf87&#x27;,&#x27;#94c2b8&#x27;,&#x27;#b3aee0&#x27;]}
+      };
+      const design={palette:&#x27;Sorbet&#x27;,numbers:true};
+      const boundary=[[.13,.14],[.32,.055],[.65,.055],[.85,.15],[.96,.36],[.94,.64],[.79,.86],[.57,.95],[.30,.92],[.11,.78],[.035,.56],[.045,.34]];
+      let model=null,selected=0,seed=817,n=28,hover=-1,showConnections=false,play=null,timer=null,token=0,wasComplete=false;
+      let shapes=[],hits=[],width=0,height=0;
+      const assert=(condition,message)=&gt;{if(!condition)throw new Error(message);};
+      function random(seedValue){let a=seedValue&gt;&gt;&gt;0;return()=&gt;{a=(a+0x6D2B79F5)&gt;&gt;&gt;0;let t=a;t=Math.imul(t^(t&gt;&gt;&gt;15),t|1);t^=t+Math.imul(t^(t&gt;&gt;&gt;7),t|61);return((t^(t&gt;&gt;&gt;14))&gt;&gt;&gt;0)/4294967296;};}
+      const distance=(a,b)=&gt;(a[0]-b[0])**2+(a[1]-b[1])**2;
+      const inside=(p,poly)=&gt;poly.every((a,i)=&gt;{const b=poly[(i+1)%poly.length];return(b[0]-a[0])*(p[1]-a[1])-(b[1]-a[1])*(p[0]-a[0])&gt;=-1e-10;});
+      function clip(poly,nx,ny,k){
+        const output=[];
+        for(let i=0;i&lt;poly.length;i++){
+          const a=poly[i],b=poly[(i+1)%poly.length],fa=a[0]*nx+a[1]*ny-k,fb=b[0]*nx+b[1]*ny-k;
+          if(fa&lt;=1e-10)output.push(a);
+          if((fa&lt;0&amp;&amp;fb&gt;0)||(fa&gt;0&amp;&amp;fb&lt;0)){const t=fa/(fa-fb);output.push([a[0]+t*(b[0]-a[0]),a[1]+t*(b[1]-a[1])]);}
+        }
+        return output;
+      }
+      function solve(adj,limit=4){
+        const colors=adj.map(()=&gt;-1),order=[];let nodes=0,exhausted=false;
+        function dfs(){
+          if(++nodes&gt;200000){exhausted=true;return false;}
+          let best=-1,score=-1;
+          for(let u=0;u&lt;colors.length;u++)if(colors[u]&lt;0){
+            const saturation=new Set(adj[u].map(v=&gt;colors[v]).filter(c=&gt;c&gt;=0)).size;
+            const s=saturation*100+adj[u].length;
+            if(s&gt;score){score=s;best=u;}
+          }
+          if(best&lt;0)return true;
+          const used=new Set(adj[best].map(v=&gt;colors[v]));
+          for(let c=0;c&lt;limit;c++)if(!used.has(c)){
+            colors[best]=c;order.push(best);if(dfs())return true;order.pop();colors[best]=-1;if(exhausted)return false;
+          }
+          return false;
+        }
+        const ok=dfs();return{ok,colors,order,nodes,exhausted};
+      }
+      function makeMap(count,seedValue){
+        const rng=random(seedValue),points=[];
+        if(count===4)points.push([.5,.5],[.5,.18],[.22,.72],[.78,.72]);
+        else for(let i=0;i&lt;count;i++){
+          let best=null,bestDistance=-1;
+          for(let trial=0;trial&lt;65;trial++){
+            let p;do{p=[.10+rng()*.80,.12+rng()*.74];}while(!inside(p,boundary));
+            const d=points.length?Math.min(...points.map(q=&gt;distance(p,q))):1-distance(p,[.5,.5]);
+            if(d&gt;bestDistance){best=p;bestDistance=d;}
+          }
+          points.push(best);
+        }
+        const cells=points.map((p,i)=&gt;{
+          let polygon=boundary.map(q=&gt;[...q]);
+          points.forEach((q,j)=&gt;{if(i!==j)polygon=clip(polygon,2*(q[0]-p[0]),2*(q[1]-p[1]),q[0]**2+q[1]**2-p[0]**2-p[1]**2);});
+          assert(polygon.length&gt;=3,&#x27;A region has no area.&#x27;);return polygon;
+        });
+        const edges=[],segments=[],adj=points.map(()=&gt;[]);
+        for(let i=0;i&lt;count;i++)for(let j=i+1;j&lt;count;j++){
+          const polygon=cells[i];
+          for(let k=0;k&lt;polygon.length;k++){
+            const a=polygon[k],b=polygon[(k+1)%polygon.length],mid=[(a[0]+b[0])/2,(a[1]+b[1])/2];
+            if(distance(a,b)&gt;1e-12&amp;&amp;Math.abs(distance(mid,points[i])-distance(mid,points[j]))&lt;1e-8&amp;&amp;inside(mid,cells[j])){
+              edges.push([i,j]);segments.push([a,b]);adj[i].push(j);adj[j].push(i);break;
+            }
+          }
+        }
+        const solution=solve(adj);
+        assert(solution.ok,&#x27;The example solver reached its limit. Try another map.&#x27;);
+        assert(edges.every(([a,b])=&gt;solution.colors[a]!==solution.colors[b]),&#x27;The solution did not pass the border check.&#x27;);
+        if(count===4)assert(edges.length===6&amp;&amp;!solve(adj,3).ok,&#x27;The four-color puzzle is not correct.&#x27;);
+        const colors=solution.colors.map((c,i)=&gt;((i*7+seedValue)%6===0||(i*11+seedValue)%9===0)?-1:c);
+        if(count===4){colors[0]=-1;colors[1]=0;colors[2]=1;colors[3]=2;}
+        const centers=cells.map(poly=&gt;{
+          let area=0,x=0,y=0;poly.forEach((a,i)=&gt;{const b=poly[(i+1)%poly.length],cross=a[0]*b[1]-b[0]*a[1];area+=cross;x+=(a[0]+b[0])*cross;y+=(a[1]+b[1])*cross;});
+          return[x/(3*area),y/(3*area)];
+        });
+        return{points,cells,centers,edges,segments,adj,solution,colors};
+      }
+      function node(tag,attributes={},text){
+        const e=document.createElementNS(NS,tag);Object.entries(attributes).forEach(([k,v])=&gt;e.setAttribute(k,String(v)));if(text!==undefined)e.textContent=text;return e;
+      }
+      const xy=p=&gt;[width*(.035+p[0]*.93),height*(.005+p[1]*.91)];
+      const path=poly=&gt;poly.map((p,i)=&gt;`${i?&#x27;L&#x27;:&#x27;M&#x27;}${xy(p).join(&#x27; &#x27;)}`).join(&#x27; &#x27;)+&#x27; Z&#x27;;
+      function stop(){if(timer!==null)clearTimeout(timer);timer=null;play=null;token++;$(&#x27;[data-solve-label]&#x27;).textContent=&#x27;Watch it color&#x27;;}
+      function selectPaint(color){
+        selected=color;
+        root.querySelectorAll(&#x27;[data-paint]&#x27;).forEach((b,i)=&gt;{b.setAttribute(&#x27;aria-pressed&#x27;,String(i===selected));b.setAttribute(&#x27;aria-label&#x27;,`Color ${i+1}, ${palettes[design.palette].names[i]}`);});
+        $(&#x27;[data-paint-name]&#x27;).textContent=palettes[design.palette].names[selected]+&#x27; selected&#x27;;
+        updateAria();
+      }
+      function updateAria(){
+        if(!model)return;
+        hits.forEach((b,i)=&gt;b.setAttribute(&#x27;aria-label&#x27;,`Region ${i+1}, ${model.colors[i]&lt;0?&#x27;uncolored&#x27;:&#x27;color &#x27;+(model.colors[i]+1)}. Paint ${palettes[design.palette].names[selected]}, color ${selected+1}.`));
+      }
+      function celebrate(){
+        const box=$(&#x27;[data-confetti]&#x27;);box.replaceChildren();
+        if(matchMedia(&#x27;(prefers-reduced-motion: reduce)&#x27;).matches)return;
+        for(let i=0;i&lt;27;i++){const s=document.createElement(&#x27;span&#x27;);s.style.left=`${(i*37)%100}%`;s.style.background=`var(--ff-c${i%4+1})`;s.style.animationDelay=`${i%6*.06}s`;box.append(s);}
+        const thisToken=token;setTimeout(()=&gt;{if(thisToken===token)box.replaceChildren();},2100);
+      }
+      function update(message){
+        if(!model)return;
+        model.colors.forEach((c,i)=&gt;{
+          shapes[i]?.setAttribute(&#x27;fill&#x27;,c&lt;0?&#x27;var(--ff-empty)&#x27;:`var(--ff-c${c+1})`);
+          shapes[i]?.classList.toggle(&#x27;ff-uncolored&#x27;,c&lt;0);
+          shapes[i]?.classList.toggle(&#x27;ff-hovered&#x27;,i===hover);
+        });
+        const conflicts=model.edges.map(([a,b],i)=&gt;model.colors[a]&gt;=0&amp;&amp;model.colors[a]===model.colors[b]?i:-1).filter(i=&gt;i&gt;=0);
+        const clashLayer=$(&#x27;[data-clashes]&#x27;);clashLayer.replaceChildren();
+        conflicts.forEach(i=&gt;{const[a,b]=model.segments[i].map(xy);clashLayer.append(node(&#x27;line&#x27;,{x1:a[0],y1:a[1],x2:b[0],y2:b[1],class:&#x27;ff-clash&#x27;}));});
+        const numbers=$(&#x27;[data-numbers]&#x27;);numbers.replaceChildren();
+        if(design.numbers&amp;&amp;!showConnections)model.centers.forEach((p,i)=&gt;{const[x,y]=xy(p),c=model.colors[i];numbers.append(node(&#x27;text&#x27;,{x,y,class:`ff-number${c&lt;0?&#x27; ff-empty-number&#x27;:&#x27;&#x27;}`},c&lt;0?&#x27;·&#x27;:c+1));});
+        const dual=$(&#x27;[data-dual]&#x27;);dual.replaceChildren();
+        if(showConnections){
+          model.edges.forEach(([a,b])=&gt;{const p=xy(model.points[a]),q=xy(model.points[b]);dual.append(node(&#x27;line&#x27;,{x1:p[0],y1:p[1],x2:q[0],y2:q[1],class:&#x27;ff-connection&#x27;}));});
+          model.points.forEach((p,i)=&gt;{const[x,y]=xy(p),c=model.colors[i];dual.append(node(&#x27;circle&#x27;,{cx:x,cy:y,r:9,fill:c&lt;0?&#x27;var(--ff-empty)&#x27;:`var(--ff-c${c+1})`,class:&#x27;ff-dot&#x27;}));if(design.numbers)dual.append(node(&#x27;text&#x27;,{x,y,class:&#x27;ff-number&#x27;},c&lt;0?&#x27;·&#x27;:c+1));});
+        }
+        const colored=model.colors.filter(c=&gt;c&gt;=0).length,complete=colored===n&amp;&amp;conflicts.length===0;
+        $(&#x27;[data-colored]&#x27;).textContent=colored;$(&#x27;[data-total]&#x27;).textContent=n;
+        $(&#x27;[data-clash-count]&#x27;).textContent=conflicts.length?`${conflicts.length} border ${conflicts.length===1?&#x27;clash&#x27;:&#x27;clashes&#x27;}`:&#x27;No clashes&#x27;;
+        $(&#x27;[data-clash-status]&#x27;).dataset.invalid=String(conflicts.length&gt;0);
+        $(&#x27;[data-valid-icon]&#x27;).hidden=conflicts.length&gt;0;$(&#x27;[data-invalid-icon]&#x27;).hidden=conflicts.length===0;
+        $(&#x27;[data-progress]&#x27;).style.width=`${colored/n*100}%`;
+        const progress=$(&#x27;.ff-progress-track&#x27;);progress.setAttribute(&#x27;aria-valuenow&#x27;,colored);progress.setAttribute(&#x27;aria-valuemax&#x27;,n);
+        const threeOfFour=n===4&amp;&amp;colored===3&amp;&amp;new Set(model.colors.filter(c=&gt;c&gt;=0)).size===3;
+        const text=message||(complete?&#x27;Beautiful. Every shared border checks out.&#x27;:conflicts.length?&#x27;The highlighted neighbors need different colors.&#x27;:threeOfFour?&#x27;Three colors used. One region left.&#x27;:colored===0?&#x27;A fresh canvas. Where will you start?&#x27;:&#x27;A few regions are waiting for your color.&#x27;);
+        $(&#x27;[data-message]&#x27;).textContent=text;
+        root.dataset.complete=String(complete);root.dataset.clashes=String(conflicts.length);root.dataset.colored=String(colored);root.dataset.regions=String(n);
+        updateAria();
+        if(complete&amp;&amp;!wasComplete)celebrate();wasComplete=complete;
+      }
+      function draw(){
+        if(!model)return;
+        width=Math.round($(&#x27;.ff-map-stage&#x27;).getBoundingClientRect().width);if(width&lt;1)return;
+        height=Math.max(280,Math.round(width*.88));
+        $(&#x27;.ff-map-art&#x27;).setAttribute(&#x27;viewBox&#x27;,`0 0 ${width} ${height}`);$(&#x27;.ff-map-art&#x27;).setAttribute(&#x27;height&#x27;,height);
+        const regionLayer=$(&#x27;[data-regions]&#x27;),hitLayer=$(&#x27;[data-hit-layer]&#x27;);regionLayer.replaceChildren();hitLayer.replaceChildren();shapes=[];hits=[];
+        model.cells.forEach((poly,i)=&gt;{
+          const p=node(&#x27;path&#x27;,{d:path(poly),class:&#x27;ff-region&#x27;,&#x27;data-region&#x27;:i});regionLayer.append(p);shapes.push(p);
+          const screen=poly.map(xy),xs=screen.map(q=&gt;q[0]),ys=screen.map(q=&gt;q[1]),left=Math.min(...xs),top=Math.min(...ys),w=Math.max(...xs)-left,h=Math.max(...ys)-top;
+          const b=document.createElement(&#x27;button&#x27;);b.type=&#x27;button&#x27;;b.className=&#x27;ff-region-hit&#x27;;b.dataset.regionButton=String(i);
+          Object.assign(b.style,{left:left+&#x27;px&#x27;,top:top+&#x27;px&#x27;,width:w+&#x27;px&#x27;,height:h+&#x27;px&#x27;,clipPath:&#x27;polygon(&#x27;+screen.map(q=&gt;`${(q[0]-left)/w*100}% ${(q[1]-top)/h*100}%`).join(&#x27;,&#x27;)+&#x27;)&#x27;});
+          b.addEventListener(&#x27;click&#x27;,()=&gt;{stop();model.colors[i]=selected;update();});
+          b.addEventListener(&#x27;mouseenter&#x27;,()=&gt;{hover=i;shapes[i].classList.add(&#x27;ff-hovered&#x27;);});
+          b.addEventListener(&#x27;mouseleave&#x27;,()=&gt;{hover=-1;shapes[i].classList.remove(&#x27;ff-hovered&#x27;);});
+          b.addEventListener(&#x27;focus&#x27;,()=&gt;{hover=i;shapes[i].classList.add(&#x27;ff-hovered&#x27;);});
+          b.addEventListener(&#x27;blur&#x27;,()=&gt;{hover=-1;shapes[i].classList.remove(&#x27;ff-hovered&#x27;);});
+          b.addEventListener(&#x27;keydown&#x27;,event=&gt;{
+            const direction={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[event.key];
+            if(!direction)return;event.preventDefault();let best=-1,score=Infinity;
+            model.points.forEach((q,j)=&gt;{const d=[q[0]-model.points[i][0],q[1]-model.points[i][1]],forward=d[0]*direction[0]+d[1]*direction[1];if(forward&gt;.001){const s=distance(q,model.points[i])/(forward*forward)+distance(q,model.points[i]);if(s&lt;score){best=j;score=s;}}});if(best&gt;=0)hits[best].focus();
+          });
+          hitLayer.append(b);hits.push(b);
+        });
+        update();
+      }
+      function loadMap(count,changeSeed=true){
+        stop();n=count;if(changeSeed)seed+=97;hover=-1;wasComplete=false;$(&#x27;[data-confetti]&#x27;).replaceChildren();
+        try{model=makeMap(n,seed);$(&#x27;[data-size]&#x27;).value=String(n);$(&#x27;[data-lesson]&#x27;).hidden=n!==4;draw();selectPaint(selected);root.dataset.ready=&#x27;true&#x27;;}
+        catch(error){$(&#x27;[data-message]&#x27;).textContent=error.message;root.dataset.ready=&#x27;false&#x27;;}
+      }
+      function tick(){
+        if(!play||play.paused)return;
+        const u=model.solution.order[play.index++];
+        if(u!==undefined){model.colors[u]=model.solution.colors[u];update(&#x27;Finding a home for every color…&#x27;);}
+        if(play.index&gt;=n){play=null;timer=null;$(&#x27;[data-solve-label]&#x27;).textContent=&#x27;Watch it again&#x27;;update();return;}
+        const captured=token;timer=setTimeout(()=&gt;{if(captured===token)tick();},Math.max(48,Math.round(2100/n)));
+      }
+      $(&#x27;[data-solve]&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{
+        if(!model)return;
+        if(play){play.paused=!play.paused;if(play.paused){clearTimeout(timer);timer=null;$(&#x27;[data-solve-label]&#x27;).textContent=&#x27;Continue&#x27;;$(&#x27;[data-message]&#x27;).textContent=&#x27;Paused. Your colors will be here.&#x27;;}else{$(&#x27;[data-solve-label]&#x27;).textContent=&#x27;Pause&#x27;;tick();}return;}
+        stop();wasComplete=false;model.colors.fill(-1);play={index:0,paused:false};$(&#x27;[data-solve-label]&#x27;).textContent=&#x27;Pause&#x27;;update(&#x27;A little color, one region at a time.&#x27;);
+        if(matchMedia(&#x27;(prefers-reduced-motion: reduce)&#x27;).matches){model.colors=[...model.solution.colors];play=null;$(&#x27;[data-solve-label]&#x27;).textContent=&#x27;Watch it again&#x27;;update();}else tick();
+      });
+      $(&#x27;[data-clear]&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{stop();wasComplete=false;model.colors.fill(-1);$(&#x27;[data-confetti]&#x27;).replaceChildren();update();});
+      root.querySelectorAll(&#x27;[data-paint]&#x27;).forEach(b=&gt;b.addEventListener(&#x27;click&#x27;,()=&gt;selectPaint(Number(b.dataset.paint))));
+      $(&#x27;[data-new]&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;loadMap(n));
+      $(&#x27;[data-size]&#x27;).addEventListener(&#x27;change&#x27;,()=&gt;loadMap(Number($(&#x27;[data-size]&#x27;).value)));
+      $(&#x27;[data-why]&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;loadMap(4));
+      $(&#x27;input[data-connections]&#x27;).addEventListener(&#x27;change&#x27;,()=&gt;{showConnections=$(&#x27;input[data-connections]&#x27;).checked;$(&#x27;.ff-map-stage&#x27;).dataset.connections=String(showConnections);update();});
+      $(&#x27;[data-about-toggle]&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{const open=$(&#x27;#ff-about-panel&#x27;).hidden;$(&#x27;#ff-about-panel&#x27;).hidden=!open;$(&#x27;[data-about-toggle]&#x27;).setAttribute(&#x27;aria-expanded&#x27;,String(open));});
+      root.addEventListener(&#x27;keydown&#x27;,event=&gt;{if(/^[1-4]$/.test(event.key)&amp;&amp;event.target.tagName!==&#x27;SELECT&#x27;){selectPaint(Number(event.key)-1);}});
+      function applyDesign(){const p=palettes[design.palette];for(let i=0;i&lt;4;i++)root.style.setProperty(`--ff-c${i+1}`,`light-dark(${p.light[i]},${p.dark[i]})`);selectPaint(selected);if(model)update();}
+      loadMap(28,false);applyDesign();new ResizeObserver(draw).observe($(&#x27;.ff-map-stage&#x27;));
+      if(globalThis.Tweak){const tweak=new Tweak({container:root,onChange:applyDesign});tweak.addSelect(design,&#x27;palette&#x27;,{label:&#x27;Paint palette&#x27;,options:[&#x27;Sorbet&#x27;,&#x27;Garden&#x27;,&#x27;Vivid&#x27;]});tweak.addToggle(design,&#x27;numbers&#x27;,{label:&#x27;Color numbers on regions&#x27;});}
+    })();
+  &lt;/script&gt;
+  &lt;script type=&quot;text/plain&quot; data-b-worker&gt;
+/* Fourfold benchmark worker. Both methods use the same prepared adjacency lists.
+ * The reduction method is a limited prototype, NOT the paper&#x27;s full algorithm.
+ * All solver allocations, reductions, core search, and restoration are timed.
+ * Periodic progress copying/reporting is included; map construction, warm-up,
+ * final transfer, independent validation, and painting are not.
+ */
+&#x27;use strict&#x27;;
+let current = null;
+const now = () =&gt; performance.now();
+class Stop extends Error { constructor(status,message){super(message);this.status=status;} }
+function rng(seed){let a=seed&gt;&gt;&gt;0;return()=&gt;{a=(a+0x6D2B79F5)&gt;&gt;&gt;0;let t=a;t=Math.imul(t^(t&gt;&gt;&gt;15),t|1);t^=t+Math.imul(t^(t&gt;&gt;&gt;7),t|61);return((t^(t&gt;&gt;&gt;14))&gt;&gt;&gt;0)/4294967296;};}
+
+function makeMap(side,seed,rows=side){
+  if(![8,16,32,64,128].includes(side)||(rows!==side&amp;&amp;!(side===64&amp;&amp;rows===32)))throw new Error(&#x27;Unsupported map size.&#x27;);
+  const started=now(),n=side*rows,random=rng(seed),points=new Float64Array(n*2);
+  for(let r=0;r&lt;rows;r++)for(let c=0;c&lt;side;c++){const i=r*side+c;points[2*i]=c+.5+(random()-.5)*.5;points[2*i+1]=r+.5+(random()-.5)*.5;}
+  const xy=[],offsets=new Uint32Array(n+1),edges=[],adj=Array.from({length:n},()=&gt;[]);
+  // Seeds are within .25 of each unit-square center. Every point has a seed
+  // within sqrt(2)*.75. A seed &gt;=3 grid columns/rows away is &gt;2*that radius
+  // from this seed, so it cannot cut this Voronoi cell. The 5x5 stencil is exact.
+  for(let i=0;i&lt;n;i++){
+    const r=Math.floor(i/side),c=i%side,px=points[2*i],py=points[2*i+1];
+    let poly=[{x:0,y:0,owner:-1},{x:side,y:0,owner:-1},{x:side,y:rows,owner:-1},{x:0,y:rows,owner:-1}];
+    for(let rr=Math.max(0,r-2);rr&lt;=Math.min(rows-1,r+2);rr++)for(let cc=Math.max(0,c-2);cc&lt;=Math.min(side-1,c+2);cc++){
+      const j=rr*side+cc;if(i===j)continue;
+      const qx=points[2*j],qy=points[2*j+1],nx=2*(qx-px),ny=2*(qy-py),k=qx*qx+qy*qy-px*px-py*py,next=[];
+      // owner labels the incoming edge, preserving exact border provenance.
+      for(let z=0;z&lt;poly.length;z++){
+        const a=poly[z],b=poly[(z+1)%poly.length],fa=nx*a.x+ny*a.y-k,fb=nx*b.x+ny*b.y-k;
+        if(fb&lt;=0){
+          if(fa&gt;0){const t=fa/(fa-fb);next.push({x:a.x+t*(b.x-a.x),y:a.y+t*(b.y-a.y),owner:j});}
+          next.push(b);
+        }else if(fa&lt;=0){const t=fa/(fa-fb);next.push({x:a.x+t*(b.x-a.x),y:a.y+t*(b.y-a.y),owner:b.owner});}
+      }
+      poly=next;
+    }
+    if(poly.length&lt;3)throw new Error(&#x27;Empty map region.&#x27;);
+    offsets[i]=xy.length/2;
+    const seen=new Set();
+    for(let z=0;z&lt;poly.length;z++){
+      const b=poly[z],a=poly[(z+poly.length-1)%poly.length];xy.push(b.x/side,b.y/rows);
+      if(b.owner&gt;i&amp;&amp;!seen.has(b.owner)&amp;&amp;Math.hypot(b.x-a.x,b.y-a.y)&gt;1e-10){seen.add(b.owner);edges.push(i,b.owner);adj[i].push(b.owner);adj[b.owner].push(i);}
+    }
+  }
+  offsets[n]=xy.length/2;adj.forEach(a=&gt;a.sort((x,y)=&gt;x-y));
+  let hash=2166136261;for(const x of [n,seed,...edges]){hash^=x;hash=Math.imul(hash,16777619)&gt;&gt;&gt;0;}
+  return{n,side,rows,seed,adj,edges:new Uint32Array(edges),xy:new Float64Array(xy),offsets,fingerprint:hash.toString(16).padStart(8,&#x27;0&#x27;),generationMs:now()-started};
+}
+function context(budgetMs){
+  return{deadline:now()+budgetMs,probes:0,decisions:0,backtracks:0,batches:0,removed:0,swaps:0,kempeVisits:0,coreVertices:0,reductionMs:0,coreMs:0,restorationMs:0,progressUpdates:0};
+}
+// Keep callbacks and mutable color buffers out of the serializable statistics.
+const liveRuns=new WeakMap();
+function progressState(ctx,colors,phase){const live=liveRuns.get(ctx);if(live){live.colors=colors;live.phase=phase;}}
+function reportProgress(ctx,stamp,force=false){
+  const live=liveRuns.get(ctx);
+  if(!live||!live.safe||!live.colors||(!force&amp;&amp;stamp&lt;live.nextAt))return;
+  live.nextAt=stamp+5000;ctx.progressUpdates++;
+  live.report({colors:live.colors.slice(),solverMs:stamp-live.started,phase:live.phase,stats:{...ctx}});
+}
+function check(ctx,force=false){
+  if(force||(ctx.probes&amp;4095)===0){
+    const stamp=now();if(stamp&gt;ctx.deadline)throw new Stop(&#x27;timeout&#x27;,&#x27;Time limit reached.&#x27;);
+    reportProgress(ctx,stamp);
+  }
+}
+const bits=new Uint8Array([0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4]);
+function dsatur(adj,vertices,colors,ctx){
+  const n=adj.length,counts=new Uint32Array(n*4),mask=new Uint8Array(n),stack=[];
+  // Iterative backtracking avoids call-stack limits on large maps. Saturation
+  // counts are maintained incrementally; selection uses the original tie rule.
+  const assign=(u,c,add)=&gt;{
+    colors[u]=add?c:-1;
+    for(const v of adj[u]){
+      const index=v*4+c;
+      if(add){if(counts[index]++===0)mask[v]|=1&lt;&lt;c;}
+      else if(--counts[index]===0)mask[v]&amp;=~(1&lt;&lt;c);
+      ctx.probes++;check(ctx);
+    }
+  };
+  let forward=true;
+  for(;;){
+    if(forward){
+      let best=-1,saturation=-1,degree=-1;
+      for(const u of vertices){
+        ctx.probes++;check(ctx);
+        if(colors[u]&lt;0){const s=bits[mask[u]],d=adj[u].length;if(s&gt;saturation||(s===saturation&amp;&amp;d&gt;degree)){best=u;saturation=s;degree=d;}}
+      }
+      if(best&lt;0)return;
+      stack.push({u:best,left:15&amp;~mask[best],assigned:-1});
+    }
+    forward=false;
+    while(stack.length){
+      const f=stack[stack.length-1];
+      if(f.assigned&gt;=0){assign(f.u,f.assigned,false);f.assigned=-1;}
+      if(f.left){const bit=f.left&amp;-f.left;f.left^=bit;const c=bit===1?0:bit===2?1:bit===4?2:3;f.assigned=c;assign(f.u,c,true);ctx.decisions++;forward=true;break;}
+      stack.pop();ctx.backtracks++;
+    }
+    if(!forward)throw new Stop(&#x27;unsupported&#x27;,&#x27;Search exhausted without a four-coloring.&#x27;);
+  }
+}
+function classic(adj,ctx){
+  const colors=new Int8Array(adj.length);colors.fill(-1);ctx.coreVertices=adj.length;
+  progressState(ctx,colors,&#x27;Searching&#x27;);
+  const vertices=Array.from({length:adj.length},(_,i)=&gt;i),started=now();
+  dsatur(adj,vertices,colors,ctx);ctx.coreMs=now()-started;return colors;
+}
+function reduction(adj,ctx){
+  const n=adj.length,colors=new Int8Array(n);colors.fill(-1);
+  progressState(ctx,colors,&#x27;Reducing&#x27;);const live=liveRuns.get(ctx);
+  const active=new Uint8Array(n);active.fill(1);
+  const degree=Uint32Array.from(adj,a=&gt;a.length),blocked=new Uint32Array(n),queued=new Uint32Array(n),removed=[];
+  let eligible=[];for(let u=0;u&lt;n;u++)if(degree[u]&lt;=4)eligible.push(u);
+  let round=0,started=now();
+  while(eligible.length){
+    round++;const batch=[];
+    for(const u of eligible){
+      ctx.probes++;check(ctx);
+      if(active[u]&amp;&amp;degree[u]&lt;=4&amp;&amp;blocked[u]!==round){batch.push(u);blocked[u]=round;for(const v of adj[u])if(active[v])blocked[v]=round;}
+    }
+    if(!batch.length)throw new Error(&#x27;Reduction batch made no progress.&#x27;);
+    for(const u of batch){active[u]=0;removed.push(u);}ctx.removed=removed.length;
+    const next=[];
+    const enqueue=u=&gt;{if(active[u]&amp;&amp;degree[u]&lt;=4&amp;&amp;queued[u]!==round){queued[u]=round;next.push(u);}};
+    for(const u of batch)for(const v of adj[u]){ctx.probes++;check(ctx);if(active[v]){degree[v]--;enqueue(v);}}
+    for(const u of eligible)enqueue(u);
+    eligible=next;ctx.batches++;
+  }
+  ctx.removed=removed.length;ctx.reductionMs=now()-started;
+  const core=[];for(let u=0;u&lt;n;u++)if(active[u])core.push(u);ctx.coreVertices=core.length;
+  started=now();progressState(ctx,colors,&#x27;Searching core&#x27;);if(core.length)dsatur(adj,core,colors,ctx);ctx.coreMs=now()-started;
+  started=now();progressState(ctx,colors,&#x27;Restoring&#x27;);
+  const seen=new Uint32Array(n),queue=new Uint32Array(n);let stamp=0;
+  for(let i=removed.length-1;i&gt;=0;i--){
+    const u=removed[i],ring=[];let used=0;
+    for(const v of adj[u])if(colors[v]&gt;=0){ring.push(v);used|=1&lt;&lt;colors[v];}
+    if(ring.length&gt;4)throw new Error(&#x27;Restoration degree invariant failed.&#x27;);
+    let free=15&amp;~used;
+    if(!free){
+      let found=false;
+      for(let a=0;a&lt;ring.length&amp;&amp;!found;a++)for(let b=a+1;b&lt;ring.length&amp;&amp;!found;b++){
+        const start=ring[a],target=ring[b],ca=colors[start],cb=colors[target];stamp++;
+        let head=0,tail=1;queue[0]=start;seen[start]=stamp;
+        while(head&lt;tail){
+          const x=queue[head++];ctx.kempeVisits++;
+          for(const y of adj[x]){ctx.probes++;check(ctx);if(seen[y]!==stamp&amp;&amp;(colors[y]===ca||colors[y]===cb)){seen[y]=stamp;queue[tail++]=y;}}
+        }
+        if(seen[target]!==stamp){
+          // A half-finished Kempe swap can have temporary conflicts. Publish
+          // only after the entire component has changed colors.
+          if(live)live.safe=false;
+          for(let z=0;z&lt;tail;z++){const v=queue[z];colors[v]=colors[v]===ca?cb:ca;ctx.probes++;check(ctx);}
+          if(live)live.safe=true;
+          free=1&lt;&lt;ca;ctx.swaps++;found=true;
+        }
+      }
+      if(!found)throw new Stop(&#x27;unsupported&#x27;,&#x27;No supported degree-four Kempe extension was found.&#x27;);
+    }
+    const bit=free&amp;-free;colors[u]=bit===1?0:bit===2?1:bit===4?2:3;ctx.probes++;check(ctx);
+  }
+  ctx.restorationMs=now()-started;return colors;
+}
+function execute(graph,method,budgetMs,onProgress=null){
+  const ctx=context(budgetMs),started=now();
+  if(onProgress)liveRuns.set(ctx,{report:onProgress,started,nextAt:started+5000,colors:null,phase:&#x27;Starting&#x27;,safe:true});
+  try{
+    const colors=method===&#x27;dsatur&#x27;?classic(graph.adj,ctx):reduction(graph.adj,ctx);
+    check(ctx,true);
+    return{method,status:&#x27;complete&#x27;,solverMs:now()-started,colors,stats:ctx};
+  }catch(error){
+    reportProgress(ctx,now(),true);
+    return{method,status:error.status||&#x27;error&#x27;,solverMs:now()-started,message:error.message,colors:null,stats:ctx};
+  }finally{liveRuns.delete(ctx);}
+}
+self.onmessage=event=&gt;{
+  const request=event.data;
+  try{
+    if(request.type===&#x27;generate&#x27;){
+      const warm=makeMap(8,11);for(let i=0;i&lt;2;i++){execute(warm,&#x27;dsatur&#x27;,1000);execute(warm,&#x27;reduction&#x27;,1000);}
+      current=makeMap(request.side,request.seed,request.rows);
+      const {n,side,rows,seed,edges,xy,offsets,fingerprint,generationMs}=current;
+      self.postMessage({type:&#x27;generated&#x27;,requestId:request.requestId,n,side,rows,seed,edges,xy,offsets,fingerprint,generationMs});
+    }else if(request.type===&#x27;solve&#x27;){
+      if(!current)throw new Error(&#x27;Generate a map first.&#x27;);
+      if(![&#x27;dsatur&#x27;,&#x27;reduction&#x27;].includes(request.method))throw new Error(&#x27;Unknown solver.&#x27;);
+      const budget=Math.min(100000,Math.max(100,Number(request.budgetMs)||100000));
+      const onProgress=progress=&gt;self.postMessage({type:&#x27;progress&#x27;,requestId:request.requestId,method:request.method,...progress});
+      self.postMessage({type:&#x27;solved&#x27;,requestId:request.requestId,...execute(current,request.method,budget,onProgress)});
+    }
+  }catch(error){self.postMessage({type:&#x27;error&#x27;,requestId:request.requestId,message:error.message});}
+};
+
+  &lt;/script&gt;
+  &lt;script data-b-controller&gt;
+    (()=&gt;{
+      const root=document.getElementById(&#x27;fourfold-exhibit&#x27;),$=s=&gt;root.querySelector(s);
+      const methods=[&#x27;dsatur&#x27;,&#x27;reduction&#x27;],panels=Object.fromEntries(methods.map(m=&gt;[m,$(`[data-b-method=&quot;${m}&quot;]`)]));
+      let worker=null,pending=new Map(),requestId=0,generation=0,busy=false,graph=null,history=[],currentRecord=null,watchdog=null;
+      let displayColors={dsatur:null,reduction:null},displayInfo={dsatur:null,reduction:null};
+      const locale=n=&gt;Number(n).toLocaleString(&#x27;en-US&#x27;),median=values=&gt;{const a=[...values].sort((x,y)=&gt;x-y);return a.length%2?a[(a.length-1)/2]:(a[a.length/2-1]+a[a.length/2])/2;};
+      const time=ms=&gt;ms&lt;.1?&#x27;&lt;0.1 ms&#x27;:ms&lt;1000?`${ms&lt;10?ms.toFixed(2):ms.toFixed(1)} ms`:`${(ms/1000).toFixed(2)} s`;
+      const setMessage=text=&gt;{$(&#x27;[data-b-message]&#x27;).textContent=text;};
+      function controls(running){busy=running;for(const key of [&#x27;size&#x27;,&#x27;seed&#x27;,&#x27;repeats&#x27;,&#x27;run&#x27;,&#x27;sweep&#x27;])$(`[data-b-${key}]`).disabled=running;$(&#x27;[data-b-stop]&#x27;).disabled=!running;}
+      function dimensions(value){const [side,rows=side]=value.split(&#x27;x&#x27;).map(Number);return{side,rows,n:side*rows};}
+      function theory(){const {n}=dimensions($(&#x27;[data-b-size]&#x27;).value);$(&#x27;[data-b-old-growth]&#x27;).textContent=locale((n/64)**4)+&#x27;× work&#x27;;$(&#x27;[data-b-new-growth]&#x27;).textContent=locale(Number((n*Math.log2(n)/(64*6)).toFixed(1)))+&#x27;× work&#x27;;}
+      function ensureWorker(){
+        if(worker)return;
+        const blob=new Blob([$(&#x27;[data-b-worker]&#x27;).textContent],{type:&#x27;application/javascript&#x27;}),url=URL.createObjectURL(blob);
+        worker=new Worker(url);URL.revokeObjectURL(url);
+        worker.onmessage=event=&gt;{const r=event.data,p=pending.get(r.requestId);if(!p)return;if(r.type===&#x27;progress&#x27;){p.onProgress?.(r);return;}pending.delete(r.requestId);clearTimeout(p.timeout);r.type===&#x27;error&#x27;?p.reject(new Error(r.message)):p.resolve(r);};
+        worker.onerror=event=&gt;{for(const p of pending.values()){clearTimeout(p.timeout);p.reject(new Error(event.message||&#x27;Worker failed.&#x27;));}pending.clear();};
+      }
+      function call(data,limit=15000,onProgress=null){
+        ensureWorker();return new Promise((resolve,reject)=&gt;{
+          const id=++requestId,timeout=setTimeout(()=&gt;{pending.delete(id);reject(new Error(&#x27;Worker did not return within its safety limit.&#x27;));terminate();},limit);
+          pending.set(id,{resolve,reject,timeout,onProgress});worker.postMessage({...data,requestId:id});
+        });
+      }
+      function terminate(){if(worker)worker.terminate();worker=null;for(const p of pending.values()){clearTimeout(p.timeout);p.reject(new Error(&#x27;Cancelled.&#x27;));}pending.clear();clearInterval(watchdog);watchdog=null;}
+      function resetPanels(){for(const m of methods){const p=panels[m];p.querySelector(&#x27;[data-b-status]&#x27;).textContent=&#x27;Ready&#x27;;p.querySelector(&#x27;[data-b-time]&#x27;).textContent=&#x27;—&#x27;;p.querySelector(&#x27;[data-b-time-note]&#x27;).textContent=&#x27;Solver time&#x27;;p.querySelector(&#x27;[data-b-validation]&#x27;).textContent=&#x27;Awaiting a checked coloring&#x27;;p.querySelector(&#x27;[data-b-validation]&#x27;).dataset.failed=&#x27;false&#x27;;for(const e of p.querySelectorAll(&#x27;[data-b-stat-a],[data-b-stat-b],[data-b-stat-c]&#x27;))e.textContent=&#x27;—&#x27;;}displayColors={dsatur:null,reduction:null};displayInfo={dsatur:null,reduction:null};}
+      function validate(colors,partial=false){
+        const started=performance.now();if(!colors||colors.length!==graph.n)return{ok:false,message:&#x27;Wrong color count.&#x27;};
+        let colored=0;for(const c of colors){if(partial&amp;&amp;c===-1)continue;if(!Number.isInteger(c)||c&lt;0||c&gt;3)return{ok:false,message:&#x27;Uncolored or invalid region.&#x27;};colored++;}
+        for(let i=0;i&lt;graph.edges.length;i+=2)if(colors[graph.edges[i]]&gt;=0&amp;&amp;colors[graph.edges[i]]===colors[graph.edges[i+1]])return{ok:false,message:&#x27;Two adjacent regions share a color.&#x27;};
+        return{ok:true,colored,edges:graph.edges.length/2,validationMs:performance.now()-started};
+      }
+      function updateStats(method,stats){
+        const p=panels[method];p.querySelector(&#x27;[data-b-stat-a]&#x27;).textContent=stats?locale(method===&#x27;dsatur&#x27;?stats.decisions:stats.removed):&#x27;—&#x27;;p.querySelector(&#x27;[data-b-stat-b]&#x27;).textContent=stats?locale(method===&#x27;dsatur&#x27;?stats.backtracks:stats.coreVertices):&#x27;—&#x27;;if(method===&#x27;reduction&#x27;)p.querySelector(&#x27;[data-b-stat-c]&#x27;).textContent=stats?locale(stats.swaps):&#x27;—&#x27;;
+      }
+      function showProgress(method,progress){
+        const validation=validate(progress.colors,true);if(!validation.ok)return;
+        displayColors[method]=progress.colors;displayInfo[method]={checked:false,colored:validation.colored,solverMs:progress.solverMs};
+        const p=panels[method];p.querySelector(&#x27;[data-b-time]&#x27;).textContent=time(progress.solverMs);
+        p.querySelector(&#x27;[data-b-validation]&#x27;).textContent=`${locale(validation.colored)} / ${locale(graph.n)} colored · ${progress.phase} · Snapshot at ${(progress.solverMs/1000).toFixed(1)} s`;
+        p.querySelector(&#x27;[data-b-validation]&#x27;).dataset.failed=&#x27;false&#x27;;updateStats(method,progress.stats);paint();
+      }
+      function resolvedColor(variable){
+        const probe=document.createElement(&#x27;span&#x27;);probe.style.color=`var(${variable})`;probe.style.position=&#x27;absolute&#x27;;probe.style.visibility=&#x27;hidden&#x27;;root.append(probe);const value=getComputedStyle(probe).color;probe.remove();return value;
+      }
+      function paint(){
+        if(!graph||$(&#x27;[data-b-compare-view]&#x27;).hidden)return;
+        const colors=[1,2,3,4].map(i=&gt;resolvedColor(`--ff-c${i}`)),empty=resolvedColor(&#x27;--ff-empty&#x27;),border=resolvedColor(&#x27;--ff-sea&#x27;);
+        for(const method of methods){
+          const canvas=panels[method].querySelector(&#x27;canvas&#x27;),width=Math.round(canvas.getBoundingClientRect().width);if(!width)continue;
+          const h=Math.max(220,Math.round(width*.7)),dpr=Math.min(2,devicePixelRatio||1);canvas.width=Math.round(width*dpr);canvas.height=Math.round(h*dpr);canvas.style.height=h+&#x27;px&#x27;;
+          const ctx=canvas.getContext(&#x27;2d&#x27;);ctx.scale(dpr,dpr);ctx.fillStyle=border;ctx.fillRect(0,0,width,h);
+          const pad=12,w=width-2*pad,height=h-2*pad,data=displayColors[method];
+          ctx.lineJoin=&#x27;round&#x27;;ctx.lineWidth=Math.max(.18,Math.min(1.4,w/graph.side*.07));ctx.strokeStyle=border;
+          for(let u=0;u&lt;graph.n;u++){
+            ctx.beginPath();for(let j=graph.offsets[u];j&lt;graph.offsets[u+1];j++){const x=pad+graph.xy[2*j]*w,y=pad+graph.xy[2*j+1]*height;j===graph.offsets[u]?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.closePath();ctx.fillStyle=data&amp;&amp;data[u]&gt;=0?colors[data[u]]:empty;ctx.fill();ctx.stroke();
+          }
+          const info=displayInfo[method];canvas.dataset.coloringState=info?.checked?&#x27;checked&#x27;:data?&#x27;partial&#x27;:&#x27;empty&#x27;;
+          canvas.setAttribute(&#x27;aria-label&#x27;,`${method===&#x27;dsatur&#x27;?&#x27;Demo DSATUR&#x27;:&#x27;Local reduction prototype&#x27;}: ${locale(graph.n)} regions, ${info?.checked?&#x27;independently checked coloring&#x27;:data?`partial search state, ${locale(info.colored)} currently colored`:&#x27;not yet colored&#x27;}.`);
+        }
+      }
+      function summarize(record,method){
+        const trials=record.trials[method],good=trials.filter(t=&gt;t.status===&#x27;complete&#x27;&amp;&amp;t.validation?.ok),failure=trials.find(t=&gt;t.status!==&#x27;complete&#x27;);
+        return{good:good.length,status:failure?failure.status:good.length===record.repeats?&#x27;complete&#x27;:good.length?&#x27;partial&#x27;:&#x27;pending&#x27;,medianMs:good.length?median(good.map(x=&gt;x.solverMs)):null,minMs:good.length?Math.min(...good.map(x=&gt;x.solverMs)):null,maxMs:good.length?Math.max(...good.map(x=&gt;x.solverMs)):null,failure};
+      }
+      function updatePanel(record,method){
+        const p=panels[method],s=summarize(record,method),trials=record.trials[method],last=trials[trials.length-1];
+        p.querySelector(&#x27;[data-b-time]&#x27;).textContent=s.status===&#x27;timeout&#x27;?`&gt;${(record.budgetMs/1000).toFixed(2)} s`:s.medianMs!==null?time(s.medianMs):&#x27;—&#x27;;
+        p.querySelector(&#x27;[data-b-time-note]&#x27;).textContent=s.medianMs!==null?`${s.good}/${record.repeats} runs · ${s.good&gt;1?&#x27;median&#x27;:&#x27;single run&#x27;}`:&#x27;No completed time&#x27;;
+        p.querySelector(&#x27;[data-b-status]&#x27;).textContent=s.status===&#x27;complete&#x27;?&#x27;Checked&#x27;:s.status===&#x27;partial&#x27;?&#x27;More trials&#x27;:s.status===&#x27;timeout&#x27;?&#x27;Time limit&#x27;:s.status;
+        const check=p.querySelector(&#x27;[data-b-validation]&#x27;);check.dataset.failed=String(!!s.failure);
+        const info=displayInfo[method],partial=info&amp;&amp;!info.checked?` Last partial snapshot: ${locale(info.colored)} / ${locale(record.n)} colored at ${(info.solverMs/1000).toFixed(1)} s.`:&#x27;&#x27;;
+        check.textContent=s.failure?((s.status===&#x27;timeout&#x27;?`${record.budgetMs/1000}-second limit reached; no full coloring for this trial.`:last?.message||&#x27;Run did not complete.&#x27;)+partial):(last?.validation?.ok?`${locale(last.validation.edges)} shared borders checked · ${time(s.minMs)}–${time(s.maxMs)}`:&#x27;Awaiting a checked coloring&#x27;);
+        if(last?.stats)updateStats(method,last.stats);
+      }
+      function renderHistory(){
+        const body=$(&#x27;[data-b-history]&#x27;);body.replaceChildren();
+        for(const r of history.slice(-8).reverse()){
+          const a=summarize(r,&#x27;dsatur&#x27;),b=summarize(r,&#x27;reduction&#x27;),row=document.createElement(&#x27;tr&#x27;);
+          for(const label of [`${locale(r.n)} · ${r.seed}`,a.status===&#x27;timeout&#x27;?`&gt;${r.budgetMs/1000} s`:a.medianMs===null?&#x27;—&#x27;:time(a.medianMs),b.status===&#x27;timeout&#x27;?`&gt;${r.budgetMs/1000} s`:b.medianMs===null?&#x27;—&#x27;:time(b.medianMs),`${a.good}/${r.repeats} · ${b.good}/${r.repeats}`]){const td=document.createElement(&#x27;td&#x27;);td.textContent=label;row.append(td);}body.append(row);
+        }
+        $(&#x27;[data-b-export]&#x27;).disabled=!history.length;
+      }
+      async function runOne(size,seed,repeats,runToken){
+        const {side,rows,n}=dimensions(size);
+        setMessage(`Building ${locale(n)} regions…`);resetPanels();graph=null;
+        const built=await call({type:&#x27;generate&#x27;,side,rows,seed},20000);if(runToken!==generation)return;
+        graph=built;theory();paint();$(&#x27;[data-b-map-info]&#x27;).textContent=`${locale(built.n)} regions · ${locale(built.edges.length/2)} borders · build ${time(built.generationMs)} · ${built.fingerprint}`;
+        const record={schemaVersion:1,n:built.n,seed,fingerprint:built.fingerprint,repeats,budgetMs:100000,progressIntervalMs:5000,generationMs:built.generationMs,startedAt:new Date().toISOString(),trials:{dsatur:[],reduction:[]}};
+        currentRecord=record;
+        for(let trial=0;trial&lt;repeats;trial++){
+          const order=trial%2===0?methods:[...methods].reverse();
+          for(const method of order){
+            if(runToken!==generation)return;
+            if(record.trials[method].some(t=&gt;t.status!==&#x27;complete&#x27;))continue;
+            const p=panels[method];p.querySelector(&#x27;[data-b-status]&#x27;).textContent=&#x27;Running&#x27;;p.querySelector(&#x27;[data-b-time]&#x27;).textContent=&#x27;—&#x27;;
+            displayColors[method]=null;displayInfo[method]=null;updateStats(method,null);
+            p.querySelector(&#x27;[data-b-validation]&#x27;).textContent=`0 / ${locale(graph.n)} colored · Updates every 5 s`;p.querySelector(&#x27;[data-b-validation]&#x27;).dataset.failed=&#x27;false&#x27;;paint();
+            const label=method===&#x27;dsatur&#x27;?&#x27;Demo DSATUR&#x27;:&#x27;Reduction prototype&#x27;;setMessage(`${label} · timed run ${trial+1} of ${repeats}. Methods run one at a time.`);
+            const started=performance.now();watchdog=setInterval(()=&gt;{p.querySelector(&#x27;[data-b-time-note]&#x27;).textContent=`Running · ${((performance.now()-started)/1000).toFixed(1)} s elapsed`;},100);
+            const result=await call({type:&#x27;solve&#x27;,method,budgetMs:record.budgetMs},record.budgetMs+5000,progress=&gt;{if(runToken===generation)showProgress(method,progress);});clearInterval(watchdog);watchdog=null;if(runToken!==generation)return;
+            const validation=result.status===&#x27;complete&#x27;?validate(result.colors):null;
+            if(validation&amp;&amp;!validation.ok){result.status=&#x27;invalid&#x27;;result.message=validation.message;}
+            if(validation?.ok){displayColors[method]=result.colors;displayInfo[method]={checked:true,colored:graph.n,solverMs:result.solverMs};}
+            const {colors,...timing}=result;record.trials[method].push({...timing,validation,trial:trial+1});updatePanel(record,method);paint();
+          }
+        }
+        const a=summarize(record,&#x27;dsatur&#x27;),b=summarize(record,&#x27;reduction&#x27;);record.finishedAt=new Date().toISOString();history.push(record);currentRecord=null;renderHistory();
+        if(a.status===&#x27;complete&#x27;&amp;&amp;b.status===&#x27;complete&#x27;){
+          const ratio=Math.max(a.medianMs,b.medianMs)/Math.max(.001,Math.min(a.medianMs,b.medianMs));
+          setMessage(ratio&lt;1.15?&#x27;Both demo methods finished with similar median times on this map.&#x27;:`${a.medianMs&lt;b.medianMs?&#x27;Demo DSATUR&#x27;:&#x27;The reduction prototype&#x27;} used ${ratio.toFixed(1)}× less median solver time on this map. This is not a timing result for the full historical algorithms.`);
+        }else setMessage(&#x27;A method stopped or reached its limit. Completed timings remain visible; unfinished trials are not counted as successful results.&#x27;);
+        root.dataset.benchmarkReady=&#x27;true&#x27;;
+      }
+      async function start(sweep=false){
+        if(busy)return;
+        const seed=Number($(&#x27;[data-b-seed]&#x27;).value),repeats=Number($(&#x27;[data-b-repeats]&#x27;).value);
+        if(!Number.isInteger(seed)||seed&lt;0||seed&gt;999999){setMessage(&#x27;Choose an integer seed between 0 and 999999.&#x27;);return;}
+        const own=++generation;controls(true);root.dataset.benchmarkReady=&#x27;false&#x27;;
+        try{
+          for(const size of sweep?Array.from($(&#x27;[data-b-size]&#x27;).options,option=&gt;option.value):[$(&#x27;[data-b-size]&#x27;).value]){if(own!==generation)break;$(&#x27;[data-b-size]&#x27;).value=size;theory();await runOne(size,seed,repeats,own);}
+        }catch(error){if(own===generation)setMessage(error.message);}
+        finally{if(own===generation){controls(false);clearInterval(watchdog);watchdog=null;}}
+      }
+      function cancel(){
+        generation++;terminate();controls(false);
+        for(const method of methods){const p=panels[method];if(p.querySelector(&#x27;[data-b-status]&#x27;).textContent===&#x27;Running&#x27;){
+          p.querySelector(&#x27;[data-b-status]&#x27;).textContent=&#x27;Cancelled&#x27;;p.querySelector(&#x27;[data-b-time-note]&#x27;).textContent=&#x27;Solver stopped&#x27;;
+          const info=displayInfo[method];p.querySelector(&#x27;[data-b-validation]&#x27;).textContent=info?`Stopped · Partial snapshot: ${locale(info.colored)} / ${locale(graph.n)} colored at ${(info.solverMs/1000).toFixed(1)} s`:&#x27;Stopped before the first map update.&#x27;;
+        }}
+        currentRecord=null;setMessage(&#x27;Stopped. Earlier completed benchmark records are preserved.&#x27;);root.dataset.benchmarkReady=&#x27;false&#x27;;
+      }
+      $(&#x27;[data-b-run]&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;start(false));$(&#x27;[data-b-sweep]&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;start(true));$(&#x27;[data-b-stop]&#x27;).addEventListener(&#x27;click&#x27;,cancel);$(&#x27;[data-b-size]&#x27;).addEventListener(&#x27;change&#x27;,()=&gt;{theory();setMessage(&#x27;Size changed. Run the benchmark to generate and measure this map.&#x27;);});
+      root.querySelectorAll(&#x27;[data-b-mode]&#x27;).forEach(button=&gt;button.addEventListener(&#x27;click&#x27;,()=&gt;{const mode=button.dataset.bMode;if(mode===&#x27;play&#x27;&amp;&amp;busy)cancel();root.dataset.mode=mode;$(&#x27;[data-b-play-view]&#x27;).hidden=mode!==&#x27;play&#x27;;$(&#x27;[data-b-compare-view]&#x27;).hidden=mode!==&#x27;compare&#x27;;root.querySelectorAll(&#x27;[data-b-mode]&#x27;).forEach(b=&gt;b.setAttribute(&#x27;aria-pressed&#x27;,String(b===button)));if(mode===&#x27;compare&#x27;)paint();}));
+      $(&#x27;[data-b-export]&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{
+        const data={kind:&#x27;fourfold-demo-benchmarks&#x27;,historicalImplementations:{appelHaken:&#x27;not implemented&#x27;,nearLinear2026:&#x27;not implemented&#x27;},measuredMethods:[&#x27;DSATUR exact search&#x27;,&#x27;limited degree-at-most-four reduction + DSATUR core + Kempe restoration&#x27;],timingScope:&#x27;solver plus periodic progress copying/reporting; generation, warm-up, final transfer, validation, and drawing excluded&#x27;,environment:{userAgent:navigator.userAgent,logicalProcessors:navigator.hardwareConcurrency||null},records:history};
+        const output=$(&#x27;[data-b-json]&#x27;);output.hidden=!output.hidden;output.value=JSON.stringify(data,null,2);if(!output.hidden){output.focus();output.select();}
+      });
+      new ResizeObserver(paint).observe($(&#x27;[data-b-compare-view]&#x27;));
+      matchMedia(&#x27;(prefers-color-scheme: dark)&#x27;).addEventListener(&#x27;change&#x27;,paint);
+      new MutationObserver(paint).observe(root,{attributes:true,attributeFilter:[&#x27;style&#x27;]});
+      theory();start(false);
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+  let lastPointerWasTouch = false;
+  let pinnedByTouch = false;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    pinnedByTouch = false;
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handlePointer = (event) =&gt; {
+    lastPointerWasTouch =
+      event.type === &quot;pointerdown&quot; &amp;&amp; event.pointerType === &quot;touch&quot;;
+  };
+  const handleTouchClick = (event) =&gt; {
+    const isTouch = event.pointerType === &quot;touch&quot; || lastPointerWasTouch;
+    lastPointerWasTouch = false;
+    if (!isTouch || event.detail === 0) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (
+      trigger == null ||
+      !trigger.isConnected ||
+      getContent(trigger).length === 0 ||
+      (pinnedByTouch &amp;&amp; activeTrigger === trigger)
+    ) {
+      if (pinnedByTouch) {
+        closeTooltip();
+      }
+      return;
+    }
+    openTooltip(trigger);
+    pinnedByTouch = activeTrigger === trigger;
+    window.setTimeout(() =&gt; {
+      if (activeTrigger === trigger &amp;&amp; !trigger.isConnected) {
+        closeTooltip(false);
+      }
+    }, 0);
+  };
+  const handleLeave = (event) =&gt; {
+    if (pinnedByTouch) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    lastPointerWasTouch = false;
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    lastPointerWasTouch = false;
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerdown&quot;, handlePointer);
+    document.removeEventListener(&quot;pointercancel&quot;, handlePointer);
+    document.removeEventListener(&quot;click&quot;, handleTouchClick);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerdown&quot;, handlePointer);
+  document.addEventListener(&quot;pointercancel&quot;, handlePointer);
+  document.addEventListener(&quot;click&quot;, handleTouchClick);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-tabs&quot;&gt;
+(() =&gt; {
+  const selector = &#x27;.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]&#x27;;
+  const disabled = &#x27;:disabled,[aria-disabled=&quot;true&quot;]&#x27;;
+  const selectTab = (selected) =&gt; {
+    const panelId = selected.getAttribute(&quot;aria-controls&quot;);
+    for (const tab of selected.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)) {
+      const active = tab === selected;
+      tab.classList.toggle(&quot;active&quot;, active);
+      tab.setAttribute(&quot;aria-selected&quot;, String(active));
+      const id = tab.getAttribute(&quot;aria-controls&quot;);
+      const panel = id &amp;&amp; document.getElementById(id);
+      if (panel != null) {
+        panel.hidden = id !== panelId;
+        if (!panel.hidden &amp;&amp; selected.id) {
+          panel.setAttribute(&quot;aria-labelledby&quot;, selected.id);
+        }
+      }
+    }
+  };
+  const interact = (event) =&gt; {
+    const tab = event.target?.closest?.(selector);
+    if (event.defaultPrevented || tab == null || tab.matches(disabled)) {
+      return;
+    }
+    if (event.type === &quot;click&quot;) {
+      selectTab(tab);
+      return;
+    }
+    const tabs = Array.from(
+      tab.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;),
+    ).filter((candidate) =&gt; !candidate.matches(disabled));
+    const current = tabs.indexOf(tab);
+    let next;
+    if (event.key === &quot;ArrowRight&quot; || event.key === &quot;ArrowDown&quot;) {
+      next = (current + 1) % tabs.length;
+    } else if (event.key === &quot;ArrowLeft&quot; || event.key === &quot;ArrowUp&quot;) {
+      next = (current + tabs.length - 1) % tabs.length;
+    } else if (event.key === &quot;Home&quot;) {
+      next = 0;
+    } else if (event.key === &quot;End&quot;) {
+      next = tabs.length - 1;
+    } else {
+      return;
+    }
+    event.preventDefault();
+    tabs[next].focus();
+    selectTab(tabs[next]);
+  };
+
+  for (const list of document.querySelectorAll(&#x27;.nav[role=&quot;tablist&quot;]&#x27;)) {
+    const selected =
+      list.querySelector(&#x27;[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;].active&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;]&#x27;);
+    if (selected != null) {
+      selectTab(selected);
+    }
+  }
+  document.addEventListener(&quot;click&quot;, interact);
+  document.addEventListener(&quot;keydown&quot;, interact);
+  window.addEventListener(&quot;pagehide&quot;, () =&gt; {
+    document.removeEventListener(&quot;click&quot;, interact);
+    document.removeEventListener(&quot;keydown&quot;, interact);
+  }, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>

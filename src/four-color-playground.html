@@ -1,0 +1,807 @@
+<div id="fourfold-exhibit" data-mode="compare" aria-label="Fourfold map coloring exhibit">
+  <style>
+    #fourfold-exhibit {
+      color-scheme: light dark;
+      --ff-paper: light-dark(#fffdf8,#202622);
+      --ff-ink: light-dark(#253a32,#f1f3e9);
+      --ff-muted: light-dark(#657369,#b0bdb2);
+      --ff-line: light-dark(#e0e5d9,#414c42);
+      --ff-sea: light-dark(#eaf1e7,#2a382f);
+      --ff-empty: light-dark(#f7f8f0,#65736b);
+      --ff-border: light-dark(#fffdf8,#202622);
+      --ff-chip: light-dark(#f2f3e9,#354037);
+      --ff-dark: light-dark(#263f34,#daedc8);
+      --ff-on-dark: light-dark(#fffdf8,#253a32);
+      --ff-red: light-dark(#b73d35,#ff9c94);
+      --ff-green: light-dark(#377658,#abd19b);
+      --ff-c1:light-dark(#f18d78,#eb9987);
+      --ff-c2:light-dark(#f4cb65,#e9c875);
+      --ff-c3:light-dark(#83bbd1,#8bbacf);
+      --ff-c4:light-dark(#b4a0d4,#b8a7d3);
+      --ff-map-ink:#273a36;
+      font-family: 'Avenir Next', 'Segoe UI', sans-serif;
+      color:var(--ff-ink); background:var(--ff-paper); overflow:hidden; border-radius:24px;
+    }
+    #fourfold-exhibit * { box-sizing:border-box; }
+    #fourfold-exhibit button, #fourfold-exhibit select { font:inherit; cursor:pointer; }
+    #fourfold-exhibit button:disabled { cursor:default; opacity:.5; }
+    #fourfold-exhibit button { -webkit-tap-highlight-color:transparent; }
+    #fourfold-exhibit .ff-nav { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px 32px; border-bottom:1px solid var(--ff-line); }
+    #fourfold-exhibit .ff-brand { display:flex; align-items:center; gap:10px; font-family:Georgia,serif; font-size:25px; letter-spacing:-1px; }
+    #fourfold-exhibit .ff-mark { width:29px; height:29px; display:grid; grid-template-columns:1fr 1fr; gap:3px; transform:rotate(-7deg); }
+    #fourfold-exhibit .ff-mark span { border-radius:5px 5px 2px 5px; }
+    #fourfold-exhibit .ff-nav-actions { display:flex; align-items:center; gap:18px; }
+    #fourfold-exhibit .ff-nav-note { color:var(--ff-muted); font-size:10px; letter-spacing:1.7px; }
+    #fourfold-exhibit .ff-text-button { border:0; background:transparent; color:var(--ff-ink); padding:8px 0; font-size:13px; text-decoration:underline; text-underline-offset:4px; }
+    #fourfold-exhibit .ff-main { display:grid; grid-template-columns:minmax(250px,.8fr) minmax(0,1.3fr); gap:24px; padding:38px 32px 24px; }
+    #fourfold-exhibit .ff-intro { align-self:center; padding:4px 0 22px; }
+    #fourfold-exhibit .ff-eyebrow { font-size:10px; font-weight:500; letter-spacing:1.8px; color:var(--ff-muted); display:flex; align-items:center; gap:8px; }
+    #fourfold-exhibit .ff-little-dot { width:7px; height:7px; border-radius:50%; background:var(--ff-c1); display:inline-block; }
+    #fourfold-exhibit h1 { color:var(--ff-ink); font-family:Georgia,'Times New Roman',serif; font-weight:400; font-size:clamp(37px,4.9vw,54px); line-height:1.03; letter-spacing:-2.1px; margin:19px 0 17px; }
+    #fourfold-exhibit h1 em { font-weight:400; color:var(--ff-green); }
+    #fourfold-exhibit .ff-lede { font-size:14px; line-height:1.65; color:var(--ff-muted); max-width:295px; margin:0 0 25px; }
+    #fourfold-exhibit .ff-palette-label { font-size:12px; margin-bottom:11px; display:flex; justify-content:space-between; gap:8px; max-width:278px; }
+    #fourfold-exhibit .ff-palette-label span { color:var(--ff-muted); }
+    #fourfold-exhibit .ff-palette { display:flex; gap:10px; margin-bottom:12px; }
+    #fourfold-exhibit .ff-paint { width:53px; height:55px; border:2px solid transparent; border-radius:16px; background:var(--paint); color:var(--ff-map-ink); position:relative; transition:transform .15s; font-size:17px; font-weight:500; box-shadow:inset 0 -3px 0 color-mix(in srgb,var(--ff-map-ink) 8%,transparent); }
+    #fourfold-exhibit .ff-paint:hover { transform:translateY(-3px); }
+    #fourfold-exhibit .ff-paint[aria-pressed=true] { outline:2px solid var(--ff-ink); outline-offset:3px; transform:translateY(-3px); }
+    #fourfold-exhibit .ff-instruction { font-size:12px; line-height:1.5; color:var(--ff-muted); margin:0 0 25px; }
+    #fourfold-exhibit .ff-actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    #fourfold-exhibit .ff-primary { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 17px; border:0; border-radius:12px; background:var(--ff-dark); color:var(--ff-on-dark); font-size:13px; font-weight:500; min-height:44px; }
+    #fourfold-exhibit .ff-secondary { display:inline-flex; align-items:center; justify-content:center; padding:12px 14px; border:1px solid var(--ff-line); border-radius:12px; background:transparent; color:var(--ff-ink); font-size:13px; min-height:44px; }
+    #fourfold-exhibit .ff-why { display:inline-flex; align-items:center; gap:8px; margin-top:23px; padding:0; border:0; background:transparent; color:var(--ff-muted); font-size:12px; text-decoration:underline; text-underline-offset:4px; }
+    #fourfold-exhibit .ff-lesson { font-size:13px; line-height:1.6; color:var(--ff-green); max-width:290px; margin:16px 0 0; }
+    #fourfold-exhibit .ff-world { min-width:0; }
+    #fourfold-exhibit .ff-map-toolbar { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:12px; }
+    #fourfold-exhibit .ff-map-choice { display:flex; gap:7px; align-items:center; color:var(--ff-muted); font-size:12px; min-width:0; }
+    #fourfold-exhibit .ff-map-choice select { border:0; background:var(--ff-paper); color:var(--ff-ink); padding:7px 20px 7px 6px; max-width:220px; font-size:12px; border-radius:6px; }
+    #fourfold-exhibit .ff-new-map { display:flex; align-items:center; gap:5px; color:var(--ff-muted); border:0; padding:8px 0 8px 8px; background:transparent; white-space:nowrap; font-size:12px; }
+    #fourfold-exhibit .ff-map-stage { width:100%; position:relative; background:var(--ff-sea); border-radius:27px; overflow:hidden; }
+    #fourfold-exhibit .ff-map-art { display:block; width:100%; }
+    #fourfold-exhibit .ff-map-art .ff-region { stroke:var(--ff-border); stroke-width:2.5; stroke-linejoin:round; transition:fill .28s; }
+    #fourfold-exhibit .ff-map-art .ff-region.ff-uncolored { stroke:light-dark(#bac8b4,#a9baac); stroke-width:1.4; stroke-dasharray:3 3; }
+    #fourfold-exhibit .ff-map-art .ff-region.ff-hovered { stroke:var(--ff-ink); stroke-width:3; }
+    #fourfold-exhibit .ff-map-art .ff-number { font:500 12px 'Avenir Next','Segoe UI',sans-serif; fill:var(--ff-map-ink); text-anchor:middle; dominant-baseline:central; pointer-events:none; opacity:.85; }
+    #fourfold-exhibit .ff-map-art .ff-empty-number { fill:var(--ff-muted); opacity:.7; }
+    #fourfold-exhibit .ff-map-art .ff-clash { stroke:var(--ff-red); stroke-width:5; stroke-linecap:round; pointer-events:none; }
+    #fourfold-exhibit .ff-map-art .ff-connection { stroke:var(--ff-ink); stroke-width:1.8; opacity:.72; pointer-events:none; }
+    #fourfold-exhibit .ff-map-art .ff-dot { stroke:var(--ff-ink); stroke-width:1.5; pointer-events:none; }
+    #fourfold-exhibit .ff-map-stage[data-connections=true] .ff-region { opacity:.38; }
+    #fourfold-exhibit .ff-hit-layer { position:absolute; inset:0; }
+    #fourfold-exhibit .ff-region-hit { position:absolute; padding:0; border:0; background:transparent; }
+    #fourfold-exhibit .ff-map-stamp { position:absolute; left:18px; bottom:13px; display:flex; align-items:center; gap:7px; pointer-events:none; color:var(--ff-muted); font-size:10px; letter-spacing:1.2px; }
+    #fourfold-exhibit .ff-map-stamp span:first-child { width:5px; height:5px; display:inline-block; border-radius:50%; background:currentColor; }
+    #fourfold-exhibit .ff-progress-line { display:flex; justify-content:space-between; align-items:center; gap:10px; margin:16px 0 9px; font-size:12px; font-variant-numeric:tabular-nums; }
+    #fourfold-exhibit .ff-progress-line strong { font-weight:500; }
+    #fourfold-exhibit .ff-progress-line .ff-clashes { display:inline-flex; gap:6px; align-items:center; color:var(--ff-green); }
+    #fourfold-exhibit .ff-progress-line .ff-clashes[data-invalid=true] { color:var(--ff-red); }
+    #fourfold-exhibit .ff-progress-track { height:5px; background:var(--ff-chip); overflow:hidden; border-radius:5px; }
+    #fourfold-exhibit .ff-progress-fill { height:100%; background:var(--ff-green); transition:width .25s; }
+    #fourfold-exhibit .ff-result { min-height:34px; padding-top:10px; font-size:12px; line-height:1.55; color:var(--ff-muted); }
+    #fourfold-exhibit .ff-bottom { padding:19px 32px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; border-top:1px solid var(--ff-line); font-size:12px; color:var(--ff-muted); }
+    #fourfold-exhibit .ff-rule { display:flex; gap:8px; align-items:center; }
+    #fourfold-exhibit .ff-connections-toggle { display:flex; align-items:center; gap:7px; cursor:pointer; }
+    #fourfold-exhibit .ff-connections-toggle input { accent-color:var(--ff-green); width:15px; height:15px; margin:0; }
+    #fourfold-exhibit .ff-about { margin:0; padding:24px 32px; border-top:1px solid var(--ff-line); background:var(--ff-chip); }
+    #fourfold-exhibit .ff-about h2 { color:var(--ff-ink); font:400 26px Georgia,serif; margin:0 0 10px; letter-spacing:-.5px; }
+    #fourfold-exhibit .ff-about p { max-width:760px; color:var(--ff-muted); font-size:13px; line-height:1.65; margin:8px 0; }
+    #fourfold-exhibit .ff-about details { margin-top:13px; font-size:12px; color:var(--ff-ink); }
+    #fourfold-exhibit .ff-about summary { cursor:pointer; }
+    #fourfold-exhibit .ff-confetti { pointer-events:none; position:absolute; inset:0; overflow:hidden; }
+    #fourfold-exhibit .ff-confetti span { position:absolute; width:7px; height:11px; top:-14px; border-radius:2px; animation:ff-fall 1.7s ease-out both; }
+    @keyframes ff-fall { from { transform:translateY(-12px) rotate(0deg);opacity:1; } to { transform:translateY(430px) rotate(270deg);opacity:0; } }
+    @media (prefers-reduced-motion:reduce) {
+      #fourfold-exhibit .ff-map-art .ff-region, #fourfold-exhibit .ff-progress-fill, #fourfold-exhibit .ff-paint { transition:none; }
+      #fourfold-exhibit .ff-confetti { display:none; }
+    }
+    @media (max-width:760px) {
+      #fourfold-exhibit .ff-main { grid-template-columns:minmax(210px,.8fr) minmax(0,1.1fr); gap:20px; padding:28px 24px 22px; }
+      #fourfold-exhibit h1 { font-size:40px; }
+      #fourfold-exhibit .ff-paint { width:46px; height:49px; border-radius:13px; }
+      #fourfold-exhibit .ff-palette { gap:9px; }
+      #fourfold-exhibit .ff-nav-note { display:none; }
+      #fourfold-exhibit .ff-map-choice>span { display:none; }
+      #fourfold-exhibit .ff-map-choice select { max-width:170px; }
+    }
+    @media (max-width:600px) {
+      #fourfold-exhibit { border-radius:18px; }
+      #fourfold-exhibit .ff-nav { padding:17px 20px; }
+      #fourfold-exhibit .ff-main { display:flex; flex-direction:column; padding:26px 20px 18px; gap:21px; }
+      #fourfold-exhibit .ff-intro { align-self:stretch; padding:0; }
+      #fourfold-exhibit h1 { font-size:43px; margin:14px 0 12px; }
+      #fourfold-exhibit h1 br { display:none; }
+      #fourfold-exhibit .ff-lede { max-width:none; margin-bottom:19px; font-size:13px; }
+      #fourfold-exhibit .ff-palette-label { max-width:none; }
+      #fourfold-exhibit .ff-paint { width:52px; height:48px; }
+      #fourfold-exhibit .ff-palette { gap:12px; margin-bottom:11px; }
+      #fourfold-exhibit .ff-instruction { margin-bottom:17px; }
+      #fourfold-exhibit .ff-why { margin-top:17px; }
+      #fourfold-exhibit .ff-bottom { padding:17px 20px; gap:16px; font-size:11px; }
+      #fourfold-exhibit .ff-about { padding:22px 20px; }
+      #fourfold-exhibit .ff-map-choice select { max-width:205px; font-size:13px; }
+    }
+    @media (pointer:coarse) {
+      #fourfold-exhibit .ff-new-map, #fourfold-exhibit .ff-why, #fourfold-exhibit .ff-text-button, #fourfold-exhibit .ff-connections-toggle { min-height:44px; }
+      #fourfold-exhibit .ff-map-choice select { font-size:16px; max-width:200px; }
+    }
+  </style>
+  <style>
+    #fourfold-exhibit .fb-mode { display:flex; gap:4px; background:var(--ff-chip); border-radius:10px; padding:3px; }
+    #fourfold-exhibit .fb-mode button { border:0; border-radius:7px; background:transparent; color:var(--ff-muted); padding:8px 12px; font-size:12px; }
+    #fourfold-exhibit .fb-mode button[aria-pressed=true] { background:var(--ff-paper); color:var(--ff-ink); }
+    #fourfold-exhibit [hidden] { display:none !important; }
+    #fourfold-exhibit .fb-main { padding:30px 32px; }
+    #fourfold-exhibit .fb-top { display:flex; align-items:start; justify-content:space-between; gap:20px; }
+    #fourfold-exhibit .fb-top h1 { font-size:39px; margin:10px 0 12px; letter-spacing:-1.2px; }
+    #fourfold-exhibit .fb-sub { margin:0; color:var(--ff-muted); font-size:13px; line-height:1.6; }
+    #fourfold-exhibit .fb-theory { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:22px; }
+    #fourfold-exhibit .fb-era { padding:17px 19px; border:1px solid var(--ff-line); border-radius:15px; min-width:0; }
+    #fourfold-exhibit .fb-era-label { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--ff-muted); }
+    #fourfold-exhibit .fb-era h2 { color:var(--ff-ink); font:400 22px Georgia,serif; margin:8px 0 12px; }
+    #fourfold-exhibit .fb-era h2 small { font:400 11px 'Segoe UI',sans-serif; color:var(--ff-muted); }
+    #fourfold-exhibit .fb-bound { display:flex; justify-content:space-between; gap:14px; align-items:baseline; flex-wrap:wrap; }
+    #fourfold-exhibit .fb-bound strong { font:400 26px Georgia,serif; }
+    #fourfold-exhibit .fb-growth { font-size:13px; font-variant-numeric:tabular-nums; }
+    #fourfold-exhibit .fb-era p { color:var(--ff-muted); font-size:11px; line-height:1.6; margin:10px 0 0; }
+    #fourfold-exhibit .fb-era a, #fourfold-exhibit .fb-methods a { color:inherit; text-underline-offset:3px; }
+    #fourfold-exhibit .fb-note { font-size:11px; color:var(--ff-muted); line-height:1.65; margin:12px 0 23px; }
+    #fourfold-exhibit .fb-controls { display:flex; flex-wrap:wrap; align-items:end; gap:12px; padding:20px 0; border-top:1px solid var(--ff-line); border-bottom:1px solid var(--ff-line); }
+    #fourfold-exhibit .fb-control { display:flex; flex-direction:column; gap:6px; font-size:11px; color:var(--ff-muted); }
+    #fourfold-exhibit .fb-control select, #fourfold-exhibit .fb-control input { border:1px solid var(--ff-line); border-radius:9px; padding:10px; background:var(--ff-paper); color:var(--ff-ink); font:400 13px 'Segoe UI',sans-serif; min-height:40px; }
+    #fourfold-exhibit .fb-control input { width:88px; }
+    #fourfold-exhibit .fb-control select { max-width:180px; }
+    #fourfold-exhibit .fb-controls .ff-primary, #fourfold-exhibit .fb-controls .ff-secondary { min-height:40px; padding:11px 14px; }
+    #fourfold-exhibit .fb-lab-heading { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin:23px 0 8px; }
+    #fourfold-exhibit .fb-lab-heading h2 { color:var(--ff-ink); margin:0; font:400 25px Georgia,serif; }
+    #fourfold-exhibit .fb-map-info { font-size:11px; color:var(--ff-muted); font-variant-numeric:tabular-nums; }
+    #fourfold-exhibit .fb-scope { font-size:12px; line-height:1.6; color:var(--ff-muted); margin:0 0 17px; }
+    #fourfold-exhibit .fb-racers { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+    #fourfold-exhibit .fb-racer { min-width:0; }
+    #fourfold-exhibit .fb-racer-head { display:flex; justify-content:space-between; gap:10px; align-items:start; margin-bottom:8px; }
+    #fourfold-exhibit .fb-racer h3 { margin:0; color:var(--ff-ink); font-size:14px; font-weight:500; }
+    #fourfold-exhibit .fb-method-tag { margin-top:5px; font-size:11px; color:var(--ff-muted); }
+    #fourfold-exhibit .fb-status { font-size:10px; color:var(--ff-muted); text-transform:uppercase; letter-spacing:.9px; padding-top:2px; }
+    #fourfold-exhibit .fb-time-row { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:12px 0; }
+    #fourfold-exhibit .fb-time { font:400 35px Georgia,serif; font-variant-numeric:tabular-nums; letter-spacing:-1px; color:var(--ff-ink); }
+    #fourfold-exhibit .fb-time-note { font-size:11px; color:var(--ff-muted); }
+    #fourfold-exhibit .fb-map { width:100%; display:block; background:var(--ff-sea); border-radius:16px; }
+    #fourfold-exhibit .fb-validation { min-height:28px; padding-top:10px; color:var(--ff-green); font-size:11px; }
+    #fourfold-exhibit .fb-validation[data-failed=true] { color:var(--ff-red); }
+    #fourfold-exhibit .fb-stats { display:flex; gap:12px; justify-content:space-between; flex-wrap:wrap; border-top:1px solid var(--ff-line); padding-top:10px; color:var(--ff-muted); font-size:11px; line-height:1.6; }
+    #fourfold-exhibit .fb-stats strong { color:var(--ff-ink); font-weight:500; font-variant-numeric:tabular-nums; }
+    #fourfold-exhibit .fb-message { font-size:13px; line-height:1.6; min-height:44px; color:var(--ff-ink); padding:19px 0 8px; }
+    #fourfold-exhibit .fb-history { border-top:1px solid var(--ff-line); margin-top:10px; padding-top:15px; }
+    #fourfold-exhibit .fb-history-head { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    #fourfold-exhibit .fb-history h3 { margin:0; font-size:13px; font-weight:500; color:var(--ff-ink); }
+    #fourfold-exhibit .fb-table { width:100%; border-collapse:collapse; margin-top:9px; font-size:12px; font-variant-numeric:tabular-nums; }
+    #fourfold-exhibit .fb-table th { font-weight:400; color:var(--ff-muted); text-align:right; padding:10px 5px; border-bottom:1px solid var(--ff-line); }
+    #fourfold-exhibit .fb-table td { color:var(--ff-ink); padding:11px 5px; text-align:right; border-bottom:1px solid var(--ff-line); }
+    #fourfold-exhibit .fb-table th:first-child, #fourfold-exhibit .fb-table td:first-child { text-align:left; }
+    #fourfold-exhibit .fb-methods { color:var(--ff-muted); font-size:12px; line-height:1.65; margin-top:19px; }
+    #fourfold-exhibit .fb-methods summary { cursor:pointer; color:var(--ff-ink); }
+    #fourfold-exhibit .fb-methods ul { padding-left:20px; }
+    #fourfold-exhibit .fb-methods li { margin:6px 0; }
+    #fourfold-exhibit .fb-json { width:100%; margin-top:12px; padding:12px; border:1px solid var(--ff-line); border-radius:9px; background:var(--ff-paper); color:var(--ff-ink); font:12px ui-monospace,monospace; }
+    #fourfold-exhibit .fb-key { display:flex; flex-wrap:wrap; align-items:center; gap:9px; margin:14px 0 0; color:var(--ff-muted); font-size:11px; }
+    #fourfold-exhibit .fb-key i { display:inline-block; width:10px; height:10px; border-radius:3px; }
+    @media(max-width:760px) { #fourfold-exhibit .fb-main{padding:25px 24px;} #fourfold-exhibit .fb-racers{gap:18px;} #fourfold-exhibit .fb-theory{gap:18px;} #fourfold-exhibit .fb-time{font-size:30px;} }
+    @media(max-width:600px) { #fourfold-exhibit .fb-main{padding:23px 20px;} #fourfold-exhibit .fb-top h1{font-size:33px;} #fourfold-exhibit .fb-theory,#fourfold-exhibit .fb-racers{grid-template-columns:1fr;} #fourfold-exhibit .fb-theory{gap:12px;} #fourfold-exhibit .fb-racers{gap:28px;} #fourfold-exhibit .fb-controls{gap:10px;} #fourfold-exhibit .fb-control select{max-width:150px;} #fourfold-exhibit .fb-controls button{flex-grow:1;} #fourfold-exhibit .ff-nav-actions{gap:10px;} #fourfold-exhibit .ff-nav{padding:17px 16px;} #fourfold-exhibit .ff-brand{font-size:22px;} #fourfold-exhibit .ff-mark{width:23px;height:23px;} #fourfold-exhibit .fb-mode button{padding:8px;} #fourfold-exhibit .fb-table{font-size:11px;} }
+  </style>
+  <header class="ff-nav">
+    <div class="ff-brand"><span class="ff-mark" aria-hidden="true"><span style="background:var(--ff-c1)"></span><span style="background:var(--ff-c2)"></span><span style="background:var(--ff-c3)"></span><span style="background:var(--ff-c4)"></span></span>fourfold</div>
+    <div class="ff-nav-actions"><div class="fb-mode" role="group" aria-label="Demo mode"><button type="button" data-b-mode="play" aria-pressed="false">Paint</button><button type="button" data-b-mode="compare" aria-pressed="true">Compare</button></div><button type="button" class="ff-text-button" data-about-toggle aria-expanded="false" aria-controls="ff-about-panel">The idea</button></div>
+  </header>
+  <div data-b-play-view hidden>
+  <main class="ff-main">
+    <section class="ff-intro" aria-label="Paint controls">
+      <div class="ff-eyebrow"><span class="ff-little-dot"></span>THE FOUR COLOR CHALLENGE</div>
+      <h1>A whole world.<br> <em>Just four colors.</em></h1>
+      <p class="ff-lede">Give neighboring regions different colors. That's the whole game. Four colors are always enough.</p>
+      <div class="ff-palette-label">Your paintbox <span data-paint-name>Coral selected</span></div>
+      <div class="ff-palette" role="group" aria-label="Choose a paint color">
+        <button type="button" class="ff-paint" data-paint="0" style="--paint:var(--ff-c1)" aria-pressed="true" aria-label="Color 1, Coral">1</button>
+        <button type="button" class="ff-paint" data-paint="1" style="--paint:var(--ff-c2)" aria-pressed="false" aria-label="Color 2, Sunshine">2</button>
+        <button type="button" class="ff-paint" data-paint="2" style="--paint:var(--ff-c3)" aria-pressed="false" aria-label="Color 3, Sky">3</button>
+        <button type="button" class="ff-paint" data-paint="3" style="--paint:var(--ff-c4)" aria-pressed="false" aria-label="Color 4, Lilac">4</button>
+      </div>
+      <p class="ff-instruction">Pick a color. Tap a region. Make it yours.</p>
+      <div class="ff-actions">
+        <button type="button" class="ff-primary" data-solve><i data-lucide="play" aria-hidden="true"></i><span data-solve-label>Watch it color</span></button>
+        <button type="button" class="ff-secondary" data-clear>Try from blank</button>
+      </div>
+      <button type="button" class="ff-why" data-why>Could we get away with three? <i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+      <p class="ff-lesson" data-lesson hidden>Every region here touches the other three. This little map really does need a fourth color.</p>
+    </section>
+    <section class="ff-world" aria-label="Interactive coloring map">
+      <div class="ff-map-toolbar">
+        <label class="ff-map-choice"><span>Explore</span><select data-size aria-label="Choose a map"><option value="12">Little adventure · 12</option><option value="28" selected>Color country · 28</option><option value="44">The big picture · 44</option><option value="4">Why four? · 4</option></select></label>
+        <button type="button" class="ff-new-map" data-new><i data-lucide="shuffle" aria-hidden="true"></i>New map</button>
+      </div>
+      <div class="ff-map-stage" data-connections="false">
+        <svg class="ff-map-art" role="img" aria-labelledby="ff-map-title ff-map-desc"><title id="ff-map-title">A colorful fictional map</title><desc id="ff-map-desc">Paint each region using one of four colors. Regions sharing a border must have different colors. The keyboard-accessible region buttons follow this picture.</desc><g data-regions></g><g data-clashes></g><g data-dual></g><g data-numbers></g></svg>
+        <div class="ff-hit-layer" data-hit-layer role="group" aria-label="Paint a region"></div>
+        <div class="ff-map-stamp" aria-hidden="true"><span></span><span>AN IMAGINARY LITTLE WORLD</span></div>
+        <div class="ff-confetti" data-confetti aria-hidden="true"></div>
+      </div>
+      <div class="ff-progress-line"><span><strong data-colored>0</strong> of <span data-total>28</span> regions colored</span><span class="ff-clashes" data-clash-status data-invalid="false"><span data-valid-icon><i data-lucide="check" aria-hidden="true"></i></span><span data-invalid-icon hidden><i data-lucide="circle-alert" aria-hidden="true"></i></span><span data-clash-count>No clashes</span></span></div>
+      <div class="ff-progress-track" role="progressbar" aria-label="Regions colored" aria-valuemin="0" aria-valuemax="28" aria-valuenow="0"><div class="ff-progress-fill" data-progress style="width:0%"></div></div>
+      <div class="ff-result" data-message role="status" aria-live="polite">Your map is ready.</div>
+    </section>
+  </main>
+  <footer class="ff-bottom"><span class="ff-rule"><i data-lucide="lightbulb" aria-hidden="true"></i>Corners can share a color. Borders can’t.</span><label class="ff-connections-toggle"><input type="checkbox" data-connections><span>Peek at the connections</span></label></footer>
+  </div>
+  <section class="fb-main" data-b-compare-view aria-label="Algorithm comparison">
+    <div class="fb-top"><div><div class="ff-eyebrow"><span class="ff-little-dot"></span>FROM THE FIRST PROOF TO A NEW PROPOSAL</div><h1>More regions. <br><em>How much more work?</em></h1><p class="fb-sub">Explore Appel–Haken and the 2026 paper, then time the code that runs in this demo.</p></div></div>
+    <div class="fb-theory">
+      <article class="fb-era"><div class="fb-era-label">ORIGINAL · 1976 / 1977</div><h2>Appel–Haken</h2><div class="fb-bound"><strong>O(n⁴)</strong><span class="fb-growth" data-b-old-growth>—</span></div><p>Associated constructive coloring bound. <a href="https://www.ams.org/notices/199807/thomas.pdf" target="_blank" rel="noopener noreferrer">Historical source</a><br>Full implementation: not available in this demo.</p></article>
+      <article class="fb-era"><div class="fb-era-label">NEW PROPOSAL · 2026</div><h2>Inoue et al.</h2><div class="fb-bound"><strong>O(n log n)</strong><span class="fb-growth" data-b-new-growth>—</span></div><p>Claimed bound in the supplied paper. <a href="https://arxiv.org/abs/2603.24880v2" target="_blank" rel="noopener noreferrer">Paper, version 2</a><br>Full implementation: not available in this demo.</p></article>
+    </div>
+    <p class="fb-note"><strong>Growth models, not measured times.</strong> Both formulas are normalized to 1 at 64 regions; constants are unknown. The original proof-checking computer program is a different task from coloring one map. The intervening 1996/97 RSST method has a quadratic bound.</p>
+    <div class="fb-controls">
+      <label class="fb-control">Regions<select data-b-size><option value="8">64 regions</option><option value="16">256 regions</option><option value="32" selected>1,024 regions</option><option value="64x32">2,048 regions</option><option value="64">4,096 regions</option><option value="128">16,384 regions</option></select></label>
+      <label class="fb-control">Map seed<input data-b-seed type="number" min="0" max="999999" value="817" step="1"></label>
+      <label class="fb-control">Timed runs<select data-b-repeats><option value="1">1 run</option><option value="3" selected>3 runs · median</option><option value="5">5 runs · median</option></select></label>
+      <button type="button" class="ff-primary" data-b-run>Run demo benchmark</button>
+      <button type="button" class="ff-secondary" data-b-sweep>Test all sizes</button>
+      <button type="button" class="ff-secondary" data-b-stop disabled>Stop</button>
+    </div>
+    <div class="fb-lab-heading"><h2>Real runtime laboratory</h2><span class="fb-map-info" data-b-map-info>Preparing your map…</span></div>
+    <p class="fb-scope"><strong>These are demo implementations, not the complete historical algorithms above.</strong> The comparison below is DSATUR search versus a limited reduction prototype. Measured solver time excludes map construction and drawing.</p>
+    <div class="fb-racers">
+      <article class="fb-racer" data-b-method="dsatur"><div class="fb-racer-head"><div><h3>Demo DSATUR</h3><div class="fb-method-tag">Search directly on the whole graph</div></div><span class="fb-status" data-b-status>Ready</span></div><div class="fb-time-row"><strong class="fb-time" data-b-time>—</strong><span class="fb-time-note" data-b-time-note>Solver time</span></div><canvas class="fb-map" data-b-canvas aria-label="Map colored by the demo DSATUR solver"></canvas><div class="fb-validation" data-b-validation>Awaiting a checked coloring</div><div class="fb-stats"><span>Search choices <strong data-b-stat-a>—</strong></span><span>Backtracks <strong data-b-stat-b>—</strong></span></div></article>
+      <article class="fb-racer" data-b-method="reduction"><div class="fb-racer-head"><div><h3>Local reduction prototype</h3><div class="fb-method-tag">Reduce, color the core, restore</div></div><span class="fb-status" data-b-status>Ready</span></div><div class="fb-time-row"><strong class="fb-time" data-b-time>—</strong><span class="fb-time-note" data-b-time-note>Solver time</span></div><canvas class="fb-map" data-b-canvas aria-label="Map colored by the local reduction prototype"></canvas><div class="fb-validation" data-b-validation>Awaiting a checked coloring</div><div class="fb-stats"><span>Removed <strong data-b-stat-a>—</strong></span><span>Search core <strong data-b-stat-b>—</strong></span><span>Kempe swaps <strong data-b-stat-c>—</strong></span></div></article>
+    </div>
+    <div class="fb-key"><span>Same four colors</span><i style="background:var(--ff-c1)"></i>1<i style="background:var(--ff-c2)"></i>2<i style="background:var(--ff-c3)"></i>3<i style="background:var(--ff-c4)"></i>4<span>· Live maps refresh every 5 seconds. Blank tiles are uncolored; search may undo colors.</span></div>
+    <div class="fb-message" data-b-message role="status" aria-live="polite">Choose a size and run the demo benchmark.</div>
+    <div class="fb-history"><div class="fb-history-head"><h3>Measured demo timings</h3><button type="button" class="ff-text-button" data-b-export disabled>Results JSON</button></div><table class="fb-table"><thead><tr><th>Regions · seed</th><th>DSATUR</th><th>Reduction<br>prototype</th><th>Runs</th></tr></thead><tbody data-b-history><tr><td colspan="4">No measurements yet.</td></tr></tbody></table><textarea class="fb-json" data-b-json readonly rows="8" aria-label="Benchmark results JSON, select and copy to save" hidden></textarea></div>
+    <details class="fb-methods"><summary>What is being timed?</summary><ul>
+      <li>Both demo methods receive identical region adjacencies, with a deterministic seed and map fingerprint. Maps are jittered square-grid Voronoi examples, not a representative collection of all planar graphs.</li>
+      <li>Two small warm-up runs per method precede measurement. Timed runs execute sequentially in a worker and alternate order. The display reports the median and range of completed trials. A 100-second solver limit ends a trial; timeouts are not successful colorings or zero times.</li>
+      <li>Solver time includes its state allocation, all reduction, search, and restoration work, and the small cost of copying and sending progress every 5 seconds. Map generation, warm-up, final data transfer, independent edge checking, and drawing are excluded.</li>
+      <li>Live maps show partial search states. Colored counts can decrease during backtracking and do not estimate time remaining. A completed coloring is marked Checked only after every shared border passes validation.</li>
+      <li>DSATUR uses iterative exact backtracking with saturation ordering. The prototype removes independent batches of vertices with at most four remaining neighbors, runs DSATUR on any leftover core, and restores using complete Kempe-component swaps.</li>
+      <li>The prototype does not implement the full catalogue, discharging, separator recursion, or certified rank scheduler of the 2026 paper. It has no near-linear runtime guarantee. Neither demo method is an implementation of Appel–Haken.</li>
+      <li>For a measured Appel–Haken versus 2026 comparison, both faithful implementations must first be built and audited. Published asymptotic bounds alone cannot determine milliseconds or real-world speedups.</li>
+    </ul></details>
+  </section>
+  <section class="ff-about" id="ff-about-panel" hidden>
+    <h2>A surprisingly simple rule.</h2>
+    <p>The four color theorem says that any flat map of connected regions can be colored with at most four colors, so regions sharing a border have different colors. A corner touching another corner doesn’t count as a shared border.</p>
+    <p>“Peek at the connections” turns regions into dots and shared borders into lines. Coloring the map and coloring those dots are the same puzzle. A successful example is a demonstration, not a proof for every map.</p>
+    <details><summary>About the paper and this exhibit</summary><p>The reviewed paper proposes removing suitable regions, coloring a smaller graph, and restoring the removed regions with coordinated recoloring. This public exhibit uses a small search solver to demonstrate map coloring. The complete paper algorithm and its remaining formal verification are separate work.</p></details>
+  </section>
+  <script>
+    (() => {
+      const root=document.getElementById('fourfold-exhibit');
+      const $=selector=>root.querySelector(selector);
+      const NS='http://www.w3.org/2000/svg';
+      const palettes={
+        Sorbet:{names:['Coral','Sunshine','Sky','Lilac'],light:['#f18d78','#f4cb65','#83bbd1','#b4a0d4'],dark:['#eb9987','#e9c875','#8bbacf','#b8a7d3']},
+        Garden:{names:['Rose','Buttercup','Mint','Periwinkle'],light:['#ea9aa9','#e2cd76','#8dc1a3','#98abdd'],dark:['#df9eaa','#d5c482','#94bda2','#9eaed6']},
+        Vivid:{names:['Tangerine','Lemon','Aqua','Iris'],light:['#f6a171','#ead763','#79c6b4','#aca3e7'],dark:['#eaaa88','#dacf87','#94c2b8','#b3aee0']}
+      };
+      const design={palette:'Sorbet',numbers:true};
+      const boundary=[[.13,.14],[.32,.055],[.65,.055],[.85,.15],[.96,.36],[.94,.64],[.79,.86],[.57,.95],[.30,.92],[.11,.78],[.035,.56],[.045,.34]];
+      let model=null,selected=0,seed=817,n=28,hover=-1,showConnections=false,play=null,timer=null,token=0,wasComplete=false;
+      let shapes=[],hits=[],width=0,height=0;
+      const assert=(condition,message)=>{if(!condition)throw new Error(message);};
+      function random(seedValue){let a=seedValue>>>0;return()=>{a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
+      const distance=(a,b)=>(a[0]-b[0])**2+(a[1]-b[1])**2;
+      const inside=(p,poly)=>poly.every((a,i)=>{const b=poly[(i+1)%poly.length];return(b[0]-a[0])*(p[1]-a[1])-(b[1]-a[1])*(p[0]-a[0])>=-1e-10;});
+      function clip(poly,nx,ny,k){
+        const output=[];
+        for(let i=0;i<poly.length;i++){
+          const a=poly[i],b=poly[(i+1)%poly.length],fa=a[0]*nx+a[1]*ny-k,fb=b[0]*nx+b[1]*ny-k;
+          if(fa<=1e-10)output.push(a);
+          if((fa<0&&fb>0)||(fa>0&&fb<0)){const t=fa/(fa-fb);output.push([a[0]+t*(b[0]-a[0]),a[1]+t*(b[1]-a[1])]);}
+        }
+        return output;
+      }
+      function solve(adj,limit=4){
+        const colors=adj.map(()=>-1),order=[];let nodes=0,exhausted=false;
+        function dfs(){
+          if(++nodes>200000){exhausted=true;return false;}
+          let best=-1,score=-1;
+          for(let u=0;u<colors.length;u++)if(colors[u]<0){
+            const saturation=new Set(adj[u].map(v=>colors[v]).filter(c=>c>=0)).size;
+            const s=saturation*100+adj[u].length;
+            if(s>score){score=s;best=u;}
+          }
+          if(best<0)return true;
+          const used=new Set(adj[best].map(v=>colors[v]));
+          for(let c=0;c<limit;c++)if(!used.has(c)){
+            colors[best]=c;order.push(best);if(dfs())return true;order.pop();colors[best]=-1;if(exhausted)return false;
+          }
+          return false;
+        }
+        const ok=dfs();return{ok,colors,order,nodes,exhausted};
+      }
+      function makeMap(count,seedValue){
+        const rng=random(seedValue),points=[];
+        if(count===4)points.push([.5,.5],[.5,.18],[.22,.72],[.78,.72]);
+        else for(let i=0;i<count;i++){
+          let best=null,bestDistance=-1;
+          for(let trial=0;trial<65;trial++){
+            let p;do{p=[.10+rng()*.80,.12+rng()*.74];}while(!inside(p,boundary));
+            const d=points.length?Math.min(...points.map(q=>distance(p,q))):1-distance(p,[.5,.5]);
+            if(d>bestDistance){best=p;bestDistance=d;}
+          }
+          points.push(best);
+        }
+        const cells=points.map((p,i)=>{
+          let polygon=boundary.map(q=>[...q]);
+          points.forEach((q,j)=>{if(i!==j)polygon=clip(polygon,2*(q[0]-p[0]),2*(q[1]-p[1]),q[0]**2+q[1]**2-p[0]**2-p[1]**2);});
+          assert(polygon.length>=3,'A region has no area.');return polygon;
+        });
+        const edges=[],segments=[],adj=points.map(()=>[]);
+        for(let i=0;i<count;i++)for(let j=i+1;j<count;j++){
+          const polygon=cells[i];
+          for(let k=0;k<polygon.length;k++){
+            const a=polygon[k],b=polygon[(k+1)%polygon.length],mid=[(a[0]+b[0])/2,(a[1]+b[1])/2];
+            if(distance(a,b)>1e-12&&Math.abs(distance(mid,points[i])-distance(mid,points[j]))<1e-8&&inside(mid,cells[j])){
+              edges.push([i,j]);segments.push([a,b]);adj[i].push(j);adj[j].push(i);break;
+            }
+          }
+        }
+        const solution=solve(adj);
+        assert(solution.ok,'The example solver reached its limit. Try another map.');
+        assert(edges.every(([a,b])=>solution.colors[a]!==solution.colors[b]),'The solution did not pass the border check.');
+        if(count===4)assert(edges.length===6&&!solve(adj,3).ok,'The four-color puzzle is not correct.');
+        const colors=solution.colors.map((c,i)=>((i*7+seedValue)%6===0||(i*11+seedValue)%9===0)?-1:c);
+        if(count===4){colors[0]=-1;colors[1]=0;colors[2]=1;colors[3]=2;}
+        const centers=cells.map(poly=>{
+          let area=0,x=0,y=0;poly.forEach((a,i)=>{const b=poly[(i+1)%poly.length],cross=a[0]*b[1]-b[0]*a[1];area+=cross;x+=(a[0]+b[0])*cross;y+=(a[1]+b[1])*cross;});
+          return[x/(3*area),y/(3*area)];
+        });
+        return{points,cells,centers,edges,segments,adj,solution,colors};
+      }
+      function node(tag,attributes={},text){
+        const e=document.createElementNS(NS,tag);Object.entries(attributes).forEach(([k,v])=>e.setAttribute(k,String(v)));if(text!==undefined)e.textContent=text;return e;
+      }
+      const xy=p=>[width*(.035+p[0]*.93),height*(.005+p[1]*.91)];
+      const path=poly=>poly.map((p,i)=>`${i?'L':'M'}${xy(p).join(' ')}`).join(' ')+' Z';
+      function stop(){if(timer!==null)clearTimeout(timer);timer=null;play=null;token++;$('[data-solve-label]').textContent='Watch it color';}
+      function selectPaint(color){
+        selected=color;
+        root.querySelectorAll('[data-paint]').forEach((b,i)=>{b.setAttribute('aria-pressed',String(i===selected));b.setAttribute('aria-label',`Color ${i+1}, ${palettes[design.palette].names[i]}`);});
+        $('[data-paint-name]').textContent=palettes[design.palette].names[selected]+' selected';
+        updateAria();
+      }
+      function updateAria(){
+        if(!model)return;
+        hits.forEach((b,i)=>b.setAttribute('aria-label',`Region ${i+1}, ${model.colors[i]<0?'uncolored':'color '+(model.colors[i]+1)}. Paint ${palettes[design.palette].names[selected]}, color ${selected+1}.`));
+      }
+      function celebrate(){
+        const box=$('[data-confetti]');box.replaceChildren();
+        if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+        for(let i=0;i<27;i++){const s=document.createElement('span');s.style.left=`${(i*37)%100}%`;s.style.background=`var(--ff-c${i%4+1})`;s.style.animationDelay=`${i%6*.06}s`;box.append(s);}
+        const thisToken=token;setTimeout(()=>{if(thisToken===token)box.replaceChildren();},2100);
+      }
+      function update(message){
+        if(!model)return;
+        model.colors.forEach((c,i)=>{
+          shapes[i]?.setAttribute('fill',c<0?'var(--ff-empty)':`var(--ff-c${c+1})`);
+          shapes[i]?.classList.toggle('ff-uncolored',c<0);
+          shapes[i]?.classList.toggle('ff-hovered',i===hover);
+        });
+        const conflicts=model.edges.map(([a,b],i)=>model.colors[a]>=0&&model.colors[a]===model.colors[b]?i:-1).filter(i=>i>=0);
+        const clashLayer=$('[data-clashes]');clashLayer.replaceChildren();
+        conflicts.forEach(i=>{const[a,b]=model.segments[i].map(xy);clashLayer.append(node('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],class:'ff-clash'}));});
+        const numbers=$('[data-numbers]');numbers.replaceChildren();
+        if(design.numbers&&!showConnections)model.centers.forEach((p,i)=>{const[x,y]=xy(p),c=model.colors[i];numbers.append(node('text',{x,y,class:`ff-number${c<0?' ff-empty-number':''}`},c<0?'·':c+1));});
+        const dual=$('[data-dual]');dual.replaceChildren();
+        if(showConnections){
+          model.edges.forEach(([a,b])=>{const p=xy(model.points[a]),q=xy(model.points[b]);dual.append(node('line',{x1:p[0],y1:p[1],x2:q[0],y2:q[1],class:'ff-connection'}));});
+          model.points.forEach((p,i)=>{const[x,y]=xy(p),c=model.colors[i];dual.append(node('circle',{cx:x,cy:y,r:9,fill:c<0?'var(--ff-empty)':`var(--ff-c${c+1})`,class:'ff-dot'}));if(design.numbers)dual.append(node('text',{x,y,class:'ff-number'},c<0?'·':c+1));});
+        }
+        const colored=model.colors.filter(c=>c>=0).length,complete=colored===n&&conflicts.length===0;
+        $('[data-colored]').textContent=colored;$('[data-total]').textContent=n;
+        $('[data-clash-count]').textContent=conflicts.length?`${conflicts.length} border ${conflicts.length===1?'clash':'clashes'}`:'No clashes';
+        $('[data-clash-status]').dataset.invalid=String(conflicts.length>0);
+        $('[data-valid-icon]').hidden=conflicts.length>0;$('[data-invalid-icon]').hidden=conflicts.length===0;
+        $('[data-progress]').style.width=`${colored/n*100}%`;
+        const progress=$('.ff-progress-track');progress.setAttribute('aria-valuenow',colored);progress.setAttribute('aria-valuemax',n);
+        const threeOfFour=n===4&&colored===3&&new Set(model.colors.filter(c=>c>=0)).size===3;
+        const text=message||(complete?'Beautiful. Every shared border checks out.':conflicts.length?'The highlighted neighbors need different colors.':threeOfFour?'Three colors used. One region left.':colored===0?'A fresh canvas. Where will you start?':'A few regions are waiting for your color.');
+        $('[data-message]').textContent=text;
+        root.dataset.complete=String(complete);root.dataset.clashes=String(conflicts.length);root.dataset.colored=String(colored);root.dataset.regions=String(n);
+        updateAria();
+        if(complete&&!wasComplete)celebrate();wasComplete=complete;
+      }
+      function draw(){
+        if(!model)return;
+        width=Math.round($('.ff-map-stage').getBoundingClientRect().width);if(width<1)return;
+        height=Math.max(280,Math.round(width*.88));
+        $('.ff-map-art').setAttribute('viewBox',`0 0 ${width} ${height}`);$('.ff-map-art').setAttribute('height',height);
+        const regionLayer=$('[data-regions]'),hitLayer=$('[data-hit-layer]');regionLayer.replaceChildren();hitLayer.replaceChildren();shapes=[];hits=[];
+        model.cells.forEach((poly,i)=>{
+          const p=node('path',{d:path(poly),class:'ff-region','data-region':i});regionLayer.append(p);shapes.push(p);
+          const screen=poly.map(xy),xs=screen.map(q=>q[0]),ys=screen.map(q=>q[1]),left=Math.min(...xs),top=Math.min(...ys),w=Math.max(...xs)-left,h=Math.max(...ys)-top;
+          const b=document.createElement('button');b.type='button';b.className='ff-region-hit';b.dataset.regionButton=String(i);
+          Object.assign(b.style,{left:left+'px',top:top+'px',width:w+'px',height:h+'px',clipPath:'polygon('+screen.map(q=>`${(q[0]-left)/w*100}% ${(q[1]-top)/h*100}%`).join(',')+')'});
+          b.addEventListener('click',()=>{stop();model.colors[i]=selected;update();});
+          b.addEventListener('mouseenter',()=>{hover=i;shapes[i].classList.add('ff-hovered');});
+          b.addEventListener('mouseleave',()=>{hover=-1;shapes[i].classList.remove('ff-hovered');});
+          b.addEventListener('focus',()=>{hover=i;shapes[i].classList.add('ff-hovered');});
+          b.addEventListener('blur',()=>{hover=-1;shapes[i].classList.remove('ff-hovered');});
+          b.addEventListener('keydown',event=>{
+            const direction={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[event.key];
+            if(!direction)return;event.preventDefault();let best=-1,score=Infinity;
+            model.points.forEach((q,j)=>{const d=[q[0]-model.points[i][0],q[1]-model.points[i][1]],forward=d[0]*direction[0]+d[1]*direction[1];if(forward>.001){const s=distance(q,model.points[i])/(forward*forward)+distance(q,model.points[i]);if(s<score){best=j;score=s;}}});if(best>=0)hits[best].focus();
+          });
+          hitLayer.append(b);hits.push(b);
+        });
+        update();
+      }
+      function loadMap(count,changeSeed=true){
+        stop();n=count;if(changeSeed)seed+=97;hover=-1;wasComplete=false;$('[data-confetti]').replaceChildren();
+        try{model=makeMap(n,seed);$('[data-size]').value=String(n);$('[data-lesson]').hidden=n!==4;draw();selectPaint(selected);root.dataset.ready='true';}
+        catch(error){$('[data-message]').textContent=error.message;root.dataset.ready='false';}
+      }
+      function tick(){
+        if(!play||play.paused)return;
+        const u=model.solution.order[play.index++];
+        if(u!==undefined){model.colors[u]=model.solution.colors[u];update('Finding a home for every color…');}
+        if(play.index>=n){play=null;timer=null;$('[data-solve-label]').textContent='Watch it again';update();return;}
+        const captured=token;timer=setTimeout(()=>{if(captured===token)tick();},Math.max(48,Math.round(2100/n)));
+      }
+      $('[data-solve]').addEventListener('click',()=>{
+        if(!model)return;
+        if(play){play.paused=!play.paused;if(play.paused){clearTimeout(timer);timer=null;$('[data-solve-label]').textContent='Continue';$('[data-message]').textContent='Paused. Your colors will be here.';}else{$('[data-solve-label]').textContent='Pause';tick();}return;}
+        stop();wasComplete=false;model.colors.fill(-1);play={index:0,paused:false};$('[data-solve-label]').textContent='Pause';update('A little color, one region at a time.');
+        if(matchMedia('(prefers-reduced-motion: reduce)').matches){model.colors=[...model.solution.colors];play=null;$('[data-solve-label]').textContent='Watch it again';update();}else tick();
+      });
+      $('[data-clear]').addEventListener('click',()=>{stop();wasComplete=false;model.colors.fill(-1);$('[data-confetti]').replaceChildren();update();});
+      root.querySelectorAll('[data-paint]').forEach(b=>b.addEventListener('click',()=>selectPaint(Number(b.dataset.paint))));
+      $('[data-new]').addEventListener('click',()=>loadMap(n));
+      $('[data-size]').addEventListener('change',()=>loadMap(Number($('[data-size]').value)));
+      $('[data-why]').addEventListener('click',()=>loadMap(4));
+      $('input[data-connections]').addEventListener('change',()=>{showConnections=$('input[data-connections]').checked;$('.ff-map-stage').dataset.connections=String(showConnections);update();});
+      $('[data-about-toggle]').addEventListener('click',()=>{const open=$('#ff-about-panel').hidden;$('#ff-about-panel').hidden=!open;$('[data-about-toggle]').setAttribute('aria-expanded',String(open));});
+      root.addEventListener('keydown',event=>{if(/^[1-4]$/.test(event.key)&&event.target.tagName!=='SELECT'){selectPaint(Number(event.key)-1);}});
+      function applyDesign(){const p=palettes[design.palette];for(let i=0;i<4;i++)root.style.setProperty(`--ff-c${i+1}`,`light-dark(${p.light[i]},${p.dark[i]})`);selectPaint(selected);if(model)update();}
+      loadMap(28,false);applyDesign();new ResizeObserver(draw).observe($('.ff-map-stage'));
+      if(globalThis.Tweak){const tweak=new Tweak({container:root,onChange:applyDesign});tweak.addSelect(design,'palette',{label:'Paint palette',options:['Sorbet','Garden','Vivid']});tweak.addToggle(design,'numbers',{label:'Color numbers on regions'});}
+    })();
+  </script>
+  <script type="text/plain" data-b-worker>
+/* Fourfold benchmark worker. Both methods use the same prepared adjacency lists.
+ * The reduction method is a limited prototype, NOT the paper's full algorithm.
+ * All solver allocations, reductions, core search, and restoration are timed.
+ * Periodic progress copying/reporting is included; map construction, warm-up,
+ * final transfer, independent validation, and painting are not.
+ */
+'use strict';
+let current = null;
+const now = () => performance.now();
+class Stop extends Error { constructor(status,message){super(message);this.status=status;} }
+function rng(seed){let a=seed>>>0;return()=>{a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
+
+function makeMap(side,seed,rows=side){
+  if(![8,16,32,64,128].includes(side)||(rows!==side&&!(side===64&&rows===32)))throw new Error('Unsupported map size.');
+  const started=now(),n=side*rows,random=rng(seed),points=new Float64Array(n*2);
+  for(let r=0;r<rows;r++)for(let c=0;c<side;c++){const i=r*side+c;points[2*i]=c+.5+(random()-.5)*.5;points[2*i+1]=r+.5+(random()-.5)*.5;}
+  const xy=[],offsets=new Uint32Array(n+1),edges=[],adj=Array.from({length:n},()=>[]);
+  // Seeds are within .25 of each unit-square center. Every point has a seed
+  // within sqrt(2)*.75. A seed >=3 grid columns/rows away is >2*that radius
+  // from this seed, so it cannot cut this Voronoi cell. The 5x5 stencil is exact.
+  for(let i=0;i<n;i++){
+    const r=Math.floor(i/side),c=i%side,px=points[2*i],py=points[2*i+1];
+    let poly=[{x:0,y:0,owner:-1},{x:side,y:0,owner:-1},{x:side,y:rows,owner:-1},{x:0,y:rows,owner:-1}];
+    for(let rr=Math.max(0,r-2);rr<=Math.min(rows-1,r+2);rr++)for(let cc=Math.max(0,c-2);cc<=Math.min(side-1,c+2);cc++){
+      const j=rr*side+cc;if(i===j)continue;
+      const qx=points[2*j],qy=points[2*j+1],nx=2*(qx-px),ny=2*(qy-py),k=qx*qx+qy*qy-px*px-py*py,next=[];
+      // owner labels the incoming edge, preserving exact border provenance.
+      for(let z=0;z<poly.length;z++){
+        const a=poly[z],b=poly[(z+1)%poly.length],fa=nx*a.x+ny*a.y-k,fb=nx*b.x+ny*b.y-k;
+        if(fb<=0){
+          if(fa>0){const t=fa/(fa-fb);next.push({x:a.x+t*(b.x-a.x),y:a.y+t*(b.y-a.y),owner:j});}
+          next.push(b);
+        }else if(fa<=0){const t=fa/(fa-fb);next.push({x:a.x+t*(b.x-a.x),y:a.y+t*(b.y-a.y),owner:b.owner});}
+      }
+      poly=next;
+    }
+    if(poly.length<3)throw new Error('Empty map region.');
+    offsets[i]=xy.length/2;
+    const seen=new Set();
+    for(let z=0;z<poly.length;z++){
+      const b=poly[z],a=poly[(z+poly.length-1)%poly.length];xy.push(b.x/side,b.y/rows);
+      if(b.owner>i&&!seen.has(b.owner)&&Math.hypot(b.x-a.x,b.y-a.y)>1e-10){seen.add(b.owner);edges.push(i,b.owner);adj[i].push(b.owner);adj[b.owner].push(i);}
+    }
+  }
+  offsets[n]=xy.length/2;adj.forEach(a=>a.sort((x,y)=>x-y));
+  let hash=2166136261;for(const x of [n,seed,...edges]){hash^=x;hash=Math.imul(hash,16777619)>>>0;}
+  return{n,side,rows,seed,adj,edges:new Uint32Array(edges),xy:new Float64Array(xy),offsets,fingerprint:hash.toString(16).padStart(8,'0'),generationMs:now()-started};
+}
+function context(budgetMs){
+  return{deadline:now()+budgetMs,probes:0,decisions:0,backtracks:0,batches:0,removed:0,swaps:0,kempeVisits:0,coreVertices:0,reductionMs:0,coreMs:0,restorationMs:0,progressUpdates:0};
+}
+// Keep callbacks and mutable color buffers out of the serializable statistics.
+const liveRuns=new WeakMap();
+function progressState(ctx,colors,phase){const live=liveRuns.get(ctx);if(live){live.colors=colors;live.phase=phase;}}
+function reportProgress(ctx,stamp,force=false){
+  const live=liveRuns.get(ctx);
+  if(!live||!live.safe||!live.colors||(!force&&stamp<live.nextAt))return;
+  live.nextAt=stamp+5000;ctx.progressUpdates++;
+  live.report({colors:live.colors.slice(),solverMs:stamp-live.started,phase:live.phase,stats:{...ctx}});
+}
+function check(ctx,force=false){
+  if(force||(ctx.probes&4095)===0){
+    const stamp=now();if(stamp>ctx.deadline)throw new Stop('timeout','Time limit reached.');
+    reportProgress(ctx,stamp);
+  }
+}
+const bits=new Uint8Array([0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4]);
+function dsatur(adj,vertices,colors,ctx){
+  const n=adj.length,counts=new Uint32Array(n*4),mask=new Uint8Array(n),stack=[];
+  // Iterative backtracking avoids call-stack limits on large maps. Saturation
+  // counts are maintained incrementally; selection uses the original tie rule.
+  const assign=(u,c,add)=>{
+    colors[u]=add?c:-1;
+    for(const v of adj[u]){
+      const index=v*4+c;
+      if(add){if(counts[index]++===0)mask[v]|=1<<c;}
+      else if(--counts[index]===0)mask[v]&=~(1<<c);
+      ctx.probes++;check(ctx);
+    }
+  };
+  let forward=true;
+  for(;;){
+    if(forward){
+      let best=-1,saturation=-1,degree=-1;
+      for(const u of vertices){
+        ctx.probes++;check(ctx);
+        if(colors[u]<0){const s=bits[mask[u]],d=adj[u].length;if(s>saturation||(s===saturation&&d>degree)){best=u;saturation=s;degree=d;}}
+      }
+      if(best<0)return;
+      stack.push({u:best,left:15&~mask[best],assigned:-1});
+    }
+    forward=false;
+    while(stack.length){
+      const f=stack[stack.length-1];
+      if(f.assigned>=0){assign(f.u,f.assigned,false);f.assigned=-1;}
+      if(f.left){const bit=f.left&-f.left;f.left^=bit;const c=bit===1?0:bit===2?1:bit===4?2:3;f.assigned=c;assign(f.u,c,true);ctx.decisions++;forward=true;break;}
+      stack.pop();ctx.backtracks++;
+    }
+    if(!forward)throw new Stop('unsupported','Search exhausted without a four-coloring.');
+  }
+}
+function classic(adj,ctx){
+  const colors=new Int8Array(adj.length);colors.fill(-1);ctx.coreVertices=adj.length;
+  progressState(ctx,colors,'Searching');
+  const vertices=Array.from({length:adj.length},(_,i)=>i),started=now();
+  dsatur(adj,vertices,colors,ctx);ctx.coreMs=now()-started;return colors;
+}
+function reduction(adj,ctx){
+  const n=adj.length,colors=new Int8Array(n);colors.fill(-1);
+  progressState(ctx,colors,'Reducing');const live=liveRuns.get(ctx);
+  const active=new Uint8Array(n);active.fill(1);
+  const degree=Uint32Array.from(adj,a=>a.length),blocked=new Uint32Array(n),queued=new Uint32Array(n),removed=[];
+  let eligible=[];for(let u=0;u<n;u++)if(degree[u]<=4)eligible.push(u);
+  let round=0,started=now();
+  while(eligible.length){
+    round++;const batch=[];
+    for(const u of eligible){
+      ctx.probes++;check(ctx);
+      if(active[u]&&degree[u]<=4&&blocked[u]!==round){batch.push(u);blocked[u]=round;for(const v of adj[u])if(active[v])blocked[v]=round;}
+    }
+    if(!batch.length)throw new Error('Reduction batch made no progress.');
+    for(const u of batch){active[u]=0;removed.push(u);}ctx.removed=removed.length;
+    const next=[];
+    const enqueue=u=>{if(active[u]&&degree[u]<=4&&queued[u]!==round){queued[u]=round;next.push(u);}};
+    for(const u of batch)for(const v of adj[u]){ctx.probes++;check(ctx);if(active[v]){degree[v]--;enqueue(v);}}
+    for(const u of eligible)enqueue(u);
+    eligible=next;ctx.batches++;
+  }
+  ctx.removed=removed.length;ctx.reductionMs=now()-started;
+  const core=[];for(let u=0;u<n;u++)if(active[u])core.push(u);ctx.coreVertices=core.length;
+  started=now();progressState(ctx,colors,'Searching core');if(core.length)dsatur(adj,core,colors,ctx);ctx.coreMs=now()-started;
+  started=now();progressState(ctx,colors,'Restoring');
+  const seen=new Uint32Array(n),queue=new Uint32Array(n);let stamp=0;
+  for(let i=removed.length-1;i>=0;i--){
+    const u=removed[i],ring=[];let used=0;
+    for(const v of adj[u])if(colors[v]>=0){ring.push(v);used|=1<<colors[v];}
+    if(ring.length>4)throw new Error('Restoration degree invariant failed.');
+    let free=15&~used;
+    if(!free){
+      let found=false;
+      for(let a=0;a<ring.length&&!found;a++)for(let b=a+1;b<ring.length&&!found;b++){
+        const start=ring[a],target=ring[b],ca=colors[start],cb=colors[target];stamp++;
+        let head=0,tail=1;queue[0]=start;seen[start]=stamp;
+        while(head<tail){
+          const x=queue[head++];ctx.kempeVisits++;
+          for(const y of adj[x]){ctx.probes++;check(ctx);if(seen[y]!==stamp&&(colors[y]===ca||colors[y]===cb)){seen[y]=stamp;queue[tail++]=y;}}
+        }
+        if(seen[target]!==stamp){
+          // A half-finished Kempe swap can have temporary conflicts. Publish
+          // only after the entire component has changed colors.
+          if(live)live.safe=false;
+          for(let z=0;z<tail;z++){const v=queue[z];colors[v]=colors[v]===ca?cb:ca;ctx.probes++;check(ctx);}
+          if(live)live.safe=true;
+          free=1<<ca;ctx.swaps++;found=true;
+        }
+      }
+      if(!found)throw new Stop('unsupported','No supported degree-four Kempe extension was found.');
+    }
+    const bit=free&-free;colors[u]=bit===1?0:bit===2?1:bit===4?2:3;ctx.probes++;check(ctx);
+  }
+  ctx.restorationMs=now()-started;return colors;
+}
+function execute(graph,method,budgetMs,onProgress=null){
+  const ctx=context(budgetMs),started=now();
+  if(onProgress)liveRuns.set(ctx,{report:onProgress,started,nextAt:started+5000,colors:null,phase:'Starting',safe:true});
+  try{
+    const colors=method==='dsatur'?classic(graph.adj,ctx):reduction(graph.adj,ctx);
+    check(ctx,true);
+    return{method,status:'complete',solverMs:now()-started,colors,stats:ctx};
+  }catch(error){
+    reportProgress(ctx,now(),true);
+    return{method,status:error.status||'error',solverMs:now()-started,message:error.message,colors:null,stats:ctx};
+  }finally{liveRuns.delete(ctx);}
+}
+self.onmessage=event=>{
+  const request=event.data;
+  try{
+    if(request.type==='generate'){
+      const warm=makeMap(8,11);for(let i=0;i<2;i++){execute(warm,'dsatur',1000);execute(warm,'reduction',1000);}
+      current=makeMap(request.side,request.seed,request.rows);
+      const {n,side,rows,seed,edges,xy,offsets,fingerprint,generationMs}=current;
+      self.postMessage({type:'generated',requestId:request.requestId,n,side,rows,seed,edges,xy,offsets,fingerprint,generationMs});
+    }else if(request.type==='solve'){
+      if(!current)throw new Error('Generate a map first.');
+      if(!['dsatur','reduction'].includes(request.method))throw new Error('Unknown solver.');
+      const budget=Math.min(100000,Math.max(100,Number(request.budgetMs)||100000));
+      const onProgress=progress=>self.postMessage({type:'progress',requestId:request.requestId,method:request.method,...progress});
+      self.postMessage({type:'solved',requestId:request.requestId,...execute(current,request.method,budget,onProgress)});
+    }
+  }catch(error){self.postMessage({type:'error',requestId:request.requestId,message:error.message});}
+};
+
+  </script>
+  <script data-b-controller>
+    (()=>{
+      const root=document.getElementById('fourfold-exhibit'),$=s=>root.querySelector(s);
+      const methods=['dsatur','reduction'],panels=Object.fromEntries(methods.map(m=>[m,$(`[data-b-method="${m}"]`)]));
+      let worker=null,pending=new Map(),requestId=0,generation=0,busy=false,graph=null,history=[],currentRecord=null,watchdog=null;
+      let displayColors={dsatur:null,reduction:null},displayInfo={dsatur:null,reduction:null};
+      const locale=n=>Number(n).toLocaleString('en-US'),median=values=>{const a=[...values].sort((x,y)=>x-y);return a.length%2?a[(a.length-1)/2]:(a[a.length/2-1]+a[a.length/2])/2;};
+      const time=ms=>ms<.1?'<0.1 ms':ms<1000?`${ms<10?ms.toFixed(2):ms.toFixed(1)} ms`:`${(ms/1000).toFixed(2)} s`;
+      const setMessage=text=>{$('[data-b-message]').textContent=text;};
+      function controls(running){busy=running;for(const key of ['size','seed','repeats','run','sweep'])$(`[data-b-${key}]`).disabled=running;$('[data-b-stop]').disabled=!running;}
+      function dimensions(value){const [side,rows=side]=value.split('x').map(Number);return{side,rows,n:side*rows};}
+      function theory(){const {n}=dimensions($('[data-b-size]').value);$('[data-b-old-growth]').textContent=locale((n/64)**4)+'× work';$('[data-b-new-growth]').textContent=locale(Number((n*Math.log2(n)/(64*6)).toFixed(1)))+'× work';}
+      function ensureWorker(){
+        if(worker)return;
+        const blob=new Blob([$('[data-b-worker]').textContent],{type:'application/javascript'}),url=URL.createObjectURL(blob);
+        worker=new Worker(url);URL.revokeObjectURL(url);
+        worker.onmessage=event=>{const r=event.data,p=pending.get(r.requestId);if(!p)return;if(r.type==='progress'){p.onProgress?.(r);return;}pending.delete(r.requestId);clearTimeout(p.timeout);r.type==='error'?p.reject(new Error(r.message)):p.resolve(r);};
+        worker.onerror=event=>{for(const p of pending.values()){clearTimeout(p.timeout);p.reject(new Error(event.message||'Worker failed.'));}pending.clear();};
+      }
+      function call(data,limit=15000,onProgress=null){
+        ensureWorker();return new Promise((resolve,reject)=>{
+          const id=++requestId,timeout=setTimeout(()=>{pending.delete(id);reject(new Error('Worker did not return within its safety limit.'));terminate();},limit);
+          pending.set(id,{resolve,reject,timeout,onProgress});worker.postMessage({...data,requestId:id});
+        });
+      }
+      function terminate(){if(worker)worker.terminate();worker=null;for(const p of pending.values()){clearTimeout(p.timeout);p.reject(new Error('Cancelled.'));}pending.clear();clearInterval(watchdog);watchdog=null;}
+      function resetPanels(){for(const m of methods){const p=panels[m];p.querySelector('[data-b-status]').textContent='Ready';p.querySelector('[data-b-time]').textContent='—';p.querySelector('[data-b-time-note]').textContent='Solver time';p.querySelector('[data-b-validation]').textContent='Awaiting a checked coloring';p.querySelector('[data-b-validation]').dataset.failed='false';for(const e of p.querySelectorAll('[data-b-stat-a],[data-b-stat-b],[data-b-stat-c]'))e.textContent='—';}displayColors={dsatur:null,reduction:null};displayInfo={dsatur:null,reduction:null};}
+      function validate(colors,partial=false){
+        const started=performance.now();if(!colors||colors.length!==graph.n)return{ok:false,message:'Wrong color count.'};
+        let colored=0;for(const c of colors){if(partial&&c===-1)continue;if(!Number.isInteger(c)||c<0||c>3)return{ok:false,message:'Uncolored or invalid region.'};colored++;}
+        for(let i=0;i<graph.edges.length;i+=2)if(colors[graph.edges[i]]>=0&&colors[graph.edges[i]]===colors[graph.edges[i+1]])return{ok:false,message:'Two adjacent regions share a color.'};
+        return{ok:true,colored,edges:graph.edges.length/2,validationMs:performance.now()-started};
+      }
+      function updateStats(method,stats){
+        const p=panels[method];p.querySelector('[data-b-stat-a]').textContent=stats?locale(method==='dsatur'?stats.decisions:stats.removed):'—';p.querySelector('[data-b-stat-b]').textContent=stats?locale(method==='dsatur'?stats.backtracks:stats.coreVertices):'—';if(method==='reduction')p.querySelector('[data-b-stat-c]').textContent=stats?locale(stats.swaps):'—';
+      }
+      function showProgress(method,progress){
+        const validation=validate(progress.colors,true);if(!validation.ok)return;
+        displayColors[method]=progress.colors;displayInfo[method]={checked:false,colored:validation.colored,solverMs:progress.solverMs};
+        const p=panels[method];p.querySelector('[data-b-time]').textContent=time(progress.solverMs);
+        p.querySelector('[data-b-validation]').textContent=`${locale(validation.colored)} / ${locale(graph.n)} colored · ${progress.phase} · Snapshot at ${(progress.solverMs/1000).toFixed(1)} s`;
+        p.querySelector('[data-b-validation]').dataset.failed='false';updateStats(method,progress.stats);paint();
+      }
+      function resolvedColor(variable){
+        const probe=document.createElement('span');probe.style.color=`var(${variable})`;probe.style.position='absolute';probe.style.visibility='hidden';root.append(probe);const value=getComputedStyle(probe).color;probe.remove();return value;
+      }
+      function paint(){
+        if(!graph||$('[data-b-compare-view]').hidden)return;
+        const colors=[1,2,3,4].map(i=>resolvedColor(`--ff-c${i}`)),empty=resolvedColor('--ff-empty'),border=resolvedColor('--ff-sea');
+        for(const method of methods){
+          const canvas=panels[method].querySelector('canvas'),width=Math.round(canvas.getBoundingClientRect().width);if(!width)continue;
+          const h=Math.max(220,Math.round(width*.7)),dpr=Math.min(2,devicePixelRatio||1);canvas.width=Math.round(width*dpr);canvas.height=Math.round(h*dpr);canvas.style.height=h+'px';
+          const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);ctx.fillStyle=border;ctx.fillRect(0,0,width,h);
+          const pad=12,w=width-2*pad,height=h-2*pad,data=displayColors[method];
+          ctx.lineJoin='round';ctx.lineWidth=Math.max(.18,Math.min(1.4,w/graph.side*.07));ctx.strokeStyle=border;
+          for(let u=0;u<graph.n;u++){
+            ctx.beginPath();for(let j=graph.offsets[u];j<graph.offsets[u+1];j++){const x=pad+graph.xy[2*j]*w,y=pad+graph.xy[2*j+1]*height;j===graph.offsets[u]?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.closePath();ctx.fillStyle=data&&data[u]>=0?colors[data[u]]:empty;ctx.fill();ctx.stroke();
+          }
+          const info=displayInfo[method];canvas.dataset.coloringState=info?.checked?'checked':data?'partial':'empty';
+          canvas.setAttribute('aria-label',`${method==='dsatur'?'Demo DSATUR':'Local reduction prototype'}: ${locale(graph.n)} regions, ${info?.checked?'independently checked coloring':data?`partial search state, ${locale(info.colored)} currently colored`:'not yet colored'}.`);
+        }
+      }
+      function summarize(record,method){
+        const trials=record.trials[method],good=trials.filter(t=>t.status==='complete'&&t.validation?.ok),failure=trials.find(t=>t.status!=='complete');
+        return{good:good.length,status:failure?failure.status:good.length===record.repeats?'complete':good.length?'partial':'pending',medianMs:good.length?median(good.map(x=>x.solverMs)):null,minMs:good.length?Math.min(...good.map(x=>x.solverMs)):null,maxMs:good.length?Math.max(...good.map(x=>x.solverMs)):null,failure};
+      }
+      function updatePanel(record,method){
+        const p=panels[method],s=summarize(record,method),trials=record.trials[method],last=trials[trials.length-1];
+        p.querySelector('[data-b-time]').textContent=s.status==='timeout'?`>${(record.budgetMs/1000).toFixed(2)} s`:s.medianMs!==null?time(s.medianMs):'—';
+        p.querySelector('[data-b-time-note]').textContent=s.medianMs!==null?`${s.good}/${record.repeats} runs · ${s.good>1?'median':'single run'}`:'No completed time';
+        p.querySelector('[data-b-status]').textContent=s.status==='complete'?'Checked':s.status==='partial'?'More trials':s.status==='timeout'?'Time limit':s.status;
+        const check=p.querySelector('[data-b-validation]');check.dataset.failed=String(!!s.failure);
+        const info=displayInfo[method],partial=info&&!info.checked?` Last partial snapshot: ${locale(info.colored)} / ${locale(record.n)} colored at ${(info.solverMs/1000).toFixed(1)} s.`:'';
+        check.textContent=s.failure?((s.status==='timeout'?`${record.budgetMs/1000}-second limit reached; no full coloring for this trial.`:last?.message||'Run did not complete.')+partial):(last?.validation?.ok?`${locale(last.validation.edges)} shared borders checked · ${time(s.minMs)}–${time(s.maxMs)}`:'Awaiting a checked coloring');
+        if(last?.stats)updateStats(method,last.stats);
+      }
+      function renderHistory(){
+        const body=$('[data-b-history]');body.replaceChildren();
+        for(const r of history.slice(-8).reverse()){
+          const a=summarize(r,'dsatur'),b=summarize(r,'reduction'),row=document.createElement('tr');
+          for(const label of [`${locale(r.n)} · ${r.seed}`,a.status==='timeout'?`>${r.budgetMs/1000} s`:a.medianMs===null?'—':time(a.medianMs),b.status==='timeout'?`>${r.budgetMs/1000} s`:b.medianMs===null?'—':time(b.medianMs),`${a.good}/${r.repeats} · ${b.good}/${r.repeats}`]){const td=document.createElement('td');td.textContent=label;row.append(td);}body.append(row);
+        }
+        $('[data-b-export]').disabled=!history.length;
+      }
+      async function runOne(size,seed,repeats,runToken){
+        const {side,rows,n}=dimensions(size);
+        setMessage(`Building ${locale(n)} regions…`);resetPanels();graph=null;
+        const built=await call({type:'generate',side,rows,seed},20000);if(runToken!==generation)return;
+        graph=built;theory();paint();$('[data-b-map-info]').textContent=`${locale(built.n)} regions · ${locale(built.edges.length/2)} borders · build ${time(built.generationMs)} · ${built.fingerprint}`;
+        const record={schemaVersion:1,n:built.n,seed,fingerprint:built.fingerprint,repeats,budgetMs:100000,progressIntervalMs:5000,generationMs:built.generationMs,startedAt:new Date().toISOString(),trials:{dsatur:[],reduction:[]}};
+        currentRecord=record;
+        for(let trial=0;trial<repeats;trial++){
+          const order=trial%2===0?methods:[...methods].reverse();
+          for(const method of order){
+            if(runToken!==generation)return;
+            if(record.trials[method].some(t=>t.status!=='complete'))continue;
+            const p=panels[method];p.querySelector('[data-b-status]').textContent='Running';p.querySelector('[data-b-time]').textContent='—';
+            displayColors[method]=null;displayInfo[method]=null;updateStats(method,null);
+            p.querySelector('[data-b-validation]').textContent=`0 / ${locale(graph.n)} colored · Updates every 5 s`;p.querySelector('[data-b-validation]').dataset.failed='false';paint();
+            const label=method==='dsatur'?'Demo DSATUR':'Reduction prototype';setMessage(`${label} · timed run ${trial+1} of ${repeats}. Methods run one at a time.`);
+            const started=performance.now();watchdog=setInterval(()=>{p.querySelector('[data-b-time-note]').textContent=`Running · ${((performance.now()-started)/1000).toFixed(1)} s elapsed`;},100);
+            const result=await call({type:'solve',method,budgetMs:record.budgetMs},record.budgetMs+5000,progress=>{if(runToken===generation)showProgress(method,progress);});clearInterval(watchdog);watchdog=null;if(runToken!==generation)return;
+            const validation=result.status==='complete'?validate(result.colors):null;
+            if(validation&&!validation.ok){result.status='invalid';result.message=validation.message;}
+            if(validation?.ok){displayColors[method]=result.colors;displayInfo[method]={checked:true,colored:graph.n,solverMs:result.solverMs};}
+            const {colors,...timing}=result;record.trials[method].push({...timing,validation,trial:trial+1});updatePanel(record,method);paint();
+          }
+        }
+        const a=summarize(record,'dsatur'),b=summarize(record,'reduction');record.finishedAt=new Date().toISOString();history.push(record);currentRecord=null;renderHistory();
+        if(a.status==='complete'&&b.status==='complete'){
+          const ratio=Math.max(a.medianMs,b.medianMs)/Math.max(.001,Math.min(a.medianMs,b.medianMs));
+          setMessage(ratio<1.15?'Both demo methods finished with similar median times on this map.':`${a.medianMs<b.medianMs?'Demo DSATUR':'The reduction prototype'} used ${ratio.toFixed(1)}× less median solver time on this map. This is not a timing result for the full historical algorithms.`);
+        }else setMessage('A method stopped or reached its limit. Completed timings remain visible; unfinished trials are not counted as successful results.');
+        root.dataset.benchmarkReady='true';
+      }
+      async function start(sweep=false){
+        if(busy)return;
+        const seed=Number($('[data-b-seed]').value),repeats=Number($('[data-b-repeats]').value);
+        if(!Number.isInteger(seed)||seed<0||seed>999999){setMessage('Choose an integer seed between 0 and 999999.');return;}
+        const own=++generation;controls(true);root.dataset.benchmarkReady='false';
+        try{
+          for(const size of sweep?Array.from($('[data-b-size]').options,option=>option.value):[$('[data-b-size]').value]){if(own!==generation)break;$('[data-b-size]').value=size;theory();await runOne(size,seed,repeats,own);}
+        }catch(error){if(own===generation)setMessage(error.message);}
+        finally{if(own===generation){controls(false);clearInterval(watchdog);watchdog=null;}}
+      }
+      function cancel(){
+        generation++;terminate();controls(false);
+        for(const method of methods){const p=panels[method];if(p.querySelector('[data-b-status]').textContent==='Running'){
+          p.querySelector('[data-b-status]').textContent='Cancelled';p.querySelector('[data-b-time-note]').textContent='Solver stopped';
+          const info=displayInfo[method];p.querySelector('[data-b-validation]').textContent=info?`Stopped · Partial snapshot: ${locale(info.colored)} / ${locale(graph.n)} colored at ${(info.solverMs/1000).toFixed(1)} s`:'Stopped before the first map update.';
+        }}
+        currentRecord=null;setMessage('Stopped. Earlier completed benchmark records are preserved.');root.dataset.benchmarkReady='false';
+      }
+      $('[data-b-run]').addEventListener('click',()=>start(false));$('[data-b-sweep]').addEventListener('click',()=>start(true));$('[data-b-stop]').addEventListener('click',cancel);$('[data-b-size]').addEventListener('change',()=>{theory();setMessage('Size changed. Run the benchmark to generate and measure this map.');});
+      root.querySelectorAll('[data-b-mode]').forEach(button=>button.addEventListener('click',()=>{const mode=button.dataset.bMode;if(mode==='play'&&busy)cancel();root.dataset.mode=mode;$('[data-b-play-view]').hidden=mode!=='play';$('[data-b-compare-view]').hidden=mode!=='compare';root.querySelectorAll('[data-b-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));if(mode==='compare')paint();}));
+      $('[data-b-export]').addEventListener('click',()=>{
+        const data={kind:'fourfold-demo-benchmarks',historicalImplementations:{appelHaken:'not implemented',nearLinear2026:'not implemented'},measuredMethods:['DSATUR exact search','limited degree-at-most-four reduction + DSATUR core + Kempe restoration'],timingScope:'solver plus periodic progress copying/reporting; generation, warm-up, final transfer, validation, and drawing excluded',environment:{userAgent:navigator.userAgent,logicalProcessors:navigator.hardwareConcurrency||null},records:history};
+        const output=$('[data-b-json]');output.hidden=!output.hidden;output.value=JSON.stringify(data,null,2);if(!output.hidden){output.focus();output.select();}
+      });
+      new ResizeObserver(paint).observe($('[data-b-compare-view]'));
+      matchMedia('(prefers-color-scheme: dark)').addEventListener('change',paint);
+      new MutationObserver(paint).observe(root,{attributes:true,attributeFilter:['style']});
+      theory();start(false);
+    })();
+  </script>
+</div>

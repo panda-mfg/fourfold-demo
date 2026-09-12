@@ -26,6 +26,9 @@ fragment, count = re.subn(
     flags=re.S,
 )
 assert count == 1, 'Expected exactly one embedded worker.'
+pool = (ROOT / 'demo/worker-pool.js').read_text(encoding='utf-8')
+fragment, count = re.subn(r'(<script data-b-pool>).*?(</script>)', lambda match: match[1] + '\n' + pool + '\n  ' + match[2], fragment, flags=re.S)
+assert count == 1, 'Expected exactly one worker pool script.'
 shell = (ROOT / 'src/standalone-shell.html').read_text(encoding='utf-8')
 assert shell.count('@@FOURFOLD_FRAGMENT@@') == 1
 document = shell.replace('@@FOURFOLD_FRAGMENT@@', escape(fragment))

@@ -29,6 +29,14 @@ function valid(g,colors,partial=false){
   const g=makeMap(side,817,rows);engine.prepare(g);const result=engine.execute('reduction');valid(g,result.colors);checks++;
  }
  const k5=graph(5,Array.from({length:5},(_,u)=>Array.from({length:4-u},(_,i)=>[u,u+i+1])).flat());
+ let variants=0;
+ for(let variant=0;variant<8;variant++){
+  for(const g of [...fixtures,makeMap(16,97)]){
+   engine.prepare(g);
+   for(const method of ['dsatur','reduction']){const result=engine.execute(method,2000,null,variant);assert.equal(result.status,'complete');valid(g,result.colors);variants++;}
+  }
+  engine.prepare(k5);for(const method of ['dsatur','reduction'])assert.equal(engine.execute(method,2000,null,variant).status,'unsupported');
+ }
  engine.prepare(k5);for(const method of ['dsatur','reduction'])assert.equal(engine.execute(method).status,'unsupported');
  assert.throws(()=>engine.prepare({n:2,edges:[0,0]}));assert.throws(()=>engine.prepare({n:2,edges:[0,2]}));
  const g=makeMap(64,817,32);let clock=0;
@@ -42,5 +50,5 @@ function valid(g,colors,partial=false){
   slow.execute('reduction',budget,p=>{valid(map,p.colors,true);if(p.phase==='Restoring')restoration++;});
  }
  assert.ok(restoration>0);
- console.log(JSON.stringify({backend:'rust-wasm',differentialAndLargeMapChecks:checks,timeoutSnapshots:snapshots.length,restorationSnapshots:restoration,invalidInputs:'rejected'}));
+ console.log(JSON.stringify({backend:'rust-wasm',differentialAndLargeMapChecks:checks,variantChecks:variants,timeoutSnapshots:snapshots.length,restorationSnapshots:restoration,invalidInputs:'rejected'}));
 })().catch(error=>{console.error(error);process.exitCode=1;});

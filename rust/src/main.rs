@@ -1,4 +1,4 @@
-use fourfold_engine::benchmark;
+use fourfold_engine::{benchmark, benchmark_threads};
 use std::{
     env, fs,
     io::{self, Read},
@@ -50,6 +50,7 @@ fn run() -> Result<bool, String> {
     let (mut input, mut method, mut timeout, mut runs, mut json, mut colors) =
         (None, String::from("both"), 100.0, 1usize, false, false);
     let mut args = env::args().skip(1);
+    let mut threads = std::thread::available_parallelism().map_or(1, |n| n.get().min(4));
     while let Some(arg) = args.next() {
         match arg.as_str() {
             "--input" => input = Some(args.next().ok_or("--input needs a path or -")?),
@@ -72,6 +73,16 @@ fn run() -> Result<bool, String> {
                     .parse()
                     .map_err(|_| "Invalid run count")?
             }
+            "--threads" => {
+                let value = args
+                    .next()
+                    .ok_or("--threads needs auto or a number from 1 to 8")?;
+                threads = if value == "auto" {
+                    std::thread::available_parallelism().map_or(1, |n| n.get().min(4))
+                } else {
+                    value.parse().map_err(|_| "Invalid thread count")?
+                };
+            }
             "--json" => json = true,
             "--colors" => {
                 colors = true;
@@ -79,10 +90,14 @@ fn run() -> Result<bool, String> {
             }
             "--help" | "-h" => {
                 println!("Fourfold native Rust benchmark\n\nDefault: the browser's 2,048-region map, seed 817.\n\n  --input PATH|-        Edge list: n m, then m zero-based endpoint pairs\n  --method METHOD       dsatur, reduction, or both (default)\n  --timeout SECONDS     Per-trial limit, up to 100 (default 100)\n  --runs COUNT          1 to 99 trials (default 1)\n  --json                Write machine-readable results to stdout\n  --colors              Include completed color arrays in JSON\n\nProgress goes to stderr every 5 seconds. Exit 2 means an incomplete trial.\nThese are demo methods; the full 2026 paper algorithm is not implemented.");
+                println!("  --threads auto|1..8   Concurrent search orders (default auto, at most 4)\n\nThe first valid worker wins; other searches stop. Small maps may be slower\nwith more threads. Parallel times include thread start, coordination, validation\nand shutdown; counters describe the winning worker, not total CPU work.");
                 return Ok(true);
             }
             _ => return Err(format!("Unknown argument: {arg}. Use --help.")),
         }
+    }
+    if !(1..=8).contains(&threads) {
+        return Err("Use 1 to 8 threads, or auto.".into());
     }
     if runs == 0 || runs > 99 || !timeout.is_finite() || timeout <= 0.0 || timeout > 100.0 {
         return Err("Use 1–99 runs and a timeout greater than 0 and at most 100 seconds.".into());
@@ -116,7 +131,7 @@ fn run() -> Result<bool, String> {
         }
     }
     if !json {
-        println!("Rust native · {n} vertices · {} shared borders · {timeout}s per trial\n{:<12} {:>5} {:>13} {:>12}", edges.len()/2, "Method", "Run", "Solver time", "Status");
+        println!("Rust native · {n} vertices · {} shared borders · {threads} threads · {timeout}s per trial\n{:<12} {:>5} {:>13} {:>12}", edges.len()/2, "Method", "Run", "Elapsed time", "Status");
     }
     let (mut records, mut failed) = (Vec::new(), Vec::new());
     for trial in 1..=runs {
@@ -129,7 +144,7 @@ fn run() -> Result<bool, String> {
                 continue;
             }
             eprintln!("{name}: trial {trial}/{runs}");
-            let result = benchmark(n, &edges, name, timeout * 1000.0, true)?;
+            let result = benchmark_threads(n, &edges, name, timeout * 1000.0, true, threads)?;
             let complete = result.status == "complete";
             if !complete {
                 failed.push(name);
@@ -145,11 +160,29 @@ fn run() -> Result<bool, String> {
             } else {
                 String::new()
             };
-            records.push(format!("{{\"method\":\"{name}\",\"trial\":{trial},\"status\":\"{}\",\"solverMs\":{},\"validated\":{complete},\"decisions\":{},\"backtracks\":{},\"removed\":{},\"swaps\":{}{color_json}}}", result.status,result.solver_ms,result.decisions,result.backtracks,result.removed,result.swaps));
+            let winner = result
+                .winning_worker
+                .map_or("null".to_string(), |w| w.to_string());
+            let worker_ms = if complete {
+                result.worker_ms.to_string()
+            } else {
+                "null".to_string()
+            };
+            records.push(format!("{{\"method\":\"{name}\",\"trial\":{trial},\"status\":\"{}\",\"solverMs\":{},\"validated\":{complete},\"threads\":{},\"winningWorker\":{winner},\"workerMs\":{worker_ms},\"decisions\":{},\"backtracks\":{},\"removed\":{},\"swaps\":{}{color_json}}}", result.status,result.solver_ms,result.threads,result.decisions,result.backtracks,result.removed,result.swaps));
         }
     }
     if json {
-        println!("{{\"backend\":\"rust-native\",\"vertices\":{n},\"edges\":{},\"budgetMs\":{},\"trials\":[{}]}}", edges.len()/2, timeout*1000.0, records.join(","));
+        let scope = if threads == 1 {
+            "solver kernel; validation excluded"
+        } else {
+            "wall time including thread startup, validation and cooperative shutdown"
+        };
+        let strategy = if threads == 1 {
+            "single"
+        } else {
+            "search-order portfolio"
+        };
+        println!("{{\"backend\":\"rust-native\",\"strategy\":\"{strategy}\",\"timingScope\":\"{scope}\",\"vertices\":{n},\"edges\":{},\"budgetMs\":{},\"threads\":{threads},\"trials\":[{}]}}", edges.len()/2, timeout*1000.0, records.join(","));
     }
     Ok(failed.is_empty())
 }

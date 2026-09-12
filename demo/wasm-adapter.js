@@ -30,15 +30,16 @@ async function createWasmEngine(bytes,clock=()=>performance.now()){
       if(exports.prepare_graph()!==0)throw new Error('Invalid graph: loops or duplicate edges.');
       vertexCount=n;
     },
-    execute(method,budgetMs=100000,onProgress=null){
+    execute(method,budgetMs=100000,onProgress=null,variant=0){
       if(!['dsatur','reduction'].includes(method))throw new Error('Unknown solver.');
       if(!vertexCount)throw new Error('Prepare a graph first.');
       if(!Number.isFinite(budgetMs)||budgetMs<=0)throw new Error('Invalid time budget.');
+      if(!Number.isInteger(variant)||variant<0||variant>7)throw new Error('Invalid search variant.');
       reporter=onProgress;
       try{
-        const code=exports.solve(method==='dsatur'?0:1,Math.min(100000,budgetMs),onProgress?1:0);
+        const code=exports.solve_ordered(method==='dsatur'?0:1,Math.min(100000,budgetMs),onProgress?1:0,variant);
         const status=['complete','timeout','unsupported','error'][code]??'error';
-        const result={method,backend:'rust-wasm',status,...stats(exports.stats_ptr()),colors:null};
+        const result={method,variant,backend:'rust-wasm',status,...stats(exports.stats_ptr()),colors:null};
         if(status==='complete'){
           if(exports.colors_len()!==vertexCount)throw new Error('Rust returned the wrong color count.');
           result.colors=new Int8Array(exports.memory.buffer,exports.colors_ptr(),vertexCount).slice();

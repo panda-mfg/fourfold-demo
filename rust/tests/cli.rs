@@ -59,3 +59,20 @@ fn timeout_is_incomplete_and_not_validated() {
     assert!(out.contains("\"validated\":false"));
     assert!(!out.contains("\"colors\":"));
 }
+
+#[test]
+fn explicit_parallel_threads_and_invalid_limits() {
+    for threads in ["1", "2", "4", "8"] {
+        let result = run(
+            &["--input", "-", "--json", "--threads", threads],
+            "3 3\n0 1\n1 2\n2 0\n",
+        );
+        assert!(result.status.success());
+        let out = String::from_utf8(result.stdout).unwrap();
+        assert!(out.contains(&format!("\"threads\":{threads}")));
+        assert_eq!(out.matches("\"validated\":true").count(), 2);
+    }
+    for threads in ["0", "9", "many"] {
+        assert_eq!(run(&["--threads", threads], "").status.code(), Some(1));
+    }
+}

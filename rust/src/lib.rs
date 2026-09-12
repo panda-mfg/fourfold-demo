@@ -1,6 +1,10 @@
 //! The two Fourfold benchmark solvers. This is a port of the demo methods,
 //! not a complete implementation of either historical four-color algorithm.
 use std::cell::RefCell;
+use std::sync::{
+    atomic::{AtomicBool, Ordering},
+    Arc,
+};
 
 #[cfg(target_arch = "wasm32")]
 #[link(wasm_import_module = "host")]
@@ -64,6 +68,7 @@ enum Failure {
     Timeout = 1,
     Unsupported = 2,
     Invalid = 3,
+    Cancelled = 4,
 }
 type Outcome = Result<(), Failure>;
 
@@ -76,6 +81,9 @@ struct Run {
     phase: u32,
     snapshot_safe: bool,
     reporting: bool,
+    order: Vec<u32>,
+    variant: u32,
+    cancel: Option<Arc<AtomicBool>>,
 }
 impl Run {
     fn new(n: usize, budget: f64, reporting: bool) -> Self {
@@ -89,6 +97,9 @@ impl Run {
             phase: 0,
             snapshot_safe: true,
             reporting,
+            order: (0..n as u32).collect(),
+            variant: 0,
+            cancel: None,
         }
     }
     fn report(&mut self, stamp: f64, force: bool) {
@@ -123,6 +134,13 @@ impl Run {
         }
     }
     fn check(&mut self) -> Outcome {
+        if self
+            .cancel
+            .as_ref()
+            .is_some_and(|flag| flag.load(Ordering::Relaxed))
+        {
+            return Err(Failure::Cancelled);
+        }
         let stamp = now();
         if stamp > self.deadline {
             return Err(Failure::Timeout);
@@ -184,8 +202,21 @@ fn dsatur(adj: &[Vec<usize>], vertices: &[usize], run: &mut Run) -> Outcome {
             for &u in vertices {
                 run.tick()?;
                 if run.colors[u] < 0 {
-                    let (s, d) = (mask[u].count_ones(), adj[u].len());
-                    if best.is_none() || s > saturation || (s == saturation && d > degree) {
+                    // Alternate static-degree and residual-degree DSATUR ties.
+                    // Both remain exhaustive searches; only exploration order changes.
+                    let colored_neighbors = if run.variant % 2 == 1 {
+                        counts[u * 4..u * 4 + 4].iter().sum::<u32>() as usize
+                    } else {
+                        0
+                    };
+                    let (s, d) = (mask[u].count_ones(), adj[u].len() - colored_neighbors);
+                    if best.is_none()
+                        || s > saturation
+                        || (s == saturation && d > degree)
+                        || (s == saturation
+                            && d == degree
+                            && run.order[u] < run.order[best.unwrap()])
+                    {
                         best = Some(u);
                         saturation = s;
                         degree = d;
@@ -253,6 +284,9 @@ fn reduction(adj: &[Vec<usize>], run: &mut Run) -> Outcome {
     let (mut blocked, mut queued) = (vec![0; n], vec![0; n]);
     let mut removed = Vec::with_capacity(n);
     let mut eligible: Vec<usize> = (0..n).filter(|&u| degree[u] <= 4).collect();
+    if run.variant > 0 {
+        eligible.sort_unstable_by_key(|&u| (run.order[u], u));
+    }
     let mut round = 0;
     let mut started = now();
     while !eligible.is_empty() {
@@ -367,7 +401,36 @@ fn reduction(adj: &[Vec<usize>], run: &mut Run) -> Outcome {
 }
 
 fn solve_graph(adj: &[Vec<usize>], method: u32, budget: f64, reporting: bool) -> (u32, Run, f64) {
+    solve_variant(adj, method, budget, reporting, 0, None)
+}
+
+// Independent deterministic tie orders make a portfolio of complete searches.
+// Variant zero preserves the original ID tie break, including reference tests.
+fn priority(vertex: u32, variant: u32) -> u32 {
+    if variant == 0 {
+        return vertex;
+    }
+    let mut x = vertex.wrapping_add(variant.wrapping_mul(0x9e3779b9));
+    x = (x ^ (x >> 16)).wrapping_mul(0x85ebca6b);
+    x = (x ^ (x >> 13)).wrapping_mul(0xc2b2ae35);
+    x ^ (x >> 16)
+}
+fn solve_variant(
+    adj: &[Vec<usize>],
+    method: u32,
+    budget: f64,
+    reporting: bool,
+    variant: u32,
+    cancel: Option<Arc<AtomicBool>>,
+) -> (u32, Run, f64) {
     let mut run = Run::new(adj.len(), budget, reporting);
+    run.variant = variant;
+    run.cancel = cancel;
+    if variant > 0 {
+        for (u, key) in run.order.iter_mut().enumerate() {
+            *key = priority(u as u32, variant);
+        }
+    }
     let outcome = match method {
         0 => classic(adj, &mut run),
         1 => reduction(adj, &mut run),
@@ -377,7 +440,9 @@ fn solve_graph(adj: &[Vec<usize>], method: u32, budget: f64, reporting: bool) ->
     let status = match outcome {
         Ok(()) => 0,
         Err(error) => {
-            run.report(now(), true);
+            if error != Failure::Cancelled {
+                run.report(now(), true);
+            }
             error as u32
         }
     };
@@ -424,6 +489,9 @@ pub struct Benchmark {
     pub backtracks: u64,
     pub removed: usize,
     pub swaps: u64,
+    pub threads: usize,
+    pub winning_worker: Option<usize>,
+    pub worker_ms: f64,
 }
 pub fn benchmark(
     n: usize,
@@ -465,6 +533,121 @@ pub fn benchmark(
         backtracks: run.stats.backtracks,
         removed: run.stats.removed,
         swaps: run.stats.swaps,
+        threads: 1,
+        winning_worker: if status == 0 { Some(1) } else { None },
+        worker_ms: elapsed,
+    })
+}
+
+/// Native parallel portfolio. Workers share immutable adjacency; color arrays
+/// remain private. A valid winner cooperatively cancels every other search.
+#[cfg(not(target_arch = "wasm32"))]
+pub fn benchmark_threads(
+    n: usize,
+    edges: &[u32],
+    method: &str,
+    budget_ms: f64,
+    reporting: bool,
+    threads: usize,
+) -> Result<Benchmark, String> {
+    if !(1..=8).contains(&threads) {
+        return Err("Use 1 to 8 threads.".into());
+    }
+    if threads == 1 {
+        return benchmark(n, edges, method, budget_ms, reporting);
+    }
+    let method_id = match method {
+        "dsatur" => 0,
+        "reduction" => 1,
+        _ => return Err("Unknown method.".into()),
+    };
+    if !budget_ms.is_finite() || budget_ms <= 0.0 || budget_ms > 100000.0 {
+        return Err("Invalid time budget.".into());
+    }
+    let graph = graph_from_edges(n, edges)
+        .map_err(|_| "Invalid graph: check sizes, endpoint IDs, loops, and duplicate edges.")?;
+    let cancel = Arc::new(AtomicBool::new(false));
+    let started = now();
+    let deadline = started + budget_ms;
+    let (sender, receiver) = std::sync::mpsc::channel();
+    let mut winner = None;
+    let (mut timed_out, mut invalid) = (false, false);
+    let mut result_run = None;
+    let mut worker_ms = 0.0;
+    let mut spawn_error = None;
+    std::thread::scope(|scope| {
+        for variant in 0..threads {
+            let (graph, sender, worker_cancel) = (&graph, sender.clone(), Arc::clone(&cancel));
+            let spawned = std::thread::Builder::new()
+                .name(format!("fourfold-{}", variant + 1))
+                .spawn_scoped(scope, move || {
+                    let remaining = (deadline - now()).max(0.000001);
+                    let result = solve_variant(
+                        graph,
+                        method_id,
+                        remaining,
+                        reporting && variant == 0,
+                        variant as u32,
+                        Some(worker_cancel),
+                    );
+                    let _ = sender.send((variant, result));
+                });
+            if let Err(error) = spawned {
+                spawn_error = Some(error.to_string());
+                cancel.store(true, Ordering::Relaxed);
+                break;
+            }
+        }
+        drop(sender);
+        for (variant, (status, run, elapsed)) in receiver {
+            if winner.is_some() {
+                continue;
+            }
+            if status == 0
+                && now() <= deadline
+                && run.colors.iter().all(|&c| (0..4).contains(&c))
+                && edges
+                    .chunks_exact(2)
+                    .all(|p| run.colors[p[0] as usize] != run.colors[p[1] as usize])
+                && now() <= deadline
+            {
+                winner = Some(variant + 1);
+                worker_ms = elapsed;
+                result_run = Some(run);
+                cancel.store(true, Ordering::Relaxed);
+            } else if status == 1 || now() > deadline {
+                timed_out = true;
+            } else if status == 3 || status == 0 {
+                invalid = true;
+            }
+        }
+    });
+    if let Some(error) = spawn_error {
+        return Err(format!("Could not start all threads: {error}"));
+    }
+    let elapsed = now() - started;
+    let (colors, stats) = result_run.map(|r| (r.colors, r.stats)).unwrap_or_default();
+    Ok(Benchmark {
+        status: if winner.is_some() {
+            "complete"
+        } else {
+            if invalid {
+                "error"
+            } else if timed_out {
+                "timeout"
+            } else {
+                "unsupported"
+            }
+        },
+        colors,
+        solver_ms: elapsed,
+        decisions: stats.decisions,
+        backtracks: stats.backtracks,
+        removed: stats.removed,
+        swaps: stats.swaps,
+        threads,
+        winning_worker: winner,
+        worker_ms,
     })
 }
 thread_local! { static STORE: RefCell<Store> = RefCell::new(Store::default()); }
@@ -501,6 +684,10 @@ pub extern "C" fn prepare_graph() -> u32 {
 }
 #[no_mangle]
 pub extern "C" fn solve(method: u32, budget_ms: f64, reporting: u32) -> u32 {
+    solve_ordered(method, budget_ms, reporting, 0)
+}
+#[no_mangle]
+pub extern "C" fn solve_ordered(method: u32, budget_ms: f64, reporting: u32, variant: u32) -> u32 {
     STORE.with(|cell| {
         let mut store = cell.borrow_mut();
         store.colors.clear();
@@ -508,11 +695,17 @@ pub extern "C" fn solve(method: u32, budget_ms: f64, reporting: u32) -> u32 {
         let Some(graph) = store.graph.as_ref() else {
             return Failure::Invalid as u32;
         };
-        if method > 1 || !budget_ms.is_finite() || budget_ms <= 0.0 {
+        if method > 1 || variant > 7 || !budget_ms.is_finite() || budget_ms <= 0.0 {
             return Failure::Invalid as u32;
         }
-        let (status, run, elapsed) =
-            solve_graph(graph, method, budget_ms.min(100000.0), reporting != 0);
+        let (status, run, elapsed) = solve_variant(
+            graph,
+            method,
+            budget_ms.min(100000.0),
+            reporting != 0,
+            variant,
+            None,
+        );
         store.stats = run.stats.values(elapsed);
         if status == 0 {
             store.colors = run.colors;

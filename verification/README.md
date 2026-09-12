@@ -62,3 +62,18 @@ done
 ```
 
 Inspect the logs for `Graph is D-reducible!` and absence of errors. The recorded runs used equivalent executable paths under `/tmp/four-color-tools`; their two checks passed. The adapter and the added include are explicitly outside the unchanged upstream sources.
+
+## RSST historical baseline
+
+The independent RSST Rust research implementation is described in
+[its scope document](../docs/rsst-implementation.md). Original finite proof
+checks passed for all 633 configurations and all five unavoidability
+presentations; [logs and pinned source hashes](results/rsst/proof-replay.json)
+are included. Reproduce them with `python3 verification/reproduce_rsst.py --fetch`
+from the repository root. The original C programs are fetched under their
+scholarly-research permission into ignored build storage.
+
+`python3 verification/check_rsst_boundaries.py` independently enumerates the
+small consistent boundary sets and reconstruction families, including the
+documented D-family indexing correction. These are executable checks. The
+Rust solver and the complete RSST proof have not been formally verified here.

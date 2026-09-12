@@ -1,3 +1,5 @@
+> **Current baseline update:** The browser now defaults to an RSST constructive research variant, with optional DSATUR diagnostics. Its exhaustive locator does not reproduce the published quadratic bound. See [current implementation scope](rsst-implementation.md). The text below preserves the earlier Appel–Haken comparison and original timing protocol.
+
 # Historical comparison and runnable benchmark scope
 
 The requested historical pair is **Appel–Haken's first computer-assisted four-color proof** and **the supplied 2026 near-linear coloring proposal**. Neither complete constructive coloring algorithm is implemented in this workspace. The current demo therefore does **not** provide a measured Appel–Haken-versus-2026 runtime comparison.

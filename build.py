@@ -12,7 +12,7 @@ parser.add_argument('--check', action='store_true', help='Fail if index.html nee
 parser.add_argument('--rust', action='store_true', help='Compile the Rust/WASM engine before rebuilding.')
 args = parser.parse_args()
 if args.rust:
-    subprocess.run(['cargo', 'build', '--manifest-path', str(ROOT / 'rust/Cargo.toml'), '--target', 'wasm32-unknown-unknown', '--lib', '--release', '--offline'], check=True)
+    subprocess.run(['cargo', 'build', '--manifest-path', str(ROOT / 'rust/Cargo.toml'), '--target', 'wasm32-unknown-unknown', '--lib', '--release', '--offline'], cwd=ROOT, check=True)
     (ROOT / 'assets/fourfold_engine.wasm').write_bytes((ROOT / 'rust/target/wasm32-unknown-unknown/release/fourfold_engine.wasm').read_bytes())
 fragment_path = ROOT / 'src/four-color-playground.html'
 fragment = fragment_path.read_text(encoding='utf-8')

@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-09-12T22:01:05.987860+00:00",
+  "rustTestsPassed": 18,
+  "rsstCatalogueReconstructionsChecked": 633,
+  "originalReducibilityCasesVerified": 633,
+  "originalUnavoidabilityPresentationsVerified": 5,
+  "boundaryAugmentationFamiliesChecked": 23,
+  "wasmReport": "wasm-tests.json",
+  "browserReport": "browser-tests.json",
+  "nativeReport": "native-observation.json",
+  "formalVerificationOfRust": false,
+  "publishedQuadraticBoundReproduced": false,
+  "sha256": {
+    "rust/src/rsst/mod.rs": "f0a280cb4a85201a3825b36c20525a96c28302e77053bd174650543a90bacc53",
+    "rust/src/rsst/plane.rs": "684943c0d4aac2ea47642c43122fcea7a231adef21be2235d3cd0345f8ffc8a9",
+    "rust/src/lib.rs": "4f504dd0ac6f593cf282d2ad365615f0c49a3af97620752ca40b9a42d12c600e",
+    "assets/fourfold_engine.wasm": "93153a18b1f8c37070d50b36421a35d49f051daf9a6df57afcd48bcc2aa8dd1b",
+    "demo/wasm-adapter.js": "4f49778e2230b923de384df4488948641d1c7848b60ae7732b4c180414126c25",
+    "demo/worker-pool.js": "5c929266c05fcd28844c4ef7060844fdc49d0298467988cc33b5cfaaa09b02b9",
+    "demo/map-generator.js": "8de4f82222fe6fcb91206b1482197dbb6d4370e9c9888d5a68876181456003f1"
+  }
+}

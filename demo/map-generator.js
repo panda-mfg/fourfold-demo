@@ -39,7 +39,8 @@ function makeMap(side,seed,rows=side){
   }
   offsets[n]=xy.length/2;adj.forEach(a=>a.sort((x,y)=>x-y));
   let hash=2166136261;for(const x of [n,seed,...edges]){hash^=x;hash=Math.imul(hash,16777619)>>>0;}
-  return{n,side,rows,seed,adj,edges:new Uint32Array(edges),xy:new Float64Array(xy),offsets,fingerprint:hash.toString(16).padStart(8,'0'),generationMs:now()-started};
+  const rotation=adj.map((row,u)=>row.slice().sort((a,b)=>Math.atan2(points[2*a+1]-points[2*u+1],points[2*a]-points[2*u])-Math.atan2(points[2*b+1]-points[2*u+1],points[2*b]-points[2*u])));
+  return{n,side,rows,seed,adj,rotation,edges:new Uint32Array(edges),xy:new Float64Array(xy),offsets,fingerprint:hash.toString(16).padStart(8,'0'),generationMs:now()-started};
 }
 
 if(typeof module !== 'undefined')module.exports={makeMap,rng};

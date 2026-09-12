@@ -28,22 +28,36 @@ async function createWasmEngine(bytes,clock=()=>performance.now()){
       if(!pointer)throw new Error('Rust graph allocation failed.');
       new Uint32Array(exports.memory.buffer,pointer,edges.length).set(edges);
       if(exports.prepare_graph()!==0)throw new Error('Invalid graph: loops or duplicate edges.');
+      if(graph.rotation){
+        if(graph.rotation.length!==n)throw new Error('Invalid rotation row count.');
+        for(const row of graph.rotation)for(const v of row)if(!Number.isInteger(v)||v<0||v>=n)throw new Error('Invalid rotation neighbor.');
+        const words=Uint32Array.from(graph.rotation.flatMap(row=>[row.length,...row]));
+        const pointer=exports.allocate_rotation(words.length);
+        if(!pointer)throw new Error('Rust rotation allocation failed.');
+        new Uint32Array(exports.memory.buffer,pointer,words.length).set(words);
+        if(exports.prepare_rotation()!==0)throw new Error('Rotation is not a planar embedding of these exact edges.');
+      }
       vertexCount=n;
     },
     execute(method,budgetMs=100000,onProgress=null,variant=0){
-      if(!['dsatur','reduction'].includes(method))throw new Error('Unknown solver.');
+      if(!['dsatur','reduction','rsst'].includes(method))throw new Error('Unknown solver.');
       if(!vertexCount)throw new Error('Prepare a graph first.');
       if(!Number.isFinite(budgetMs)||budgetMs<=0)throw new Error('Invalid time budget.');
       if(!Number.isInteger(variant)||variant<0||variant>7)throw new Error('Invalid search variant.');
       reporter=onProgress;
       try{
-        const code=exports.solve_ordered(method==='dsatur'?0:1,Math.min(100000,budgetMs),onProgress?1:0,variant);
-        const status=['complete','timeout','unsupported','error'][code]??'error';
+        const code=method==='rsst'?exports.solve_rsst(Math.min(100000,budgetMs),onProgress?1:0,variant):exports.solve_ordered(method==='dsatur'?0:1,Math.min(100000,budgetMs),onProgress?1:0,variant);
+        const status=['complete','timeout','unsupported','error','cancelled','resource-limit'][code]??'error';
         const result={method,variant,backend:'rust-wasm',status,...stats(exports.stats_ptr()),colors:null};
+        if(method==='rsst'){
+          const names=['configurations','dReductions','cReductions','separators2','separators3','separators4','separators5','boundaryStates','extensionAttempts','matchesTested','lowDegreeReductions','maxDepth'];
+          result.rsst=Object.fromEntries(names.map((key,i)=>[key,new Float64Array(exports.memory.buffer,exports.rsst_stats_ptr(),12)[i]]));
+          result.implementation='RSST constructive variant; exhaustive locator; quadratic bound not certified';
+        }
         if(status==='complete'){
           if(exports.colors_len()!==vertexCount)throw new Error('Rust returned the wrong color count.');
           result.colors=new Int8Array(exports.memory.buffer,exports.colors_ptr(),vertexCount).slice();
-        }else result.message=code===1?'Time limit reached.':code===2?'No supported four-coloring was found.':'Rust solver rejected the request.';
+        }else result.message=method==='rsst'&&exports.solver_message_len()?new TextDecoder().decode(new Uint8Array(exports.memory.buffer,exports.solver_message_ptr(),exports.solver_message_len())):code===1?'Time limit reached.':code===2?'No supported four-coloring was found.':'Rust solver rejected the request.';
         return result;
       }finally{reporter=null;}
     }

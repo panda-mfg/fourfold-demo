@@ -1,0 +1,7 @@
+Verifying /tmp/rsst-present7
+Reading rules from file `rules'.
+Total of 67 rules resulted in 103 outlets of degree 7.
+Outlets written into file `outlet.et'.
+Reading unavoidable set from file `unavoidable.conf'.
+Total of 633 configurations.
+/tmp/rsst-present7 verified.

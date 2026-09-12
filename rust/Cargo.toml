@@ -3,6 +3,7 @@ name = "fourfold_engine"
 version = "0.1.0"
 edition = "2021"
 publish = false
+default-run = "fourfold"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -10,6 +11,10 @@ crate-type = ["cdylib", "rlib"]
 [[bin]]
 name = "fourfold"
 path = "src/main.rs"
+
+[[bin]]
+name = "fourfold-rsst"
+path = "src/rsst_cli.rs"
 
 [profile.release]
 opt-level = 3

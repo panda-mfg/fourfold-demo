@@ -1,0 +1,815 @@
+{
+  "single": {
+    "schemaVersion": 4,
+    "baseline": "rsst",
+    "backend": "rust-wasm",
+    "threads": 1,
+    "strategy": "single",
+    "timingScope": "wall time including dispatch, transfer, winner checking and cancellation; worker setup and drawing excluded",
+    "n": 2048,
+    "seed": 817,
+    "fingerprint": "b9bfe747",
+    "repeats": 1,
+    "budgetMs": 100000,
+    "progressIntervalMs": 5000,
+    "generationMs": 8.600000023841858,
+    "startedAt": "2026-09-12T21:59:40.145Z",
+    "trials": {
+      "baseline": [
+        {
+          "type": "solved",
+          "requestId": 2,
+          "method": "rsst",
+          "variant": 0,
+          "backend": "rust-wasm",
+          "status": "complete",
+          "stats": {
+            "probes": 792468,
+            "decisions": 0,
+            "backtracks": 0,
+            "batches": 94,
+            "removed": 115,
+            "swaps": 570,
+            "kempeVisits": 0,
+            "coreVertices": 0,
+            "reductionMs": 0,
+            "coreMs": 0,
+            "restorationMs": 0,
+            "progressUpdates": 0
+          },
+          "solverMs": 929.8999999761581,
+          "rsst": {
+            "configurations": 94,
+            "dReductions": 87,
+            "cReductions": 7,
+            "separators2": 60,
+            "separators3": 0,
+            "separators4": 0,
+            "separators5": 0,
+            "boundaryStates": 240,
+            "extensionAttempts": 240,
+            "matchesTested": 247673,
+            "lowDegreeReductions": 1130,
+            "maxDepth": 154
+          },
+          "implementation": "RSST constructive variant; exhaustive locator; quadratic bound not certified",
+          "threads": 1,
+          "strategy": "single",
+          "winningWorker": 1,
+          "workerMs": 927.8000000715256,
+          "attempts": [
+            {
+              "worker": 1,
+              "variant": 0,
+              "status": "complete",
+              "workerMs": 927.8000000715256
+            }
+          ],
+          "validation": {
+            "ok": true,
+            "colored": 2048,
+            "edges": 5953,
+            "validationMs": 0
+          },
+          "trial": 1
+        }
+      ],
+      "reduction": [
+        {
+          "type": "solved",
+          "requestId": 3,
+          "method": "reduction",
+          "variant": 0,
+          "backend": "rust-wasm",
+          "status": "complete",
+          "stats": {
+            "probes": 243111,
+            "decisions": 0,
+            "backtracks": 0,
+            "batches": 35,
+            "removed": 2048,
+            "swaps": 152,
+            "kempeVisits": 36460,
+            "coreVertices": 0,
+            "reductionMs": 0.30000007152557373,
+            "coreMs": 0,
+            "restorationMs": 1.7999999523162842,
+            "progressUpdates": 0
+          },
+          "solverMs": 12.300000071525574,
+          "threads": 1,
+          "strategy": "single",
+          "winningWorker": 1,
+          "workerMs": 2.100000023841858,
+          "attempts": [
+            {
+              "worker": 1,
+              "variant": 0,
+              "status": "complete",
+              "workerMs": 2.100000023841858
+            }
+          ],
+          "validation": {
+            "ok": true,
+            "colored": 2048,
+            "edges": 5953,
+            "validationMs": 0
+          },
+          "trial": 1
+        }
+      ]
+    },
+    "finishedAt": "2026-09-12T21:59:41.110Z"
+  },
+  "parallel": {
+    "schemaVersion": 4,
+    "baseline": "rsst",
+    "backend": "rust-wasm",
+    "threads": 4,
+    "strategy": "search-order portfolio",
+    "timingScope": "wall time including dispatch, transfer, winner checking and cancellation; worker setup and drawing excluded",
+    "n": 2048,
+    "seed": 817,
+    "fingerprint": "b9bfe747",
+    "repeats": 3,
+    "budgetMs": 100000,
+    "progressIntervalMs": 5000,
+    "generationMs": 8.700000047683716,
+    "startedAt": "2026-09-12T21:59:41.687Z",
+    "trials": {
+      "baseline": [
+        {
+          "type": "solved",
+          "requestId": 8,
+          "method": "rsst",
+          "variant": 3,
+          "backend": "rust-wasm",
+          "status": "complete",
+          "stats": {
+            "probes": 250559,
+            "decisions": 0,
+            "backtracks": 0,
+            "batches": 68,
+            "removed": 74,
+            "swaps": 258,
+            "kempeVisits": 0,
+            "coreVertices": 0,
+            "reductionMs": 0,
+            "coreMs": 0,
+            "restorationMs": 0,
+            "progressUpdates": 0
+          },
+          "solverMs": 930.7000000476837,
+          "rsst": {
+            "configurations": 68,
+            "dReductions": 66,
+            "cReductions": 2,
+            "separators2": 59,
+            "separators3": 0,
+            "separators4": 0,
+            "separators5": 0,
+            "boundaryStates": 138,
+            "extensionAttempts": 138,
+            "matchesTested": 77586,
+            "lowDegreeReductions": 1147,
+            "maxDepth": 127
+          },
+          "implementation": "RSST constructive variant; exhaustive locator; quadratic bound not certified",
+          "threads": 4,
+          "strategy": "search-order portfolio",
+          "winningWorker": 4,
+          "workerMs": 928.7000000476837,
+          "attempts": [
+            {
+              "worker": 1,
+              "variant": 0,
+              "status": "cancelled"
+            },
+            {
+              "worker": 2,
+              "variant": 1,
+              "status": "cancelled"
+            },
+            {
+              "worker": 3,
+              "variant": 2,
+              "status": "cancelled"
+            },
+            {
+              "worker": 4,
+              "variant": 3,
+              "status": "complete",
+              "workerMs": 928.7000000476837
+            }
+          ],
+          "validation": {
+            "ok": true,
+            "colored": 2048,
+            "edges": 5953,
+            "validationMs": 0.10000002384185791
+          },
+          "trial": 1
+        },
+        {
+          "type": "solved",
+          "requestId": 29,
+          "method": "rsst",
+          "variant": 3,
+          "backend": "rust-wasm",
+          "status": "complete",
+          "stats": {
+            "probes": 250559,
+            "decisions": 0,
+            "backtracks": 0,
+            "batches": 68,
+            "removed": 74,
+            "swaps": 258,
+            "kempeVisits": 0,
+            "coreVertices": 0,
+            "reductionMs": 0,
+            "coreMs": 0,
+            "restorationMs": 0,
+            "progressUpdates": 0
+          },
+          "solverMs": 938.2000000476837,
+          "rsst": {
+            "configurations": 68,
+            "dReductions": 66,
+            "cReductions": 2,
+            "separators2": 59,
+            "separators3": 0,
+            "separators4": 0,
+            "separators5": 0,
+            "boundaryStates": 138,
+            "extensionAttempts": 138,
+            "matchesTested": 77586,
+            "lowDegreeReductions": 1147,
+            "maxDepth": 127
+          },
+          "implementation": "RSST constructive variant; exhaustive locator; quadratic bound not certified",
+          "threads": 4,
+          "strategy": "search-order portfolio",
+          "winningWorker": 4,
+          "workerMs": 936.0999999046326,
+          "attempts": [
+            {
+              "worker": 1,
+              "variant": 0,
+              "status": "cancelled"
+            },
+            {
+              "worker": 2,
+              "variant": 1,
+              "status": "cancelled"
+            },
+            {
+              "worker": 3,
+              "variant": 2,
+              "status": "cancelled"
+            },
+            {
+              "worker": 4,
+              "variant": 3,
+              "status": "complete",
+              "workerMs": 936.0999999046326
+            }
+          ],
+          "validation": {
+            "ok": true,
+            "colored": 2048,
+            "edges": 5953,
+            "validationMs": 0
+          },
+          "trial": 2
+        },
+        {
+          "type": "solved",
+          "requestId": 36,
+          "method": "rsst",
+          "variant": 3,
+          "backend": "rust-wasm",
+          "status": "complete",
+          "stats": {
+            "probes": 250559,
+            "decisions": 0,
+            "backtracks": 0,
+            "batches": 68,
+            "removed": 74,
+            "swaps": 258,
+            "kempeVisits": 0,
+            "coreVertices": 0,
+            "reductionMs": 0,
+            "coreMs": 0,
+            "restorationMs": 0,
+            "progressUpdates": 0
+          },
+          "solverMs": 926.8999999761581,
+          "rsst": {
+            "configurations": 68,
+            "dReductions": 66,
+            "cReductions": 2,
+            "separators2": 59,
+            "separators3": 0,
+            "separators4": 0,
+            "separators5": 0,
+            "boundaryStates": 138,
+            "extensionAttempts": 138,
+            "matchesTested": 77586,
+            "lowDegreeReductions": 1147,
+            "maxDepth": 127
+          },
+          "implementation": "RSST constructive variant; exhaustive locator; quadratic bound not certified",
+          "threads": 4,
+          "strategy": "search-order portfolio",
+          "winningWorker": 4,
+          "workerMs": 924.0999999046326,
+          "attempts": [
+            {
+              "worker": 1,
+              "variant": 0,
+              "status": "cancelled"
+            },
+            {
+              "worker": 2,
+              "variant": 1,
+              "status": "cancelled"
+            },
+            {
+              "worker": 3,
+              "variant": 2,
+              "status": "cancelled"
+            },
+            {
+              "worker": 4,
+              "variant": 3,
+              "status": "complete",
+              "workerMs": 924.0999999046326
+            }
+          ],
+          "validation": {
+            "ok": true,
+            "colored": 2048,
+            "edges": 5953,
+            "validationMs": 0
+          },
+          "trial": 3
+        }
+      ],
+      "reduction": [
+        {
+          "type": "solved",
+          "requestId": 12,
+          "method": "reduction",
+          "variant": 0,
+          "backend": "rust-wasm",
+          "status": "complete",
+          "stats": {
+            "probes": 243111,
+            "decisions": 0,
+            "backtracks": 0,
+            "batches": 35,
+            "removed": 2048,
+            "swaps": 152,
+            "kempeVisits": 36460,
+            "coreVertices": 0,
+            "reductionMs": 0.20000004768371582,
+            "coreMs": 0,
+            "restorationMs": 1.5,
+            "progressUpdates": 0
+          },
+          "solverMs": 2,
+          "threads": 4,
+          "strategy": "search-order portfolio",
+          "winningWorker": 1,
+          "workerMs": 1.7000000476837158,
+          "attempts": [
+            {
+              "worker": 1,
+              "variant": 0,
+              "status": "complete",
+              "workerMs": 1.7000000476837158
+            },
+            {
+              "worker": 2,
+              "variant": 1,
+              "status": "cancelled"
+            },
+            {
+              "worker": 3,
+              "variant": 2,
+              "status": "cancelled"
+            },
+            {
+              "worker": 4,
+              "variant": 3,
+              "status": "cancelled"
+            }
+          ],
+          "validation": {
+            "ok": true,
+            "colored": 2048,
+            "edges": 5953,
+            "validationMs": 0
+          },
+          "trial": 1
+        },
+        {
+          "type": "solved",
+          "requestId": 21,
+          "method": "reduction",
+          "variant": 2,
+          "backend": "rust-wasm",
+          "status": "complete",
+          "stats": {
+            "probes": 227178,
+            "decisions": 0,
+            "backtracks": 0,
+            "batches": 34,
+            "removed": 2048,
+            "swaps": 104,
+            "kempeVisits": 33616,
+            "coreVertices": 0,
+            "reductionMs": 0.10000002384185791,
+            "coreMs": 0,
+            "restorationMs": 1.2000000476837158,
+            "progressUpdates": 0
+          },
+          "solverMs": 1.5,
+          "threads": 4,
+          "strategy": "search-order portfolio",
+          "winningWorker": 3,
+          "workerMs": 1.3000000715255737,
+          "attempts": [
+            {
+              "worker": 1,
+              "variant": 0,
+              "status": "cancelled"
+            },
+            {
+              "worker": 2,
+              "variant": 1,
+              "status": "cancelled"
+            },
+            {
+              "worker": 3,
+              "variant": 2,
+              "status": "complete",
+              "workerMs": 1.3000000715255737
+            },
+            {
+              "worker": 4,
+              "variant": 3,
+              "status": "cancelled"
+            }
+          ],
+          "validation": {
+            "ok": true,
+            "colored": 2048,
+            "edges": 5953,
+            "validationMs": 0
+          },
+          "trial": 2
+        },
+        {
+          "type": "solved",
+          "requestId": 42,
+          "method": "reduction",
+          "variant": 2,
+          "backend": "rust-wasm",
+          "status": "complete",
+          "stats": {
+            "probes": 227178,
+            "decisions": 0,
+            "backtracks": 0,
+            "batches": 34,
+            "removed": 2048,
+            "swaps": 104,
+            "kempeVisits": 33616,
+            "coreVertices": 0,
+            "reductionMs": 0.2999999523162842,
+            "coreMs": 0,
+            "restorationMs": 1.100000023841858,
+            "progressUpdates": 0
+          },
+          "solverMs": 1.600000023841858,
+          "threads": 4,
+          "strategy": "search-order portfolio",
+          "winningWorker": 3,
+          "workerMs": 1.399999976158142,
+          "attempts": [
+            {
+              "worker": 1,
+              "variant": 0,
+              "status": "cancelled"
+            },
+            {
+              "worker": 2,
+              "variant": 1,
+              "status": "cancelled"
+            },
+            {
+              "worker": 3,
+              "variant": 2,
+              "status": "complete",
+              "workerMs": 1.399999976158142
+            },
+            {
+              "worker": 4,
+              "variant": 3,
+              "status": "cancelled"
+            }
+          ],
+          "validation": {
+            "ok": true,
+            "colored": 2048,
+            "edges": 5953,
+            "validationMs": 0
+          },
+          "trial": 3
+        }
+      ]
+    },
+    "finishedAt": "2026-09-12T21:59:45.006Z"
+  },
+  "diagnostic": {
+    "schemaVersion": 4,
+    "baseline": "dsatur",
+    "backend": "rust-wasm",
+    "threads": 4,
+    "strategy": "search-order portfolio",
+    "timingScope": "wall time including dispatch, transfer, winner checking and cancellation; worker setup and drawing excluded",
+    "n": 64,
+    "seed": 817,
+    "fingerprint": "af9457cf",
+    "repeats": 1,
+    "budgetMs": 100000,
+    "progressIntervalMs": 5000,
+    "generationMs": 0.8999999761581421,
+    "startedAt": "2026-09-12T21:59:45.982Z",
+    "trials": {
+      "baseline": [
+        {
+          "type": "solved",
+          "requestId": 49,
+          "method": "dsatur",
+          "variant": 1,
+          "backend": "rust-wasm",
+          "status": "complete",
+          "stats": {
+            "probes": 4482,
+            "decisions": 64,
+            "backtracks": 0,
+            "batches": 0,
+            "removed": 0,
+            "swaps": 0,
+            "kempeVisits": 0,
+            "coreVertices": 64,
+            "reductionMs": 0,
+            "coreMs": 0,
+            "restorationMs": 0,
+            "progressUpdates": 0
+          },
+          "solverMs": 0.30000007152557373,
+          "threads": 4,
+          "strategy": "search-order portfolio",
+          "winningWorker": 2,
+          "workerMs": 0,
+          "attempts": [
+            {
+              "worker": 1,
+              "variant": 0,
+              "status": "cancelled"
+            },
+            {
+              "worker": 2,
+              "variant": 1,
+              "status": "complete",
+              "workerMs": 0
+            },
+            {
+              "worker": 3,
+              "variant": 2,
+              "status": "cancelled"
+            },
+            {
+              "worker": 4,
+              "variant": 3,
+              "status": "cancelled"
+            }
+          ],
+          "validation": {
+            "ok": true,
+            "colored": 64,
+            "edges": 161,
+            "validationMs": 0
+          },
+          "trial": 1
+        }
+      ],
+      "reduction": [
+        {
+          "type": "solved",
+          "requestId": 55,
+          "method": "reduction",
+          "variant": 0,
+          "backend": "rust-wasm",
+          "status": "complete",
+          "stats": {
+            "probes": 499,
+            "decisions": 0,
+            "backtracks": 0,
+            "batches": 10,
+            "removed": 64,
+            "swaps": 0,
+            "kempeVisits": 0,
+            "coreVertices": 0,
+            "reductionMs": 0,
+            "coreMs": 0,
+            "restorationMs": 0,
+            "progressUpdates": 0
+          },
+          "solverMs": 0.19999992847442627,
+          "threads": 4,
+          "strategy": "search-order portfolio",
+          "winningWorker": 1,
+          "workerMs": 0,
+          "attempts": [
+            {
+              "worker": 1,
+              "variant": 0,
+              "status": "complete",
+              "workerMs": 0
+            },
+            {
+              "worker": 2,
+              "variant": 1,
+              "status": "cancelled"
+            },
+            {
+              "worker": 3,
+              "variant": 2,
+              "status": "cancelled"
+            },
+            {
+              "worker": 4,
+              "variant": 3,
+              "status": "cancelled"
+            }
+          ],
+          "validation": {
+            "ok": true,
+            "colored": 64,
+            "edges": 161,
+            "validationMs": 0
+          },
+          "trial": 1
+        }
+      ]
+    },
+    "finishedAt": "2026-09-12T21:59:46.106Z"
+  },
+  "restarted": {
+    "schemaVersion": 4,
+    "baseline": "rsst",
+    "backend": "rust-wasm",
+    "threads": 2,
+    "strategy": "search-order portfolio",
+    "timingScope": "wall time including dispatch, transfer, winner checking and cancellation; worker setup and drawing excluded",
+    "n": 64,
+    "seed": 817,
+    "fingerprint": "af9457cf",
+    "repeats": 1,
+    "budgetMs": 100000,
+    "progressIntervalMs": 5000,
+    "generationMs": 0.8000000715255737,
+    "startedAt": "2026-09-12T21:59:47.344Z",
+    "trials": {
+      "baseline": [
+        {
+          "type": "solved",
+          "requestId": 4,
+          "method": "rsst",
+          "variant": 1,
+          "backend": "rust-wasm",
+          "status": "complete",
+          "stats": {
+            "probes": 56,
+            "decisions": 0,
+            "backtracks": 0,
+            "batches": 0,
+            "removed": 0,
+            "swaps": 0,
+            "kempeVisits": 0,
+            "coreVertices": 0,
+            "reductionMs": 0,
+            "coreMs": 0,
+            "restorationMs": 0,
+            "progressUpdates": 0
+          },
+          "solverMs": 1.399999976158142,
+          "rsst": {
+            "configurations": 0,
+            "dReductions": 0,
+            "cReductions": 0,
+            "separators2": 5,
+            "separators3": 0,
+            "separators4": 0,
+            "separators5": 0,
+            "boundaryStates": 0,
+            "extensionAttempts": 0,
+            "matchesTested": 0,
+            "lowDegreeReductions": 35,
+            "maxDepth": 5
+          },
+          "implementation": "RSST constructive variant; exhaustive locator; quadratic bound not certified",
+          "threads": 2,
+          "strategy": "search-order portfolio",
+          "winningWorker": 2,
+          "workerMs": 1.100000023841858,
+          "attempts": [
+            {
+              "worker": 1,
+              "variant": 0,
+              "status": "cancelled"
+            },
+            {
+              "worker": 2,
+              "variant": 1,
+              "status": "complete",
+              "workerMs": 1.100000023841858
+            }
+          ],
+          "validation": {
+            "ok": true,
+            "colored": 64,
+            "edges": 161,
+            "validationMs": 0
+          },
+          "trial": 1
+        }
+      ],
+      "reduction": [
+        {
+          "type": "solved",
+          "requestId": 6,
+          "method": "reduction",
+          "variant": 0,
+          "backend": "rust-wasm",
+          "status": "complete",
+          "stats": {
+            "probes": 499,
+            "decisions": 0,
+            "backtracks": 0,
+            "batches": 10,
+            "removed": 64,
+            "swaps": 0,
+            "kempeVisits": 0,
+            "coreVertices": 0,
+            "reductionMs": 0,
+            "coreMs": 0,
+            "restorationMs": 0,
+            "progressUpdates": 0
+          },
+          "solverMs": 0.10000002384185791,
+          "threads": 2,
+          "strategy": "search-order portfolio",
+          "winningWorker": 1,
+          "workerMs": 0,
+          "attempts": [
+            {
+              "worker": 1,
+              "variant": 0,
+              "status": "complete",
+              "workerMs": 0
+            },
+            {
+              "worker": 2,
+              "variant": 1,
+              "status": "cancelled"
+            }
+          ],
+          "validation": {
+            "ok": true,
+            "colored": 64,
+            "edges": 161,
+            "validationMs": 0
+          },
+          "trial": 1
+        }
+      ]
+    },
+    "finishedAt": "2026-09-12T21:59:47.476Z"
+  },
+  "checks": [
+    "RSST default",
+    "actual WASM Web Workers",
+    "1 and 4 workers",
+    "edge validation",
+    "schema 4 with RSST counters",
+    "DSATUR diagnostic selector",
+    "stop/restart",
+    "responsive light/dark",
+    "paint mode"
+  ],
+  "errors": []
+}

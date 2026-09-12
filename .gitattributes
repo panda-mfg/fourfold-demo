@@ -1,0 +1,2 @@
+# Preserve the original catalogue byte-for-byte, including historical spacing.
+rust/data/rsst-unavoidable.conf -whitespace

@@ -62,7 +62,7 @@ class FourfoldWorkerPool {
     await Promise.all(Array.from({length: this.count}, async (_, index) => {
       const slot = this.slot(index);
       if (slot.ready) return;
-      await this.request(index, {type: 'prepare', n: this.graph.n, edges: this.graph.edges});
+      await this.request(index, {type: 'prepare', n: this.graph.n, edges: this.graph.edges, rotation: this.graph.rotation});
       if (this.closed) throw new Error('Cancelled.');
       slot.ready = true;
     }));
@@ -76,7 +76,7 @@ class FourfoldWorkerPool {
   }
   async solve(method, budgetMs = 100000, progress = null) {
     if (this.busy) throw new Error('A trial is already running.');
-    if (!['dsatur', 'reduction'].includes(method) || !Number.isFinite(budgetMs) || budgetMs <= 0 || budgetMs > 100000) throw new Error('Invalid trial.');
+    if (!['dsatur', 'reduction', 'rsst'].includes(method) || !Number.isFinite(budgetMs) || budgetMs <= 0 || budgetMs > 100000) throw new Error('Invalid trial.');
     this.busy = true;
     try {
       await this.prepare(); // Creation, compilation, graph import, and warm-up are untimed.
@@ -114,8 +114,8 @@ class FourfoldWorkerPool {
             if (result.status === 'complete') attempts[index].status = 'timeout';
             last = result;
             if (attempts.every(a => a.status !== 'running')) {
-              const status = attempts.some(a => ['error', 'invalid'].includes(a.status)) ? 'error' : attempts.some(a => a.status === 'timeout') ? 'timeout' : 'unsupported';
-              finish({...last, status, colors: null, message: status === 'timeout' ? 'Shared trial deadline reached.' : 'No worker returned a valid coloring.'});
+              const status = attempts.some(a => ['error', 'invalid'].includes(a.status)) ? 'error' : attempts.some(a => a.status === 'timeout') ? 'timeout' : attempts.some(a=>a.status==='resource-limit') ? 'resource-limit' : 'unsupported';
+              finish({...last, status, colors: null, message: status === 'timeout' ? 'Shared trial deadline reached.' : last?.message || 'No worker returned a valid coloring.'});
             }
           }).catch(error => {
             if (settled) return;

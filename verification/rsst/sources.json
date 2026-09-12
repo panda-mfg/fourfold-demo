@@ -1,0 +1,62 @@
+{
+  "retrieved_at": "2026-09-12T21:43:14.496755+00:00",
+  "source_index": "https://thomas.math.gatech.edu/FC/ftpinfo.html",
+  "paper": "https://thomas.math.gatech.edu/PAP/fc.pdf",
+  "program_license": "Copyright 1995 by N. Robertson, D.P. Sanders, P.D. Seymour and R. Thomas. Permission to use for the purpose of scholarly research is hereby granted.",
+  "files": [
+    {
+      "name": "unavoidable.conf",
+      "url": "https://thomas.math.gatech.edu/OLDFTP/four/unavoidable.conf",
+      "sha256": "1c92fc280a9b384f736b94077fc59aac75e3d830d441ffd2d18683ee4b524e84",
+      "bytes": 407769
+    },
+    {
+      "name": "reduce.c",
+      "url": "https://thomas.math.gatech.edu/OLDFTP/four/reduce.c",
+      "sha256": "f49caf1bffe3721f2c45c9fadcf13f45f058a4c744d858ed35d6c2bf6872ec77",
+      "bytes": 30185
+    },
+    {
+      "name": "discharge.c",
+      "url": "https://thomas.math.gatech.edu/OLDFTP/four/discharge.c",
+      "sha256": "b2e16d710b66b54ef193615f3901636c8361a820b01e2ef7e37d4331318aba19",
+      "bytes": 55569
+    },
+    {
+      "name": "rules",
+      "url": "https://thomas.math.gatech.edu/OLDFTP/four/rules",
+      "sha256": "4a511a1df9392a7af6253bfcf4dab9bf96ea9a080465abd0b12b57788a6c3dee",
+      "bytes": 2625
+    },
+    {
+      "name": "present7",
+      "url": "https://thomas.math.gatech.edu/OLDFTP/four/present7",
+      "sha256": "6eb6da6355a5ba05611641b05f6a2929476ced3b4721d79d085119db29c6a257",
+      "bytes": 199827
+    },
+    {
+      "name": "present8",
+      "url": "https://thomas.math.gatech.edu/OLDFTP/four/present8",
+      "sha256": "376c6c4d3b1c7530da6fd5630aca50731e554d471695e2a21e68a0d3399ee944",
+      "bytes": 176637
+    },
+    {
+      "name": "present9",
+      "url": "https://thomas.math.gatech.edu/OLDFTP/four/present9",
+      "sha256": "8fe088094ac6cc993357458451d8c64f4ca4a658b8ed9f9bb26ca20127eb0034",
+      "bytes": 118500
+    },
+    {
+      "name": "present10",
+      "url": "https://thomas.math.gatech.edu/OLDFTP/four/present10",
+      "sha256": "e8397f655d0b3fcf9b18fd34d28b4badc9cd0fd0e94e42f410cd2498640a84f7",
+      "bytes": 35098
+    },
+    {
+      "name": "present11",
+      "url": "https://thomas.math.gatech.edu/OLDFTP/four/present11",
+      "sha256": "f3cbfcdee6e83d3087d496cb80883fe2e752a55bfc68eecaeb2bc892477f4e83",
+      "bytes": 11124
+    }
+  ]
+}

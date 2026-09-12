@@ -1,0 +1,61 @@
+{
+  "generated_at": "2026-09-12T21:43:14.501896+00:00",
+  "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "flags": [
+    "-O2",
+    "-std=gnu89",
+    "-DPROTOTYPE_MAX"
+  ],
+  "discharge_additional_flag": [
+    "-include",
+    "string.h"
+  ],
+  "source_manifest": "../../rsst/sources.json",
+  "all_633_reducibility_checks_passed": true,
+  "all_five_unavoidability_certificates_passed": true,
+  "formal_verification_of_rust": false,
+  "checks": [
+    {
+      "check": "reducibility",
+      "exit_code": 0,
+      "log": "reducibility.log",
+      "sha256": "853128231a26e2cce78c4271102e1cd77f9004e9d0e1ad0b382131ab9a901146",
+      "last_line": "Reducibility of 633 configurations verified"
+    },
+    {
+      "check": "discharge7",
+      "exit_code": 0,
+      "log": "discharge7.log",
+      "sha256": "f12ff09ef47c2a39ce25e23ff7d47174ed18489c5b32eb93ec2e4b75d806eb00",
+      "last_line": "/tmp/rsst-present7 verified."
+    },
+    {
+      "check": "discharge8",
+      "exit_code": 0,
+      "log": "discharge8.log",
+      "sha256": "a13c8244c830e5fc4243700d1c8d74df472856b560bdf63f6aa6c8a87e65b8d6",
+      "last_line": "/tmp/rsst-present8 verified."
+    },
+    {
+      "check": "discharge9",
+      "exit_code": 0,
+      "log": "discharge9.log",
+      "sha256": "70b899472e62923cb39f5c222e705af6057e5504bfe9292b10425845eca361e4",
+      "last_line": "/tmp/rsst-present9 verified."
+    },
+    {
+      "check": "discharge10",
+      "exit_code": 0,
+      "log": "discharge10.log",
+      "sha256": "009db8401708c76b4de92db4927ea637aa1052c1c6f4a32ef41238951805501f",
+      "last_line": "/tmp/rsst-present10 verified."
+    },
+    {
+      "check": "discharge11",
+      "exit_code": 0,
+      "log": "discharge11.log",
+      "sha256": "e18c98cb5b98bc3ef29e355592914a790a47fb97b53a629baf42acaa87dfdfc2",
+      "last_line": "/tmp/rsst-present11 verified."
+    }
+  ]
+}

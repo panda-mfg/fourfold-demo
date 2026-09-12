@@ -1,6 +1,7 @@
-//! The two Fourfold benchmark solvers. This is a port of the demo methods,
-//! not a complete implementation of either historical four-color algorithm.
+//! Fourfold benchmark engines: DSATUR, a limited reduction prototype, and
+//! the separately identified RSST constructive research variant.
 use std::cell::RefCell;
+pub mod rsst;
 use std::sync::{
     atomic::{AtomicBool, Ordering},
     Arc,
@@ -478,6 +479,10 @@ struct Store {
     graph: Option<Vec<Vec<usize>>>,
     colors: Vec<i8>,
     stats: [f64; 13],
+    rotation_input: Vec<u32>,
+    rotation: Option<Vec<Vec<usize>>>,
+    rsst_stats: [f64; 12],
+    message: Vec<u8>,
 }
 
 /// Native CLI API using exactly the same solver core as the WASM exports.
@@ -681,6 +686,117 @@ pub extern "C" fn prepare_graph() -> u32 {
             }
         }
     })
+}
+/// Optional cyclic incidence input for RSST: degree followed by neighbors,
+/// one row per vertex. The edge set must exactly equal prepare_graph's input.
+#[no_mangle]
+pub extern "C" fn allocate_rotation(word_count: u32) -> *mut u32 {
+    STORE.with(|cell| {
+        let mut s = cell.borrow_mut();
+        s.rotation = None;
+        if word_count as usize > s.n * 17 || (word_count as usize) < s.n || s.graph.is_none() {
+            return std::ptr::null_mut();
+        }
+        s.rotation_input = vec![0; word_count as usize];
+        s.rotation_input.as_mut_ptr()
+    })
+}
+#[no_mangle]
+pub extern "C" fn prepare_rotation() -> u32 {
+    STORE.with(|cell| {
+        let mut s = cell.borrow_mut();
+        s.rotation = None;
+        let Some(graph) = s.graph.as_ref() else {
+            return 3;
+        };
+        let mut words = s.rotation_input.iter();
+        let mut rows = Vec::new();
+        for expected in graph {
+            let Some(&degree) = words.next() else {
+                return 3;
+            };
+            if degree as usize != expected.len() {
+                return 3;
+            }
+            let row: Vec<usize> = words
+                .by_ref()
+                .take(degree as usize)
+                .map(|&x| x as usize)
+                .collect();
+            let mut sorted = row.clone();
+            sorted.sort_unstable();
+            if sorted != *expected {
+                return 3;
+            }
+            rows.push(row);
+        }
+        if words.next().is_some() || rsst::plane::Plane::from_neighbors(&rows).is_err() {
+            return 3;
+        }
+        s.rotation = Some(rows);
+        0
+    })
+}
+#[no_mangle]
+pub extern "C" fn solve_rsst(budget_ms: f64, reporting: u32, variant: u32) -> u32 {
+    STORE.with(|cell| {
+        let mut s = cell.borrow_mut();
+        s.colors.clear();
+        s.stats = [0.0; 13];
+        s.rsst_stats = [0.0; 12];
+        s.message.clear();
+        let Some(rotation) = s.rotation.as_ref() else {
+            s.message = b"RSST requires a validated planar rotation system.".to_vec();
+            return 3;
+        };
+        if variant > 7 {
+            return 3;
+        }
+        match rsst::benchmark_ordered(rotation, budget_ms, reporting != 0, variant) {
+            Err(error) => {
+                s.message = error.into_bytes();
+                3
+            }
+            Ok(result) => {
+                let c = &result.counters;
+                s.rsst_stats = [
+                    c.configurations as f64,
+                    c.d_reductions as f64,
+                    c.c_reductions as f64,
+                    c.separators[0] as f64,
+                    c.separators[1] as f64,
+                    c.separators[2] as f64,
+                    c.separators[3] as f64,
+                    c.boundary_states as f64,
+                    c.extension_attempts as f64,
+                    c.matches_tested as f64,
+                    c.low_degree_reductions as f64,
+                    c.max_depth as f64,
+                ];
+                s.stats = result.stats;
+                s.colors = result.colors.into_iter().map(|c| c as i8).collect();
+                s.message = result.message.unwrap_or_default().into_bytes();
+                match result.status {
+                    "complete" => 0,
+                    "timeout" => 1,
+                    "resource-limit" => 5,
+                    _ => 3,
+                }
+            }
+        }
+    })
+}
+#[no_mangle]
+pub extern "C" fn rsst_stats_ptr() -> *const f64 {
+    STORE.with(|s| s.borrow().rsst_stats.as_ptr())
+}
+#[no_mangle]
+pub extern "C" fn solver_message_ptr() -> *const u8 {
+    STORE.with(|s| s.borrow().message.as_ptr())
+}
+#[no_mangle]
+pub extern "C" fn solver_message_len() -> u32 {
+    STORE.with(|s| s.borrow().message.len() as u32)
 }
 #[no_mangle]
 pub extern "C" fn solve(method: u32, budget_ms: f64, reporting: u32) -> u32 {

@@ -14,13 +14,13 @@ async function handle(request){
     const rust=await engine();
     if(request.type==='generate'||request.type==='prepare'){
       const warm=makeMap(8,11);rust.prepare(warm);
-      for(let i=0;i<2;i++){rust.execute('dsatur',1000);rust.execute('reduction',1000);}
+      for(let i=0;i<2;i++){rust.execute('dsatur',1000);rust.execute('reduction',1000);rust.execute('rsst',1000);}
       if(request.type==='generate'){
         current=makeMap(request.side,request.seed,request.rows);rust.prepare(current);
-        const {n,side,rows,seed,edges,xy,offsets,fingerprint,generationMs}=current;
-        self.postMessage({type:'generated',requestId:request.requestId,backend:'rust-wasm',n,side,rows,seed,edges,xy,offsets,fingerprint,generationMs});
+        const {n,side,rows,seed,edges,rotation,xy,offsets,fingerprint,generationMs}=current;
+        self.postMessage({type:'generated',requestId:request.requestId,backend:'rust-wasm',n,side,rows,seed,edges,rotation,xy,offsets,fingerprint,generationMs});
       }else{
-        current={n:request.n,edges:request.edges};rust.prepare(current);
+        current={n:request.n,edges:request.edges,rotation:request.rotation};rust.prepare(current);
         self.postMessage({type:'prepared',requestId:request.requestId});
       }
     }else if(request.type==='solve'){

@@ -1,0 +1,35 @@
+{
+  "lemmas_6_3_and_6_4": {
+    "4": {
+      "boundary_orbits": 4,
+      "subsets_examined": 15,
+      "nonempty_consistent_sets": 9
+    },
+    "5": {
+      "boundary_orbits": 10,
+      "subsets_examined": 1023,
+      "nonempty_consistent_sets": 153
+    }
+  },
+  "augmentation_families_checked": 23,
+  "paper_D1_index_correction": {
+    "printed_diagonals": [
+      "v2-v4",
+      "v2-v5"
+    ],
+    "printed_family": "D4",
+    "corrected_diagonals": [
+      "v4-v1",
+      "v4-v2"
+    ],
+    "corrected_family": "D1",
+    "counterexample_vertex_colors": [
+      0,
+      1,
+      2,
+      0,
+      2
+    ]
+  },
+  "formal_verification_of_rust": false
+}

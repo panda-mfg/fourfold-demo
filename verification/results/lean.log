@@ -1,0 +1,17 @@
+'PaperAudit.euler_charge' depends on axioms: [propext, Quot.sound]
+'PaperAudit.charge_upper_bound' depends on axioms: [propext, Quot.sound]
+'PaperAudit.nonnegative_degree_bound' depends on axioms: [propext, Quot.sound]
+'PaperAudit.negative_degree_bound' depends on axioms: [propext, Quot.sound]
+'PaperAudit.cycle_savings' depends on axioms: [propext, Quot.sound]
+'PaperAudit.conditional_choice' depends on axioms: [propext, Quot.sound]
+'PaperAudit.kempe_edge' does not depend on any axioms
+'PaperAudit.kempe_preserves_proper' does not depend on any axioms
+'PaperAudit.poles_non_touching' depends on axioms: [propext]
+'PaperAudit.poles_same_ring' depends on axioms: [propext]
+'PaperAudit.four_ring_vertices' depends on axioms: [propext]
+'PaperAudit.overlapping_rings' depends on axioms: [propext]
+'PaperAudit.source_basic' depends on axioms: [propext, Quot.sound]
+'PaperAudit.source_single_list' does not depend on any axioms
+'PaperAudit.target_basic' depends on axioms: [propext, Quot.sound]
+'PaperAudit.target_minimal' depends on axioms: [propext, Quot.sound]
+'PaperAudit.target_not_single_list' does not depend on any axioms

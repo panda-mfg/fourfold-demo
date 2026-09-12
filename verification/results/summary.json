@@ -1,0 +1,65 @@
+{
+  "overall": "partial_verification_with_confirmed_auxiliary_errors",
+  "main_theorem_formally_verified": false,
+  "main_theorem_disproved": false,
+  "lean_named_results": 17,
+  "additional_axioms_or_proof_holes": false,
+  "catalogue_selected_structural_checks": 8200,
+  "combined_rules": {
+    "all": {
+      "count": 1832,
+      "max_charge": 8
+    },
+    "nonblocked": {
+      "count": 671,
+      "max_charge": 5
+    }
+  },
+  "initial_wheels": [
+    {
+      "degree": 7,
+      "exit_code": 0,
+      "output_files": 5439,
+      "elapsed_seconds": 30.592
+    },
+    {
+      "degree": 8,
+      "exit_code": 0,
+      "output_files": 6790,
+      "elapsed_seconds": 41.643
+    },
+    {
+      "degree": 9,
+      "exit_code": 0,
+      "output_files": 3285,
+      "elapsed_seconds": 108.119
+    },
+    {
+      "degree": 10,
+      "status": "timeout",
+      "output_files": 0,
+      "elapsed_seconds": 180
+    },
+    {
+      "degree": 11,
+      "status": "timeout",
+      "output_files": 0,
+      "elapsed_seconds": 180
+    }
+  ],
+  "sample_reducibility": [
+    {
+      "configuration": "D0000",
+      "status": "passed",
+      "elapsed_seconds": 0.004
+    },
+    {
+      "configuration": "D2834",
+      "status": "passed",
+      "elapsed_seconds": 17.745
+    }
+  ],
+  "complete_A3_A6_executed": false,
+  "all_catalogue_D3_verified": false,
+  "application_implemented": false
+}

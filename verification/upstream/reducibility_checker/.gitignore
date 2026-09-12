@@ -1,0 +1,21 @@
+# Externals
+*.txt
+*.log
+*.out
+*.conf
+*.dconf
+*.csv
+*.fs
+dconf
+
+# Python/pyenv/venv
+.python-version
+env/
+*.py
+
+# CMake
+!CMakeLists.txt
+build/
+
+# VSCode
+.vscode

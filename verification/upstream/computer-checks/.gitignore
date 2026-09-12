@@ -1,0 +1,12 @@
+build/
+.vscode/c_cpp_properties.json
+
+*.sh
+linearly_many/
+log/
+empty/
+combined_rules/
+wheels/
+
+!enum_possible_bad_wheels.sh
+!enum_all_bad_cartwheels.sh

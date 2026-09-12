@@ -1,0 +1,32 @@
+[
+  {
+    "degree": 7,
+    "exit_code": 0,
+    "output_files": 5439,
+    "elapsed_seconds": 30.592
+  },
+  {
+    "degree": 8,
+    "exit_code": 0,
+    "output_files": 6790,
+    "elapsed_seconds": 41.643
+  },
+  {
+    "degree": 9,
+    "exit_code": 0,
+    "output_files": 3285,
+    "elapsed_seconds": 108.119
+  },
+  {
+    "degree": 10,
+    "status": "timeout",
+    "output_files": 0,
+    "elapsed_seconds": 180
+  },
+  {
+    "degree": 11,
+    "status": "timeout",
+    "output_files": 0,
+    "elapsed_seconds": 180
+  }
+]

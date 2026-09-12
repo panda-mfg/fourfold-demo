@@ -101,6 +101,16 @@ The checks cover map geometry, shared borders, valid completed and partial color
 
 ## Background
 
+The complete review workspace is included alongside the current demo:
+
+- [Original paper PDF](2603.24880v2.pdf), unchanged, with its checksum in [provenance](verification/results/provenance.json).
+- [Paper review overview](docs/paper-review-overview.md) and [verification report](docs/verification-report.md).
+- [Implementation plan](docs/demo-implementation-plan.md), [backlog](docs/implementation-backlog.md), and [historical algorithm comparison](docs/algorithm-comparison.md).
+- [Lean proofs, checking scripts, pinned upstream sources, licenses, and recorded results](verification/README.md).
+- [Original JavaScript demo snapshot](archive/original-javascript-demo/README.md) and historical browser observations.
+
+The verification results are evidence from a **partial audit**, not a formal proof of the full paper. The recorded result summaries describe the review at the time it ran; subsequent application development does not change those proof claims. Build caches and machine-specific tool installations are not part of the repository.
+
 - [Appel and Haken's public account](https://celebratio.org/Appel_KI/article/674/)
 - [Robin Thomas's 1998 account](https://www.ams.org/notices/199807/thomas.pdf)
 - [The supplied 2026 proposal, version 2](https://arxiv.org/abs/2603.24880v2)

@@ -1,0 +1,192 @@
+{
+  "configurations": {
+    "count": 8200,
+    "max_vertices": 19,
+    "max_ring": 18,
+    "max_diameter": 4,
+    "radius_three": [
+      {
+        "file": "D5059.conf",
+        "vertices": 14,
+        "ring": 18,
+        "radius": 3,
+        "diameter": 4,
+        "cut_vertices": 0,
+        "all_degree_six": false
+      }
+    ],
+    "all_degree_six": [
+      {
+        "file": "D2834.conf",
+        "vertices": 10,
+        "ring": 14,
+        "radius": 2,
+        "diameter": 3,
+        "cut_vertices": 0,
+        "all_degree_six": true
+      }
+    ],
+    "cut_vertex_configurations": 1677,
+    "checked": [
+      "format",
+      "internal connectivity",
+      "D0 path condition",
+      "D1 radius/high-degree bounds",
+      "D2 size bounds"
+    ],
+    "not_checked": [
+      "D3 reducibility/level",
+      "full free-completion embedding validity",
+      "Steinberger subset containment"
+    ]
+  },
+  "cycle_colorings": {
+    "3": {
+      "labeled": 24,
+      "up_to_color_permutation": 1,
+      "three_or_fewer_colors": 1
+    },
+    "4": {
+      "labeled": 84,
+      "up_to_color_permutation": 4,
+      "three_or_fewer_colors": 3
+    },
+    "5": {
+      "labeled": 240,
+      "up_to_color_permutation": 10,
+      "three_or_fewer_colors": 5
+    }
+  },
+  "octahedron_counterexample": {
+    "vertices": 6,
+    "edges": [
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        1,
+        5
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        5
+      ]
+    ],
+    "oriented_faces": [
+      [
+        0,
+        2,
+        3
+      ],
+      [
+        1,
+        3,
+        2
+      ],
+      [
+        0,
+        3,
+        4
+      ],
+      [
+        1,
+        4,
+        3
+      ],
+      [
+        0,
+        4,
+        5
+      ],
+      [
+        1,
+        5,
+        4
+      ],
+      [
+        0,
+        5,
+        2
+      ],
+      [
+        1,
+        2,
+        5
+      ]
+    ],
+    "non_touching_configurations": [
+      [
+        0
+      ],
+      [
+        1
+      ]
+    ],
+    "rings": [
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ]
+    ]
+  },
+  "overlapping_incidence_repair_example": {
+    "initial_potential": "11/8",
+    "survivors": 2,
+    "decisions": {
+      "0": 1,
+      "1": 1,
+      "2": 0
+    }
+  },
+  "constants": {
+    "one_step_denominator": 786432,
+    "block_success_probability": "1/2463368687990995287869222670357444146370302045201152504083855520062387841573497461411089394644063296340224165818094050626507775567335500002919186432",
+    "block_success_probability_approx": 4.059481655649166e-148,
+    "flat_packing_bound": 2384185791015625000
+  }
+}

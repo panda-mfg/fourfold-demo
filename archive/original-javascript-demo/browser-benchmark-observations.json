@@ -1,0 +1,546 @@
+{
+  "kind": "fourfold-demo-benchmarks",
+  "historicalImplementations": {
+    "appelHaken": "not implemented",
+    "nearLinear2026": "not implemented"
+  },
+  "measuredMethods": [
+    "DSATUR exact search",
+    "limited degree-at-most-four reduction + DSATUR core + Kempe restoration"
+  ],
+  "timingScope": "solver only; generation, warm-up, transfers, validation, and rendering excluded",
+  "environment": {
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+    "logicalProcessors": 24
+  },
+  "records": [
+    {
+      "schemaVersion": 1,
+      "n": 1024,
+      "seed": 817,
+      "fingerprint": "333944dd",
+      "repeats": 3,
+      "budgetMs": 5000,
+      "generationMs": 3.399999976158142,
+      "startedAt": "2026-09-12T10:08:04.832Z",
+      "trials": {
+        "dsatur": [
+          {
+            "type": "solved",
+            "requestId": 2,
+            "method": "dsatur",
+            "status": "complete",
+            "solverMs": 12.800000071525574,
+            "stats": {
+              "deadline": 5015.5,
+              "probes": 1067924,
+              "decisions": 1036,
+              "backtracks": 12,
+              "batches": 0,
+              "removed": 0,
+              "swaps": 0,
+              "kempeVisits": 0,
+              "coreVertices": 1024,
+              "reductionMs": 0,
+              "coreMs": 12.800000071525574,
+              "restorationMs": 0
+            },
+            "validation": {
+              "ok": true,
+              "edges": 2945,
+              "validationMs": 0.20000004768371582
+            },
+            "trial": 1
+          },
+          {
+            "type": "solved",
+            "requestId": 5,
+            "method": "dsatur",
+            "status": "complete",
+            "solverMs": 7.600000023841858,
+            "stats": {
+              "deadline": 5049.700000047684,
+              "probes": 1067924,
+              "decisions": 1036,
+              "backtracks": 12,
+              "batches": 0,
+              "removed": 0,
+              "swaps": 0,
+              "kempeVisits": 0,
+              "coreVertices": 1024,
+              "reductionMs": 0,
+              "coreMs": 7.600000023841858,
+              "restorationMs": 0
+            },
+            "validation": {
+              "ok": true,
+              "edges": 2945,
+              "validationMs": 0
+            },
+            "trial": 2
+          },
+          {
+            "type": "solved",
+            "requestId": 6,
+            "method": "dsatur",
+            "status": "complete",
+            "solverMs": 4.800000071525574,
+            "stats": {
+              "deadline": 5061.5,
+              "probes": 1067924,
+              "decisions": 1036,
+              "backtracks": 12,
+              "batches": 0,
+              "removed": 0,
+              "swaps": 0,
+              "kempeVisits": 0,
+              "coreVertices": 1024,
+              "reductionMs": 0,
+              "coreMs": 4.700000047683716,
+              "restorationMs": 0
+            },
+            "validation": {
+              "ok": true,
+              "edges": 2945,
+              "validationMs": 0
+            },
+            "trial": 3
+          }
+        ],
+        "reduction": [
+          {
+            "type": "solved",
+            "requestId": 3,
+            "method": "reduction",
+            "status": "complete",
+            "solverMs": 7.300000071525574,
+            "stats": {
+              "deadline": 5033.899999976158,
+              "probes": 100039,
+              "decisions": 0,
+              "backtracks": 0,
+              "batches": 33,
+              "removed": 1024,
+              "swaps": 72,
+              "kempeVisits": 14745,
+              "coreVertices": 0,
+              "reductionMs": 0.7000000476837158,
+              "coreMs": 0,
+              "restorationMs": 6.5
+            },
+            "validation": {
+              "ok": true,
+              "edges": 2945,
+              "validationMs": 0.10000002384185791
+            },
+            "trial": 1
+          },
+          {
+            "type": "solved",
+            "requestId": 4,
+            "method": "reduction",
+            "status": "complete",
+            "solverMs": 2.799999952316284,
+            "stats": {
+              "deadline": 5043.700000047684,
+              "probes": 100039,
+              "decisions": 0,
+              "backtracks": 0,
+              "batches": 33,
+              "removed": 1024,
+              "swaps": 72,
+              "kempeVisits": 14745,
+              "coreVertices": 0,
+              "reductionMs": 0.6000000238418579,
+              "coreMs": 0,
+              "restorationMs": 1.899999976158142
+            },
+            "validation": {
+              "ok": true,
+              "edges": 2945,
+              "validationMs": 0.10000002384185791
+            },
+            "trial": 2
+          },
+          {
+            "type": "solved",
+            "requestId": 7,
+            "method": "reduction",
+            "status": "complete",
+            "solverMs": 1.7999999523162842,
+            "stats": {
+              "deadline": 5067.600000023842,
+              "probes": 100039,
+              "decisions": 0,
+              "backtracks": 0,
+              "batches": 33,
+              "removed": 1024,
+              "swaps": 72,
+              "kempeVisits": 14745,
+              "coreVertices": 0,
+              "reductionMs": 0.19999992847442627,
+              "coreMs": 0,
+              "restorationMs": 1.5
+            },
+            "validation": {
+              "ok": true,
+              "edges": 2945,
+              "validationMs": 0
+            },
+            "trial": 3
+          }
+        ]
+      },
+      "finishedAt": "2026-09-12T10:08:04.889Z"
+    },
+    {
+      "schemaVersion": 1,
+      "n": 64,
+      "seed": 817,
+      "fingerprint": "af9457cf",
+      "repeats": 1,
+      "budgetMs": 5000,
+      "generationMs": 0.30000007152557373,
+      "startedAt": "2026-09-12T10:08:05.139Z",
+      "trials": {
+        "dsatur": [
+          {
+            "type": "solved",
+            "requestId": 9,
+            "method": "dsatur",
+            "status": "complete",
+            "solverMs": 0,
+            "stats": {
+              "deadline": 5322.100000023842,
+              "probes": 4482,
+              "decisions": 64,
+              "backtracks": 0,
+              "batches": 0,
+              "removed": 0,
+              "swaps": 0,
+              "kempeVisits": 0,
+              "coreVertices": 64,
+              "reductionMs": 0,
+              "coreMs": 0,
+              "restorationMs": 0
+            },
+            "validation": {
+              "ok": true,
+              "edges": 161,
+              "validationMs": 0
+            },
+            "trial": 1
+          }
+        ],
+        "reduction": [
+          {
+            "type": "solved",
+            "requestId": 10,
+            "method": "reduction",
+            "status": "complete",
+            "solverMs": 0.10000002384185791,
+            "stats": {
+              "deadline": 5326.5,
+              "probes": 499,
+              "decisions": 0,
+              "backtracks": 0,
+              "batches": 10,
+              "removed": 64,
+              "swaps": 0,
+              "kempeVisits": 0,
+              "coreVertices": 0,
+              "reductionMs": 0.10000002384185791,
+              "coreMs": 0,
+              "restorationMs": 0
+            },
+            "validation": {
+              "ok": true,
+              "edges": 161,
+              "validationMs": 0
+            },
+            "trial": 1
+          }
+        ]
+      },
+      "finishedAt": "2026-09-12T10:08:05.146Z"
+    },
+    {
+      "schemaVersion": 1,
+      "n": 256,
+      "seed": 817,
+      "fingerprint": "2cc7bb6d",
+      "repeats": 1,
+      "budgetMs": 5000,
+      "generationMs": 0.8999999761581421,
+      "startedAt": "2026-09-12T10:08:05.151Z",
+      "trials": {
+        "dsatur": [
+          {
+            "type": "solved",
+            "requestId": 12,
+            "method": "dsatur",
+            "status": "complete",
+            "solverMs": 0.5,
+            "stats": {
+              "deadline": 5334.700000047684,
+              "probes": 69074,
+              "decisions": 263,
+              "backtracks": 7,
+              "batches": 0,
+              "removed": 0,
+              "swaps": 0,
+              "kempeVisits": 0,
+              "coreVertices": 256,
+              "reductionMs": 0,
+              "coreMs": 0.5,
+              "restorationMs": 0
+            },
+            "validation": {
+              "ok": true,
+              "edges": 705,
+              "validationMs": 0
+            },
+            "trial": 1
+          }
+        ],
+        "reduction": [
+          {
+            "type": "solved",
+            "requestId": 13,
+            "method": "reduction",
+            "status": "complete",
+            "solverMs": 0.2999999523162842,
+            "stats": {
+              "deadline": 5361.600000023842,
+              "probes": 7849,
+              "decisions": 0,
+              "backtracks": 0,
+              "batches": 16,
+              "removed": 256,
+              "swaps": 17,
+              "kempeVisits": 918,
+              "coreVertices": 0,
+              "reductionMs": 0.10000002384185791,
+              "coreMs": 0,
+              "restorationMs": 0.19999992847442627
+            },
+            "validation": {
+              "ok": true,
+              "edges": 705,
+              "validationMs": 0
+            },
+            "trial": 1
+          }
+        ]
+      },
+      "finishedAt": "2026-09-12T10:08:05.188Z"
+    },
+    {
+      "schemaVersion": 1,
+      "n": 1024,
+      "seed": 817,
+      "fingerprint": "333944dd",
+      "repeats": 1,
+      "budgetMs": 5000,
+      "generationMs": 2.600000023841858,
+      "startedAt": "2026-09-12T10:08:05.200Z",
+      "trials": {
+        "dsatur": [
+          {
+            "type": "solved",
+            "requestId": 15,
+            "method": "dsatur",
+            "status": "complete",
+            "solverMs": 6.799999952316284,
+            "stats": {
+              "deadline": 5383.300000071526,
+              "probes": 1067924,
+              "decisions": 1036,
+              "backtracks": 12,
+              "batches": 0,
+              "removed": 0,
+              "swaps": 0,
+              "kempeVisits": 0,
+              "coreVertices": 1024,
+              "reductionMs": 0,
+              "coreMs": 6.700000047683716,
+              "restorationMs": 0
+            },
+            "validation": {
+              "ok": true,
+              "edges": 2945,
+              "validationMs": 0
+            },
+            "trial": 1
+          }
+        ],
+        "reduction": [
+          {
+            "type": "solved",
+            "requestId": 16,
+            "method": "reduction",
+            "status": "complete",
+            "solverMs": 2.299999952316284,
+            "stats": {
+              "deadline": 5391.800000071526,
+              "probes": 100039,
+              "decisions": 0,
+              "backtracks": 0,
+              "batches": 33,
+              "removed": 1024,
+              "swaps": 72,
+              "kempeVisits": 14745,
+              "coreVertices": 0,
+              "reductionMs": 0.30000007152557373,
+              "coreMs": 0,
+              "restorationMs": 1.899999976158142
+            },
+            "validation": {
+              "ok": true,
+              "edges": 2945,
+              "validationMs": 0
+            },
+            "trial": 1
+          }
+        ]
+      },
+      "finishedAt": "2026-09-12T10:08:05.214Z"
+    },
+    {
+      "schemaVersion": 1,
+      "n": 4096,
+      "seed": 817,
+      "fingerprint": "80cc2d2f",
+      "repeats": 1,
+      "budgetMs": 5000,
+      "generationMs": 14.200000047683716,
+      "startedAt": "2026-09-12T10:08:05.235Z",
+      "trials": {
+        "dsatur": [
+          {
+            "type": "solved",
+            "requestId": 18,
+            "method": "dsatur",
+            "status": "timeout",
+            "solverMs": 5000.299999952316,
+            "message": "Time limit reached.",
+            "stats": {
+              "deadline": 5418.100000023842,
+              "probes": 1141202944,
+              "decisions": 277827,
+              "backtracks": 276432,
+              "batches": 0,
+              "removed": 0,
+              "swaps": 0,
+              "kempeVisits": 0,
+              "coreVertices": 4096,
+              "reductionMs": 0,
+              "coreMs": 0,
+              "restorationMs": 0
+            },
+            "validation": null,
+            "trial": 1
+          }
+        ],
+        "reduction": [
+          {
+            "type": "solved",
+            "requestId": 19,
+            "method": "reduction",
+            "status": "complete",
+            "solverMs": 23.700000047683716,
+            "stats": {
+              "deadline": 10427.5,
+              "probes": 913879,
+              "decisions": 0,
+              "backtracks": 0,
+              "batches": 66,
+              "removed": 4096,
+              "swaps": 332,
+              "kempeVisits": 141161,
+              "coreVertices": 0,
+              "reductionMs": 3.600000023841858,
+              "coreMs": 0,
+              "restorationMs": 19.700000047683716
+            },
+            "validation": {
+              "ok": true,
+              "edges": 12033,
+              "validationMs": 0
+            },
+            "trial": 1
+          }
+        ]
+      },
+      "finishedAt": "2026-09-12T10:08:10.289Z"
+    },
+    {
+      "schemaVersion": 1,
+      "n": 16384,
+      "seed": 817,
+      "fingerprint": "098aeac9",
+      "repeats": 1,
+      "budgetMs": 5000,
+      "generationMs": 34.10000002384186,
+      "startedAt": "2026-09-12T10:08:10.379Z",
+      "trials": {
+        "dsatur": [
+          {
+            "type": "solved",
+            "requestId": 21,
+            "method": "dsatur",
+            "status": "timeout",
+            "solverMs": 5000.200000047684,
+            "message": "Time limit reached.",
+            "stats": {
+              "deadline": 10562.899999976158,
+              "probes": 922202112,
+              "decisions": 56245,
+              "backtracks": 54408,
+              "batches": 0,
+              "removed": 0,
+              "swaps": 0,
+              "kempeVisits": 0,
+              "coreVertices": 16384,
+              "reductionMs": 0,
+              "coreMs": 0,
+              "restorationMs": 0
+            },
+            "validation": null,
+            "trial": 1
+          }
+        ],
+        "reduction": [
+          {
+            "type": "solved",
+            "requestId": 22,
+            "method": "reduction",
+            "status": "complete",
+            "solverMs": 111.5,
+            "stats": {
+              "deadline": 15634.5,
+              "probes": 10173881,
+              "decisions": 0,
+              "backtracks": 0,
+              "batches": 125,
+              "removed": 16384,
+              "swaps": 1298,
+              "kempeVisits": 1597358,
+              "coreVertices": 0,
+              "reductionMs": 4,
+              "coreMs": 0,
+              "restorationMs": 106.39999997615814
+            },
+            "validation": {
+              "ok": true,
+              "edges": 48641,
+              "validationMs": 0.20000004768371582
+            },
+            "trial": 1
+          }
+        ]
+      },
+      "finishedAt": "2026-09-12T10:08:15.623Z"
+    }
+  ]
+}

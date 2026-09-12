@@ -1,0 +1,30 @@
+{
+  "pdf_sha256": "27016693b9799d2ccbc3ea52fd8cdc357d6be290fcbcd33d05220e36fe7520c1",
+  "upstream": [
+    {
+      "repository": "near-linear-4ct/computer-checks",
+      "commit": "6cb85666ce89cf8bd813132e4c5dd56053e367a5",
+      "archive_bytes": 30820
+    },
+    {
+      "repository": "near-linear-4ct/discharging-rules",
+      "commit": "d85bfe09e9584d675fdf33a1da61067575ec4883",
+      "archive_bytes": 4948
+    },
+    {
+      "repository": "near-linear-4ct/instructions-for-checking-reproducibility",
+      "commit": "82e20d89ba8927521e9e87135c02c85d08f66b18",
+      "archive_bytes": 2363
+    },
+    {
+      "repository": "edge-coloring/reducibility_checker",
+      "commit": "54726f6fc9611a4cd4a794a1d27dd51e3dcd778d",
+      "archive_bytes": 15616
+    },
+    {
+      "repository": "near-linear-4ct/reducible-configurations",
+      "commit": "c2ce7a96e35256201526e2abb51a39d04a588b53",
+      "archive_bytes": 653335
+    }
+  ]
+}

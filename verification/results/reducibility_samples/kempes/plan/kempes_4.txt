@@ -1,0 +1,15 @@
+14
+abccbdda
+abbcddca
+abbaccdd
+abbccdda
+aabccddb
+abccddba
+abbccadd
+aabcddcb
+aabbcddc
+abcddcba
+aabbccdd
+aabccbdd
+abbacddc
+abccbadd

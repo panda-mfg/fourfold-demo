@@ -1,0 +1,137 @@
+{
+  "record": {
+    "schemaVersion": 1,
+    "n": 2048,
+    "seed": 817,
+    "fingerprint": "b9bfe747",
+    "repeats": 1,
+    "budgetMs": 100000,
+    "progressIntervalMs": 5000,
+    "generationMs": 7,
+    "startedAt": "2026-09-12T10:26:37.430Z",
+    "trials": {
+      "dsatur": [
+        {
+          "type": "solved",
+          "requestId": 14,
+          "method": "dsatur",
+          "status": "complete",
+          "solverMs": 59158.60000002384,
+          "stats": {
+            "deadline": 100221,
+            "probes": 15437332728,
+            "decisions": 7495243,
+            "backtracks": 7493195,
+            "batches": 0,
+            "removed": 0,
+            "swaps": 0,
+            "kempeVisits": 0,
+            "coreVertices": 2048,
+            "reductionMs": 0,
+            "coreMs": 59158.60000002384,
+            "restorationMs": 0,
+            "progressUpdates": 11
+          },
+          "validation": {
+            "ok": true,
+            "colored": 2048,
+            "edges": 5953,
+            "validationMs": 0.10000002384185791
+          },
+          "trial": 1
+        }
+      ],
+      "reduction": [
+        {
+          "type": "solved",
+          "requestId": 15,
+          "method": "reduction",
+          "status": "complete",
+          "solverMs": 14.200000047683716,
+          "stats": {
+            "deadline": 159387.79999995232,
+            "probes": 243111,
+            "decisions": 0,
+            "backtracks": 0,
+            "batches": 35,
+            "removed": 2048,
+            "swaps": 152,
+            "kempeVisits": 36460,
+            "coreVertices": 0,
+            "reductionMs": 2,
+            "coreMs": 0,
+            "restorationMs": 11.899999976158142,
+            "progressUpdates": 0
+          },
+          "validation": {
+            "ok": true,
+            "colored": 2048,
+            "edges": 5953,
+            "validationMs": 0.10000002384185791
+          },
+          "trial": 1
+        }
+      ]
+    },
+    "finishedAt": "2026-09-12T10:27:36.621Z"
+  },
+  "snapshots": [
+    {
+      "elapsed": 5,
+      "text": "1,386 / 2,048 colored \u00b7 Searching \u00b7 Snapshot at 5.0 s"
+    },
+    {
+      "elapsed": 10,
+      "text": "1,371 / 2,048 colored \u00b7 Searching \u00b7 Snapshot at 10.0 s"
+    },
+    {
+      "elapsed": 15,
+      "text": "1,331 / 2,048 colored \u00b7 Searching \u00b7 Snapshot at 15.0 s"
+    },
+    {
+      "elapsed": 20,
+      "text": "1,396 / 2,048 colored \u00b7 Searching \u00b7 Snapshot at 20.0 s"
+    },
+    {
+      "elapsed": 25,
+      "text": "1,356 / 2,048 colored \u00b7 Searching \u00b7 Snapshot at 25.0 s"
+    },
+    {
+      "elapsed": 30,
+      "text": "1,335 / 2,048 colored \u00b7 Searching \u00b7 Snapshot at 30.0 s"
+    },
+    {
+      "elapsed": 35,
+      "text": "1,411 / 2,048 colored \u00b7 Searching \u00b7 Snapshot at 35.0 s"
+    },
+    {
+      "elapsed": 40,
+      "text": "1,403 / 2,048 colored \u00b7 Searching \u00b7 Snapshot at 40.0 s"
+    },
+    {
+      "elapsed": 45,
+      "text": "1,363 / 2,048 colored \u00b7 Searching \u00b7 Snapshot at 45.0 s"
+    },
+    {
+      "elapsed": 50,
+      "text": "1,361 / 2,048 colored \u00b7 Searching \u00b7 Snapshot at 50.0 s"
+    },
+    {
+      "elapsed": 55,
+      "text": "1,345 / 2,048 colored \u00b7 Searching \u00b7 Snapshot at 55.0 s"
+    }
+  ],
+  "environment": {
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+    "logicalProcessors": 24
+  },
+  "measuredMethods": [
+    "DSATUR exact search",
+    "limited degree-at-most-four reduction + DSATUR core + Kempe restoration"
+  ],
+  "historicalImplementations": {
+    "appelHaken": "not implemented",
+    "nearLinear2026": "not implemented"
+  },
+  "timingScope": "solver plus periodic progress copying/reporting; generation, warm-up, final transfer, validation, and drawing excluded"
+}

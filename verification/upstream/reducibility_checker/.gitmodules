@@ -1,0 +1,3 @@
+[submodule "projective_configurations"]
+	path = projective_configurations
+	url = git@github.com:edge-coloring/projective_configurations.git
